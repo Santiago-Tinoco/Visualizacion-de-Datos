@@ -1,0 +1,8 @@
+inicio
+ejercicio-1
+ejercicio-2
+ejercicio-3
+uso-de-gather
+uso-de-spread
+uso-de-unite
+uso-del-separate
