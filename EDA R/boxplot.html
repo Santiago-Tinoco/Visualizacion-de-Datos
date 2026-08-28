@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>6 Boxplot | EDA</title>
+  <meta name="description" content="6 Boxplot | EDA" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="6 Boxplot | EDA" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6 Boxplot | EDA" />
+  
+  
+  
+
+<meta name="author" content="Alejandra Fuentes y Santiago Tinoco" />
+
+
+<meta name="date" content="2026-08-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="histograma.html"/>
+<link rel="next" href="diagrama-de-densidad.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.2.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-3.0.0/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-2.2.3/leaflet-providers-plugin.js"></script>
+<script src="libs/plotly-binding-4.12.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.25.2/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
+<ul>
+<li class="chapter" data-level="" data-path="introducción.html"><a href="introducción.html#notas-importantes-sobre-este-dataset"><i class="fa fa-check"></i>Notas importantes sobre este dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="librerías.html"><a href="librerías.html"><i class="fa fa-check"></i><b>2</b> Librerías</a></li>
+<li class="chapter" data-level="3" data-path="carga-y-preparación-de-datos.html"><a href="carga-y-preparación-de-datos.html"><i class="fa fa-check"></i><b>3</b> Carga y preparación de datos</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="carga-y-preparación-de-datos.html"><a href="carga-y-preparación-de-datos.html#mapa-interactivo-mundial-de-sismos"><i class="fa fa-check"></i><b>3.1</b> Mapa interactivo mundial de sismos</a></li>
+<li class="chapter" data-level="3.2" data-path="carga-y-preparación-de-datos.html"><a href="carga-y-preparación-de-datos.html#filtro-obligatorio-por-regi%C3%B3n"><i class="fa fa-check"></i><b>3.2</b> Filtro obligatorio por región</a></li>
+<li class="chapter" data-level="3.3" data-path="carga-y-preparación-de-datos.html"><a href="carga-y-preparación-de-datos.html#diagn%C3%B3stico-de-datos-faltantes"><i class="fa fa-check"></i><b>3.3</b> Diagnóstico de datos faltantes</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="tabla-resumen-de-estadísticas-descriptivas.html"><a href="tabla-resumen-de-estadísticas-descriptivas.html"><i class="fa fa-check"></i><b>4</b> Tabla resumen de estadísticas descriptivas</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="tabla-resumen-de-estadísticas-descriptivas.html"><a href="tabla-resumen-de-estadísticas-descriptivas.html#rango-intercuart%C3%ADlico-y-detecci%C3%B3n-de-outliers"><i class="fa fa-check"></i><b>4.1</b> Rango intercuartílico y detección de outliers</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="histograma.html"><a href="histograma.html"><i class="fa fa-check"></i><b>5</b> Histograma</a></li>
+<li class="chapter" data-level="6" data-path="boxplot.html"><a href="boxplot.html"><i class="fa fa-check"></i><b>6</b> Boxplot</a></li>
+<li class="chapter" data-level="7" data-path="diagrama-de-densidad.html"><a href="diagrama-de-densidad.html"><i class="fa fa-check"></i><b>7</b> Diagrama de densidad</a></li>
+<li class="chapter" data-level="8" data-path="diagrama-de-pareto.html"><a href="diagrama-de-pareto.html"><i class="fa fa-check"></i><b>8</b> Diagrama de Pareto</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="diagrama-de-pareto.html"><a href="diagrama-de-pareto.html#por-regi%C3%B3n"><i class="fa fa-check"></i><b>8.1</b> Por región</a></li>
+<li class="chapter" data-level="8.2" data-path="diagrama-de-pareto.html"><a href="diagrama-de-pareto.html#por-rango-de-magnitud"><i class="fa fa-check"></i><b>8.2</b> Por rango de magnitud</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="tabla-y-gráfico-de-correlación.html"><a href="tabla-y-gráfico-de-correlación.html"><i class="fa fa-check"></i><b>9</b> Tabla y gráfico de correlación</a></li>
+<li class="chapter" data-level="10" data-path="análisis-específico-reciente-vs.-histórico.html"><a href="análisis-específico-reciente-vs.-histórico.html"><i class="fa fa-check"></i><b>10</b> Análisis específico: ¿reciente vs. histórico?</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="análisis-específico-reciente-vs.-histórico.html"><a href="análisis-específico-reciente-vs.-histórico.html#ley-de-gutenberg-richter-valor-b-reciente-vs.-hist%C3%B3rico"><i class="fa fa-check"></i><b>10.1</b> Ley de Gutenberg-Richter: valor-b (reciente vs. histórico)</a></li>
+<li class="chapter" data-level="10.2" data-path="análisis-específico-reciente-vs.-histórico.html"><a href="análisis-específico-reciente-vs.-histórico.html#serie-temporal-con-gr%C3%A1fico-de-control"><i class="fa fa-check"></i><b>10.2</b> Serie temporal con gráfico de control</a></li>
+<li class="chapter" data-level="10.3" data-path="análisis-específico-reciente-vs.-histórico.html"><a href="análisis-específico-reciente-vs.-histórico.html#test-de-tasa-de-ocurrencia-poisson"><i class="fa fa-check"></i><b>10.3</b> Test de tasa de ocurrencia (Poisson)</a></li>
+<li class="chapter" data-level="10.4" data-path="análisis-específico-reciente-vs.-histórico.html"><a href="análisis-específico-reciente-vs.-histórico.html#comparaci%C3%B3n-de-magnitudes-t-test-y-wilcoxon"><i class="fa fa-check"></i><b>10.4</b> Comparación de magnitudes: t-test y Wilcoxon</a></li>
+<li class="chapter" data-level="10.5" data-path="análisis-específico-reciente-vs.-histórico.html"><a href="análisis-específico-reciente-vs.-histórico.html#comparaci%C3%B3n-de-distribuciones-completas-kolmogorov-smirnov"><i class="fa fa-check"></i><b>10.5</b> Comparación de distribuciones completas: Kolmogorov-Smirnov</a></li>
+<li class="chapter" data-level="10.6" data-path="análisis-específico-reciente-vs.-histórico.html"><a href="análisis-específico-reciente-vs.-histórico.html#z-score-de-la-actividad-reciente"><i class="fa fa-check"></i><b>10.6</b> Z-score de la actividad reciente</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="conclusión.html"><a href="conclusión.html"><i class="fa fa-check"></i><b>11</b> Conclusión</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">EDA</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="boxplot" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">6</span> Boxplot<a href="boxplot.html#boxplot" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="boxplot.html#cb17-1" tabindex="-1"></a>p_box <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(sismos, <span class="fu">aes</span>(<span class="at">y =</span> magnitud, <span class="at">x =</span> <span class="st">&quot;Todos los sismos&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb17-2"><a href="boxplot.html#cb17-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="boxplot.html#cb17-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Boxplot de magnitudes sísmicas&quot;</span>, <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">&quot;Magnitud&quot;</span>) <span class="sc">+</span></span>
+<span id="cb17-4"><a href="boxplot.html#cb17-4" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb17-5"><a href="boxplot.html#cb17-5" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="boxplot.html#cb17-6" tabindex="-1"></a><span class="fu">ggplotly</span>(p_box)</span></code></pre></div>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-4293f48132766b0e46b9" style="width:768px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-4293f48132766b0e46b9">{"x":{"data":[{"x":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"y":[6.4699999999999998,6.3799999999999999,6.1500000000000004,6.5300000000000002,6.4299999999999997,5.8200000000000003,6.2000000000000002,6.3499999999999996,6.3499999999999996,7.2999999999999998,6.3799999999999999,5.8399999999999999,6.4299999999999997,6.0700000000000003,6.71,5.9299999999999997,6.04,5.9400000000000004,5.9400000000000004,5.8499999999999996,5.9500000000000002,6.0700000000000003,6.3099999999999996,5.9100000000000001,5.7699999999999996,5.79,5.9800000000000004,6.25,6.4100000000000001,6.0800000000000001,5.9400000000000004,6.4500000000000002,5.8200000000000003,5.7599999999999998,5.9500000000000002,6.6399999999999997,6.1200000000000001,6.2599999999999998,5.7999999999999998,6.5099999999999998,5.7699999999999996,5.2300000000000004,5.6299999999999999,5.5999999999999996,5.4100000000000001,5.3099999999999996,5.8899999999999997,5.1399999999999997,7,5.25,5.5,6.7800000000000002,5.2000000000000002,5.4699999999999998,5.1900000000000004,5.46,5.7300000000000004,5.1100000000000003,6.5599999999999996,5.7800000000000002,6.5199999999999996,5.1100000000000003,5.71,5.1399999999999997,5.71,5.2599999999999998,5.1200000000000001,5.7699999999999996,5.7599999999999998,5.3099999999999996,5.0999999999999996,5.2999999999999998,5,5,5,6.2000000000000002,5.2999999999999998,5.5,6.5,5.2999999999999998,5.2000000000000002,5.7000000000000002,5.7000000000000002,5.5999999999999996,5.2999999999999998,5.2000000000000002,5,5,5.0999999999999996,5,5.0999999999999996,5.2000000000000002,5.2000000000000002,5,5.2000000000000002,5.2000000000000002,5.5,5.0999999999999996,5.2999999999999998,5.2999999999999998,5,5.9000000000000004,5.4000000000000004,5.7999999999999998,6.5,5,5,5.5,5.2000000000000002,5,5.0999999999999996,5.2000000000000002,5.0999999999999996,5.4000000000000004,5.7999999999999998,5,5.0999999999999996,5.4000000000000004,5.2000000000000002,5,5.0999999999999996,5.9000000000000004,5.5,5,5,5.0999999999999996,5.2000000000000002,5.5999999999999996,5,5.0999999999999996,5.0999999999999996,5.5,5.0999999999999996,5.5,5.2000000000000002,5.0999999999999996,5.2000000000000002,5.2999999999999998,5.2999999999999998,5,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.5,5,5.2000000000000002,5.0999999999999996,5,5,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.0999999999999996,5,5.2000000000000002,5,5.2000000000000002,5,5,6.4000000000000004,5.5,5.2999999999999998,5.7000000000000002,5.0999999999999996,5,5,5.7999999999999998,5,5.2000000000000002,5,5,5,5,5.0999999999999996,5,5,5,5.2999999999999998,5.4000000000000004,5,5.0999999999999996,5,5,5,5.7000000000000002,5.0999999999999996,5.7999999999999998,5,5.0999999999999996,5,5,5,5.7000000000000002,5.7000000000000002,5.5999999999999996,5.0999999999999996,5,5,5.0999999999999996,5.0999999999999996,5,5.2000000000000002,5.0999999999999996,5.4000000000000004,5,5,5.2999999999999998,5,5,5.2000000000000002,5.2999999999999998,5.0999999999999996,5.2000000000000002,5,5.2000000000000002,5.0999999999999996,5.2999999999999998,5.0999999999999996,5,5,5,5.0999999999999996,5,5,5,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.2000000000000002,5.0999999999999996,5,5.5,5.0999999999999996,5.0999999999999996,5,5.2999999999999998,5.0999999999999996,5,5.2000000000000002,5.2000000000000002,5,5,5.5999999999999996,5.2000000000000002,5.4000000000000004,5,5.7000000000000002,5,5,5,5.7000000000000002,5.2999999999999998,5.2000000000000002,5,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.0999999999999996,6,5.7999999999999998,5.7999999999999998,5.0999999999999996,5,5.4000000000000004,5,5.0999999999999996,5.4000000000000004,5.0999999999999996,5.4000000000000004,5.2000000000000002,5,5,5.0999999999999996,5.7999999999999998,5.4000000000000004,5.7000000000000002,5,5.0999999999999996,5.0999999999999996,5.2999999999999998,5.2999999999999998,5.0999999999999996,5,5.9000000000000004,5,5.0999999999999996,5.2999999999999998,5,5,5.2000000000000002,5.2999999999999998,5.5999999999999996,5,6.0999999999999996,5.2999999999999998,5,5,6.2999999999999998,6.2000000000000002,5.2000000000000002,5,5.2000000000000002,7.2000000000000002,5.0999999999999996,5.2000000000000002,5.7999999999999998,5.0999999999999996,5.0999999999999996,5.9000000000000004,6.7000000000000002,5,5.0999999999999996,5.2000000000000002,7.2000000000000002,5.0999999999999996,5.2000000000000002,5.0999999999999996,5,5.5999999999999996,5.5,5.0999999999999996,5.0999999999999996,5.0999999999999996,5,5.2999999999999998,5.2999999999999998,5,5.5,5,5.0999999999999996,5.2000000000000002,5.0999999999999996,5.5,5.2999999999999998,6.0999999999999996,5.2000000000000002,5,5.2000000000000002,5.2000000000000002,5.7999999999999998,6.7999999999999998,6.0999999999999996,6.2000000000000002,5,5.2999999999999998,5.2000000000000002,6.5,5.2000000000000002,5.2999999999999998,5.7000000000000002,6.4000000000000004,5.7000000000000002,5.2999999999999998,5.4000000000000004,5.0999999999999996,5.2999999999999998,5.2999999999999998,6.5999999999999996,5.4000000000000004,5.0999999999999996,5,6.2000000000000002,5.2999999999999998,5.7000000000000002,5.2999999999999998,6.2999999999999998,5.2999999999999998,5,5.7999999999999998,6.7999999999999998,5.0999999999999996,5.2999999999999998,6.4000000000000004,5,5.0999999999999996,5,5.7000000000000002,6.0999999999999996,5.5,5.2000000000000002,5.4000000000000004,5.5999999999999996,5.2999999999999998,5.2000000000000002,5.2000000000000002,5.2999999999999998,5.0999999999999996,6.5,5.4000000000000004,5.0999999999999996,5.9000000000000004,5.2999999999999998,5.2000000000000002,5.4000000000000004,5.9000000000000004,5,5.7999999999999998,5.0999999999999996,5.2999999999999998,5.7000000000000002,5,6,5.2999999999999998,5.0999999999999996,7.2000000000000002,5.2999999999999998,5,5.2000000000000002,5,6.2000000000000002,5.5,5.2999999999999998,5.2000000000000002,5.2999999999999998,5.2000000000000002,6,6.2000000000000002,5.0999999999999996,5.4000000000000004,5.2000000000000002,5.2000000000000002,6.7999999999999998,5,5,5.4000000000000004,5.0999999999999996,5,5.9000000000000004,5.7000000000000002,5.7999999999999998,5,5.0999999999999996,5.2000000000000002,5.0999999999999996,5,5.0999999999999996,5,5.0999999999999996,5.4000000000000004,5.7000000000000002,5,5,5.2000000000000002,5.7000000000000002,5,5.2999999999999998,5.0999999999999996,6.9000000000000004,5,6.7000000000000002,5,5.5,5,5.2000000000000002,5.4000000000000004,5.2999999999999998,5,5.0999999999999996,5.0999999999999996,5.5,6.2000000000000002,5.0999999999999996,5.2000000000000002,5,5,5,5.0999999999999996,6,5.2000000000000002,5.5,5.2000000000000002,5.2000000000000002,5,5.2000000000000002,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.2999999999999998,5.0999999999999996,5.2999999999999998,5,6,5.7000000000000002,5,5.2000000000000002,5.5999999999999996,5.5,6.0999999999999996,5,5,6,5.0999999999999996,5,5.7000000000000002,5,5.7000000000000002,5,5.0999999999999996,5.2999999999999998,5.0999999999999996,5,5.0999999999999996,5,5,5,5.5,5,5,5.2000000000000002,5.4000000000000004,5.0999999999999996,5.2999999999999998,5.2999999999999998,5.2000000000000002,5.2000000000000002,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.2000000000000002,5.2999999999999998,5.2999999999999998,5.2999999999999998,5.2999999999999998,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.0999999999999996,6.2000000000000002,6.2000000000000002,6.2999999999999998,6.2999999999999998,5.5999999999999996,5.5999999999999996,5.7000000000000002,5.7000000000000002,5,5,5,5,5.7000000000000002,5.7000000000000002,5.7000000000000002,5.7000000000000002,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.2000000000000002,5.2000000000000002,5.5999999999999996,5.5999999999999996,5.5999999999999996,5.5999999999999996,5.2000000000000002,5.2000000000000002,5.2000000000000002,5.2000000000000002,5,5,5,5,5.5999999999999996,5.5999999999999996,5.5999999999999996,5.5999999999999996,5,5,5,5.2000000000000002,5.2000000000000002,5.2000000000000002,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.0999999999999996,6.2999999999999998,6.2999999999999998,6.2999999999999998,5.4000000000000004,5.4000000000000004,5.5,5.5,5.2999999999999998,5.2999999999999998,7.4000000000000004,7.4000000000000004,5,5],"hoverinfo":"y","type":"box","fillcolor":"rgba(255,165,0,1)","marker":{"opacity":null,"outliercolor":"rgba(0,0,0,1)","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)"},"size":5.6692913385826778},"line":{"color":"rgba(51,51,51,1)","width":1.8897637795275593},"showlegend":false,"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":40.840182648401829,"r":7.3059360730593621,"b":22.648401826484022,"l":43.105022831050242},"paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"Boxplot de magnitudes sísmicas","font":{"color":"rgba(0,0,0,1)","family":"","size":17.534246575342465},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,1.6000000000000001],"tickmode":"array","ticktext":["Todos los sismos"],"tickvals":[1],"categoryorder":"array","categoryarray":["Todos los sismos"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[4.8799999999999999,7.5200000000000005],"tickmode":"array","ticktext":["5.0","5.5","6.0","6.5","7.0","7.5"],"tickvals":[5,5.5,6,6.5,7,7.5],"categoryorder":"array","categoryarray":["5.0","5.5","6.0","6.5","7.0","7.5"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716894984},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Magnitud","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[],"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"2487feb4f90":{"x":{},"y":{},"type":"box"}},"cur_data":"2487feb4f90","visdat":{"2487feb4f90":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>Boxplot por año, útil para comparar visualmente reciente vs. histórico —
+al pasar el mouse sobre cada caja se ven mediana, cuartiles y outliers:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="boxplot.html#cb18-1" tabindex="-1"></a>p_box_anio <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(sismos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(anio), <span class="at">y =</span> magnitud)) <span class="sc">+</span></span>
+<span id="cb18-2"><a href="boxplot.html#cb18-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;lightblue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="boxplot.html#cb18-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Distribución de magnitud por año&quot;</span>,</span>
+<span id="cb18-4"><a href="boxplot.html#cb18-4" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Año&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Magnitud&quot;</span>) <span class="sc">+</span></span>
+<span id="cb18-5"><a href="boxplot.html#cb18-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb18-6"><a href="boxplot.html#cb18-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span>
+<span id="cb18-7"><a href="boxplot.html#cb18-7" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="boxplot.html#cb18-8" tabindex="-1"></a><span class="fu">ggplotly</span>(p_box_anio)</span></code></pre></div>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-5ab52a739c5c8037a439" style="width:768px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-5ab52a739c5c8037a439">{"x":{"data":[{"x":[1,2,3,4,5,6,6,7,8,8,9,10,10,10,11,12,13,14,15,15,16,16,16,17,17,17,18,18,19,20,21,21,21,21,22,23,23,24,25,25,26,27,28,28,29,29,29,29,30,30,30,30,30,30,31,31,31,31,32,32,32,32,32,32,32,32,33,34,34,34,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,37,37,37,37,37,37,37,37,37,37,37,37,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,39,39,39,39,39,39,40,40,40,40,40,40,40,40,40,40,40,40,41,41,41,41,41,41,41,41,41,41,41,41,41,41,41,41,41,41,41,41,41,41,41,41,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,44,44,44,44,44,44,45,45,45,45,45,45,45,45,46,46,46,46,46,46,46,46,46,46,46,47,47,47,47,47,47,47,47,47,47,47,47,47,48,48,48,48,48,48,48,48,48,48,48,48,49,49,49,49,49,49,49,49,49,49,49,50,50,50,50,50,50,50,51,51,51,51,51,51,51,51,51,51,52,52,52,52,52,52,52,52,52,53,53,53,53,53,53,53,53,53,53,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,55,55,55,55,55,56,56,56,56,56,56,56,56,56,56,57,57,57,57,57,57,57,57,57,57,57,57,57,57,58,58,58,58,58,58,59,59,59,59,59,59,59,60,60,60,60,61,61,61,61,62,62,62,62,62,62,62,62,63,63,63,64,64,64,64,64,64,64,65,65,65,66,66,66,67,67,67,68,68,68,68,68,69,69,69,69,69,69,69,69,69,69,70,70,70,70,70,70,71,71,71,71,71,71,71,72,72,72,73,73,73,73,73,74,74,74,75,75,75,75,76,76,76,76,76,76,76,77,77,77,77,77,77,77,78,78,78,79,79,79,79,79,79,79,79,79,79,79,80,80,80,80,80,80,80,81,81,81,81,81,81,81,81,81,81,81,82,82,82,82,82,82,83,83,83,83,84,84,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,86,86,86,86,86,86,86,86,86,86,86,86,87,87,87,87,87,87,87,87,87,87,87,87,87,87,87,87,87,87,87,87,87,88,88,88,88,88,88],"y":[6.4699999999999998,6.3799999999999999,6.1500000000000004,6.5300000000000002,6.4299999999999997,5.8200000000000003,6.2000000000000002,6.3499999999999996,6.3499999999999996,7.2999999999999998,6.3799999999999999,5.8399999999999999,6.4299999999999997,6.0700000000000003,6.71,5.9299999999999997,6.04,5.9400000000000004,5.9400000000000004,5.8499999999999996,5.9500000000000002,6.0700000000000003,6.3099999999999996,5.9100000000000001,5.7699999999999996,5.79,5.9800000000000004,6.25,6.4100000000000001,6.0800000000000001,5.9400000000000004,6.4500000000000002,5.8200000000000003,5.7599999999999998,5.9500000000000002,6.6399999999999997,6.1200000000000001,6.2599999999999998,5.7999999999999998,6.5099999999999998,5.7699999999999996,5.2300000000000004,5.6299999999999999,5.5999999999999996,5.4100000000000001,5.3099999999999996,5.8899999999999997,5.1399999999999997,7,5.25,5.5,6.7800000000000002,5.2000000000000002,5.4699999999999998,5.1900000000000004,5.46,5.7300000000000004,5.1100000000000003,6.5599999999999996,5.7800000000000002,6.5199999999999996,5.1100000000000003,5.71,5.1399999999999997,5.71,5.2599999999999998,5.1200000000000001,5.7699999999999996,5.7599999999999998,5.3099999999999996,5.0999999999999996,5.2999999999999998,5,5,5,6.2000000000000002,5.2999999999999998,5.5,6.5,5.2999999999999998,5.2000000000000002,5.7000000000000002,5.7000000000000002,5.5999999999999996,5.2999999999999998,5.2000000000000002,5,5,5.0999999999999996,5,5.0999999999999996,5.2000000000000002,5.2000000000000002,5,5.2000000000000002,5.2000000000000002,5.5,5.0999999999999996,5.2999999999999998,5.2999999999999998,5,5.9000000000000004,5.4000000000000004,5.7999999999999998,6.5,5,5,5.5,5.2000000000000002,5,5.0999999999999996,5.2000000000000002,5.0999999999999996,5.4000000000000004,5.7999999999999998,5,5.0999999999999996,5.4000000000000004,5.2000000000000002,5,5.0999999999999996,5.9000000000000004,5.5,5,5,5.0999999999999996,5.2000000000000002,5.5999999999999996,5,5.0999999999999996,5.0999999999999996,5.5,5.0999999999999996,5.5,5.2000000000000002,5.0999999999999996,5.2000000000000002,5.2999999999999998,5.2999999999999998,5,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.5,5,5.2000000000000002,5.0999999999999996,5,5,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.0999999999999996,5,5.2000000000000002,5,5.2000000000000002,5,5,6.4000000000000004,5.5,5.2999999999999998,5.7000000000000002,5.0999999999999996,5,5,5.7999999999999998,5,5.2000000000000002,5,5,5,5,5.0999999999999996,5,5,5,5.2999999999999998,5.4000000000000004,5,5.0999999999999996,5,5,5,5.7000000000000002,5.0999999999999996,5.7999999999999998,5,5.0999999999999996,5,5,5,5.7000000000000002,5.7000000000000002,5.5999999999999996,5.0999999999999996,5,5,5.0999999999999996,5.0999999999999996,5,5.2000000000000002,5.0999999999999996,5.4000000000000004,5,5,5.2999999999999998,5,5,5.2000000000000002,5.2999999999999998,5.0999999999999996,5.2000000000000002,5,5.2000000000000002,5.0999999999999996,5.2999999999999998,5.0999999999999996,5,5,5,5.0999999999999996,5,5,5,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.2000000000000002,5.0999999999999996,5,5.5,5.0999999999999996,5.0999999999999996,5,5.2999999999999998,5.0999999999999996,5,5.2000000000000002,5.2000000000000002,5,5,5.5999999999999996,5.2000000000000002,5.4000000000000004,5,5.7000000000000002,5,5,5,5.7000000000000002,5.2999999999999998,5.2000000000000002,5,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.0999999999999996,6,5.7999999999999998,5.7999999999999998,5.0999999999999996,5,5.4000000000000004,5,5.0999999999999996,5.4000000000000004,5.0999999999999996,5.4000000000000004,5.2000000000000002,5,5,5.0999999999999996,5.7999999999999998,5.4000000000000004,5.7000000000000002,5,5.0999999999999996,5.0999999999999996,5.2999999999999998,5.2999999999999998,5.0999999999999996,5,5.9000000000000004,5,5.0999999999999996,5.2999999999999998,5,5,5.2000000000000002,5.2999999999999998,5.5999999999999996,5,6.0999999999999996,5.2999999999999998,5,5,6.2999999999999998,6.2000000000000002,5.2000000000000002,5,5.2000000000000002,7.2000000000000002,5.0999999999999996,5.2000000000000002,5.7999999999999998,5.0999999999999996,5.0999999999999996,5.9000000000000004,6.7000000000000002,5,5.0999999999999996,5.2000000000000002,7.2000000000000002,5.0999999999999996,5.2000000000000002,5.0999999999999996,5,5.5999999999999996,5.5,5.0999999999999996,5.0999999999999996,5.0999999999999996,5,5.2999999999999998,5.2999999999999998,5,5.5,5,5.0999999999999996,5.2000000000000002,5.0999999999999996,5.5,5.2999999999999998,6.0999999999999996,5.2000000000000002,5,5.2000000000000002,5.2000000000000002,5.7999999999999998,6.7999999999999998,6.0999999999999996,6.2000000000000002,5,5.2999999999999998,5.2000000000000002,6.5,5.2000000000000002,5.2999999999999998,5.7000000000000002,6.4000000000000004,5.7000000000000002,5.2999999999999998,5.4000000000000004,5.0999999999999996,5.2999999999999998,5.2999999999999998,6.5999999999999996,5.4000000000000004,5.0999999999999996,5,6.2000000000000002,5.2999999999999998,5.7000000000000002,5.2999999999999998,6.2999999999999998,5.2999999999999998,5,5.7999999999999998,6.7999999999999998,5.0999999999999996,5.2999999999999998,6.4000000000000004,5,5.0999999999999996,5,5.7000000000000002,6.0999999999999996,5.5,5.2000000000000002,5.4000000000000004,5.5999999999999996,5.2999999999999998,5.2000000000000002,5.2000000000000002,5.2999999999999998,5.0999999999999996,6.5,5.4000000000000004,5.0999999999999996,5.9000000000000004,5.2999999999999998,5.2000000000000002,5.4000000000000004,5.9000000000000004,5,5.7999999999999998,5.0999999999999996,5.2999999999999998,5.7000000000000002,5,6,5.2999999999999998,5.0999999999999996,7.2000000000000002,5.2999999999999998,5,5.2000000000000002,5,6.2000000000000002,5.5,5.2999999999999998,5.2000000000000002,5.2999999999999998,5.2000000000000002,6,6.2000000000000002,5.0999999999999996,5.4000000000000004,5.2000000000000002,5.2000000000000002,6.7999999999999998,5,5,5.4000000000000004,5.0999999999999996,5,5.9000000000000004,5.7000000000000002,5.7999999999999998,5,5.0999999999999996,5.2000000000000002,5.0999999999999996,5,5.0999999999999996,5,5.0999999999999996,5.4000000000000004,5.7000000000000002,5,5,5.2000000000000002,5.7000000000000002,5,5.2999999999999998,5.0999999999999996,6.9000000000000004,5,6.7000000000000002,5,5.5,5,5.2000000000000002,5.4000000000000004,5.2999999999999998,5,5.0999999999999996,5.0999999999999996,5.5,6.2000000000000002,5.0999999999999996,5.2000000000000002,5,5,5,5.0999999999999996,6,5.2000000000000002,5.5,5.2000000000000002,5.2000000000000002,5,5.2000000000000002,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.2999999999999998,5.0999999999999996,5.2999999999999998,5,6,5.7000000000000002,5,5.2000000000000002,5.5999999999999996,5.5,6.0999999999999996,5,5,6,5.0999999999999996,5,5.7000000000000002,5,5.7000000000000002,5,5.0999999999999996,5.2999999999999998,5.0999999999999996,5,5.0999999999999996,5,5,5,5.5,5,5,5.2000000000000002,5.4000000000000004,5.0999999999999996,5.2999999999999998,5.2999999999999998,5.2000000000000002,5.2000000000000002,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.2000000000000002,5.2999999999999998,5.2999999999999998,5.2999999999999998,5.2999999999999998,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.0999999999999996,6.2000000000000002,6.2000000000000002,6.2999999999999998,6.2999999999999998,5.5999999999999996,5.5999999999999996,5.7000000000000002,5.7000000000000002,5,5,5,5,5.7000000000000002,5.7000000000000002,5.7000000000000002,5.7000000000000002,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.2000000000000002,5.2000000000000002,5.5999999999999996,5.5999999999999996,5.5999999999999996,5.5999999999999996,5.2000000000000002,5.2000000000000002,5.2000000000000002,5.2000000000000002,5,5,5,5,5.5999999999999996,5.5999999999999996,5.5999999999999996,5.5999999999999996,5,5,5,5.2000000000000002,5.2000000000000002,5.2000000000000002,5.0999999999999996,5.0999999999999996,5.0999999999999996,5.0999999999999996,6.2999999999999998,6.2999999999999998,6.2999999999999998,5.4000000000000004,5.4000000000000004,5.5,5.5,5.2999999999999998,5.2999999999999998,7.4000000000000004,7.4000000000000004,5,5],"hoverinfo":"y","type":"box","fillcolor":"rgba(173,216,230,1)","marker":{"opacity":null,"outliercolor":"rgba(0,0,0,1)","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)"},"size":5.6692913385826778},"line":{"color":"rgba(51,51,51,1)","width":1.8897637795275593},"showlegend":false,"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":40.840182648401829,"r":7.3059360730593621,"b":39.301911110976633,"l":43.105022831050242},"paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"Distribución de magnitud por año","font":{"color":"rgba(0,0,0,1)","family":"","size":17.534246575342465},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,88.599999999999994],"tickmode":"array","ticktext":["1907","1911","1913","1914","1917","1918","1920","1921","1923","1924","1926","1928","1930","1932","1934","1935","1937","1942","1945","1951","1952","1956","1957","1960","1962","1963","1964","1965","1966","1967","1968","1970","1971","1972","1973","1974","1975","1976","1977","1978","1979","1980","1981","1982","1983","1984","1985","1986","1987","1988","1989","1990","1991","1992","1993","1994","1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","2026"],"tickvals":[1,2,3,3.9999999999999996,5,6.0000000000000009,6.9999999999999991,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,22.999999999999996,24,25,26,27,28,29,30,31,32.000000000000007,33,34,35,36,37,38,39,40,41,42,43,44,45,46.000000000000007,47,48,49,50.000000000000007,51,52,53,53.999999999999993,55,56,57,57.999999999999993,59.000000000000007,60,61,62,63.000000000000007,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88],"categoryorder":"array","categoryarray":["1907","1911","1913","1914","1917","1918","1920","1921","1923","1924","1926","1928","1930","1932","1934","1935","1937","1942","1945","1951","1952","1956","1957","1960","1962","1963","1964","1965","1966","1967","1968","1970","1971","1972","1973","1974","1975","1976","1977","1978","1979","1980","1981","1982","1983","1984","1985","1986","1987","1988","1989","1990","1991","1992","1993","1994","1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","2026"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-45,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Año","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[4.8799999999999999,7.5200000000000005],"tickmode":"array","ticktext":["5.0","5.5","6.0","6.5","7.0","7.5"],"tickvals":[5,5.5,6,6.5,7,7.5],"categoryorder":"array","categoryarray":["5.0","5.5","6.0","6.5","7.0","7.5"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716894984},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Magnitud","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[],"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"248183012f6":{"x":{},"y":{},"type":"box"}},"cur_data":"248183012f6","visdat":{"248183012f6":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="histograma.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="diagrama-de-densidad.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>
