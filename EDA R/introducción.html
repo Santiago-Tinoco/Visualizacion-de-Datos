@@ -266,7 +266,9 @@ sismología para caracterizar la distribución de magnitudes.</li>
 <p>La magnitud representa una medida logarítmica relacionada con el tamaño de un terremoto. Debido a su naturaleza, la distribución de las magnitudes sísmicas no se comporta como una distribución normal. En el catálogo analizado, la magnitud presenta una distribución asimétrica y una cola hacia valores altos, comportamiento característico de los datos sísmicos.</p>
 <p>Además, el análisis considera una <strong>magnitud de completitud</strong>, a partir de la cual se considera que el catálogo presenta una cobertura adecuada para los análisis de distribución de magnitudes.</p>
 <p>La ley de Gutenberg–Richter describe la relación entre la magnitud de los terremotos y su frecuencia de ocurrencia. Se expresa como:</p>
+  
 <p>$$\log_{10} N(M) = a - bM$$</p>
+  
 <p>donde <em>N(M)</em> corresponde al número acumulado de sismos con magnitud igual o superior a <em>M</em>, <em>a</em> representa el nivel general de actividad sísmica y <em>b</em> describe la proporción relativa entre terremotos pequeños y grandes.</p>
 <p>El parámetro <strong><em>b</em>-value</strong> es particularmente útil para comparar poblaciones sísmicas. Una variación en este parámetro puede indicar un cambio en la distribución relativa de los tamaños de los eventos. El notebook estima el <em>b</em>-value mediante máxima verosimilitud y utiliza posteriormente el <strong>test de Utsu</strong> para comparar el comportamiento reciente con el histórico.</p>
 <p>Para estudiar la frecuencia temporal de los terremotos, el trabajo utiliza como modelo nulo un <strong>proceso de Poisson homogéneo</strong>. Este modelo permite representar el número de eventos que ocurren durante una unidad determinada de tiempo bajo una tasa histórica <em>λ</em>:</p>
