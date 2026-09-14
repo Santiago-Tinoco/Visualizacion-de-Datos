@@ -242,7 +242,7 @@ sismología para caracterizar la distribución de magnitudes.</li>
 </ul>
 
 <h2 id="objetivo-general">Objetivo general</h2>
-<p><strong>Analizar exploratoria y estadísticamente la actividad sísmica regional a partir de un catálogo histórico de sismos, con el fin de identificar regiones cuya actividad reciente se encuentre significativamente fuera del comportamiento esperado según su registro histórico.</strong></p>
+<p><strong>Analizar la actividad sísmica regional a partir de un catálogo histórico de sismos, con el fin de identificar regiones cuya actividad reciente se encuentre significativamente fuera del comportamiento esperado según su registro histórico.</strong></p>
 
 <h2 id="objetivos-especificos">Objetivos específicos</h2>
 <ol>
@@ -257,47 +257,28 @@ sismología para caracterizar la distribución de magnitudes.</li>
 
 <h2 id="marco-teorico">Marco teórico</h2>
 
-<h3>1. Actividad sísmica y catálogos de terremotos</h3>
 <p>Los terremotos son eventos asociados a la liberación súbita de energía acumulada en la corteza terrestre, principalmente como consecuencia de la deformación y ruptura de materiales sometidos a esfuerzos tectónicos. Los catálogos sísmicos reúnen información de estos eventos, incluyendo variables como tiempo de ocurrencia, coordenadas geográficas, profundidad, magnitud y diferentes parámetros relacionados con la calidad de la localización.</p>
 <p>El presente análisis utiliza un catálogo de aproximadamente <strong>115.500 eventos registrados entre 1900 y 2023</strong>, con 22 variables asociadas a cada evento. Entre las variables principales se encuentran la latitud, longitud, profundidad, magnitud, tipo de magnitud, localización y estado de revisión del evento.</p>
-
-<h3>2. Análisis exploratorio de datos</h3>
 <p>El análisis exploratorio de datos (EDA) permite estudiar las características principales de un conjunto de datos antes de realizar inferencias o establecer modelos. Incluye procedimientos como estadística descriptiva, análisis de distribuciones, identificación de valores faltantes, detección de valores extremos y evaluación de relaciones entre variables.</p>
 <p>En este trabajo, el EDA se desarrolla mediante análisis <strong>univariado, bivariado e inferencial</strong>, utilizando medidas de tendencia y dispersión, asimetría, curtosis, histogramas, KDE, boxplots, correlaciones y pruebas estadísticas.</p>
-
-<h3>3. Completitud y sesgo temporal del catálogo sísmico</h3>
 <p>Un aspecto fundamental de los catálogos sísmicos es que la capacidad de detección de eventos no ha sido constante a lo largo del tiempo. El desarrollo de las redes sismológicas y de los instrumentos de registro produjo un aumento considerable en la cantidad de sismos detectados, especialmente durante la segunda mitad del siglo XX.</p>
 <p>Por esta razón, comparar directamente la actividad registrada en periodos antiguos con la actividad reciente puede generar <strong>falsas anomalías asociadas al mejoramiento de la capacidad de detección</strong>, y no a cambios reales en la actividad sísmica. El notebook identifica este problema y establece <strong>1968 como inicio de la línea base histórica</strong>, buscando trabajar con un periodo de mayor estabilidad en la tasa de detección.</p>
-
-<h3>4. Magnitud y distribución de los sismos</h3>
 <p>La magnitud representa una medida logarítmica relacionada con el tamaño de un terremoto. Debido a su naturaleza, la distribución de las magnitudes sísmicas no se comporta como una distribución normal. En el catálogo analizado, la magnitud presenta una distribución asimétrica y una cola hacia valores altos, comportamiento característico de los datos sísmicos.</p>
 <p>Además, el análisis considera una <strong>magnitud de completitud</strong>, a partir de la cual se considera que el catálogo presenta una cobertura adecuada para los análisis de distribución de magnitudes.</p>
-
-<h3>5. Ley de Gutenberg–Richter</h3>
 <p>La ley de Gutenberg–Richter describe la relación entre la magnitud de los terremotos y su frecuencia de ocurrencia. Se expresa como:</p>
 <p>$$\log_{10} N(M) = a - bM$$</p>
 <p>donde <em>N(M)</em> corresponde al número acumulado de sismos con magnitud igual o superior a <em>M</em>, <em>a</em> representa el nivel general de actividad sísmica y <em>b</em> describe la proporción relativa entre terremotos pequeños y grandes.</p>
 <p>El parámetro <strong><em>b</em>-value</strong> es particularmente útil para comparar poblaciones sísmicas. Una variación en este parámetro puede indicar un cambio en la distribución relativa de los tamaños de los eventos. El notebook estima el <em>b</em>-value mediante máxima verosimilitud y utiliza posteriormente el <strong>test de Utsu</strong> para comparar el comportamiento reciente con el histórico.</p>
-
-<h3>6. Proceso de Poisson y ocurrencia de sismos</h3>
 <p>Para estudiar la frecuencia temporal de los terremotos, el trabajo utiliza como modelo nulo un <strong>proceso de Poisson homogéneo</strong>. Este modelo permite representar el número de eventos que ocurren durante una unidad determinada de tiempo bajo una tasa histórica <em>λ</em>:</p>
 <p>$$P(N=k)=\frac{e^{-\lambda t}(\lambda t)^k}{k!}$$</p>
 <p>donde <em>N</em> representa el número de sismos registrados en la región durante el periodo <em>t</em>, mientras que <em>λ</em> corresponde a la tasa histórica de ocurrencia de esa región.</p>
 <p>Para aplicar este modelo, el catálogo de eventos puntuales se transforma en un <strong>panel región × mes</strong>, incluyendo también los meses en los que no se registraron terremotos. Esto permite obtener una estimación consistente de la tasa histórica de ocurrencia.</p>
-
-<h3>7. Definición estadística de anomalía</h3>
 <p>En este trabajo, una anomalía sísmica <strong>no se define simplemente como un aumento visual en el número de terremotos</strong>. Una región se considera anómala cuando su actividad reciente presenta una probabilidad suficientemente baja bajo el comportamiento histórico esperado.</p>
 <p>Por tanto, el análisis compara los conteos recientes de cada región con su tasa histórica y evalúa la significancia estadística mediante pruebas de tasa de Poisson, considerando además la corrección por múltiples comparaciones.</p>
-
-<h3>8. Sobredispersión y agrupamiento sísmico</h3>
 <p>El proceso de Poisson supone una relación específica entre la media y la varianza de los conteos. Sin embargo, la actividad sísmica puede presentar <strong>agrupamiento temporal</strong>, especialmente debido a secuencias de réplicas posteriores a terremotos principales. Esto puede producir una varianza superior a la esperada bajo un modelo de Poisson simple.</p>
 <p>Por esta razón, el análisis incorpora una <strong>corrección cuasi-Poisson por sobredispersión</strong> y utiliza el índice de dispersión como parte del diagnóstico estadístico. También se analiza la distribución de los tiempos entre eventos para evaluar la presencia de agrupamiento.</p>
-
-<h3>9. Control estadístico de la actividad sísmica</h3>
 <p>Otra herramienta utilizada es la <strong>carta de control de Shewhart de 3σ</strong>, aplicada a los conteos de actividad sísmica después de utilizar una transformación estabilizadora de la varianza. Esta herramienta permite identificar periodos en los cuales la actividad observada se aleja de los límites establecidos a partir del comportamiento histórico.</p>
 <p>En conjunto, el notebook utiliza tres líneas principales de evidencia para evaluar anomalías: <strong>tasa de ocurrencia mediante Poisson, control estadístico mediante 3σ y cambios en la distribución de magnitudes mediante Gutenberg–Richter y el test de Utsu</strong>.</p>
-
-<h3>10. Representación espacial y temporal</h3>
 <p>Para realizar una comparación objetiva entre regiones, el espacio se divide mediante una <strong>malla de 5° × 5°</strong>, asignando cada evento a una celda espacial. Esta regionalización permite transformar el catálogo puntual en unidades comparables y analizar simultáneamente la variabilidad espacial y temporal de la actividad sísmica.</p>
 
 </div>
