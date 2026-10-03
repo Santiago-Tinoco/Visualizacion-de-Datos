@@ -1,1 +1,1 @@
-import{a}from"/build/_shared/chunk-G6IGCFRK.js";import"/build/_shared/chunk-W5F6WS2S.js";import"/build/_shared/chunk-RAQ24GF6.js";export default a();
+import{a}from"/Visualizacion-de-Datos/EDA python/build/_shared/chunk-G6IGCFRK.js";import"/Visualizacion-de-Datos/EDA python/build/_shared/chunk-W5F6WS2S.js";import"/Visualizacion-de-Datos/EDA python/build/_shared/chunk-RAQ24GF6.js";export default a();
