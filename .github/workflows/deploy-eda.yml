@@ -38,7 +38,21 @@ jobs:
         working-directory: EDA
         env:
           BASE_URL: /Visualizacion-de-Datos/EDA
-        run: myst build --html
+        run: |
+          myst build --html
+
+      - name: Revisar archivos generados
+        run: |
+          echo "Contenido de EDA:"
+          ls -la EDA
+
+          echo ""
+          echo "Contenido de EDA/_build:"
+          ls -la EDA/_build || true
+
+          echo ""
+          echo "Buscando carpetas HTML:"
+          find EDA -maxdepth 4 -type d | sort
 
       - name: Preparar sitio completo
         run: |
@@ -52,6 +66,7 @@ jobs:
             ./ _site/
 
           mkdir -p _site/EDA
+
           cp -r EDA/_build/html/. _site/EDA/
 
           touch _site/.nojekyll
