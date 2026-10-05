@@ -1,0 +1,77 @@
+name: Deploy Visualizacion-de-Datos
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+
+      - name: Instalar MyST
+        run: npm install -g mystmd
+
+      - name: Construir Jupyter Book
+        working-directory: EDA
+        env:
+          BASE_URL: /Visualizacion-de-Datos/EDA
+        run: myst build --html
+
+      - name: Preparar sitio completo
+        run: |
+          mkdir -p _site
+
+          rsync -av \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='EDA' \
+            --exclude='_site' \
+            ./ _site/
+
+          mkdir -p _site/EDA
+          cp -r EDA/_build/html/. _site/EDA/
+
+          touch _site/.nojekyll
+
+      - name: Subir sitio
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: './_site'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    steps:
+
+      - name: Publicar en GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
