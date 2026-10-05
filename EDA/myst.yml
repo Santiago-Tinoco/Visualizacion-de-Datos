@@ -1,0 +1,15 @@
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  id: 6f4e0aac-9b7f-4066-889a-a2dd5724b592
+  # title: "Analisis exploratorio de datos sísmicos"
+  # description: "EDA de datos sísmicos hehco en Python"
+  # keywords: []
+  # authors: [Alejandra Fuentes, Santiago Tinoco]
+  # github:
+  # To autogenerate a Table of Contents, run "jupyter book init --write-toc"
+site:
+  template: book-theme
+  # options:
+  #   favicon: favicon.ico
+  #   logo: site_logo.png
