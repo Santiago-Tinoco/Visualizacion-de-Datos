@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5 5. Limpieza y preparación de datos | Análisis Exploratorio de Datos — Anomalías en la Actividad Sísmica Regional</title>
+  <meta name="description" content="5 5. Limpieza y preparación de datos | Análisis Exploratorio de Datos — Anomalías en la Actividad Sísmica Regional" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5 5. Limpieza y preparación de datos | Análisis Exploratorio de Datos — Anomalías en la Actividad Sísmica Regional" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5 5. Limpieza y preparación de datos | Análisis Exploratorio de Datos — Anomalías en la Actividad Sísmica Regional" />
+  
+  
+  
+
+<meta name="author" content="Alejandra Fuentes y Santiago Tinoco" />
+
+
+<meta name="date" content="2026-08-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="descripción-del-conjunto-de-datos.html"/>
+<link rel="next" href="análisis-exploratorio-de-datos-eda.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.12.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.25.2/plotly-latest.min.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.2.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-3.0.0/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-2.2.3/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="contexto.html"><a href="contexto.html"><i class="fa fa-check"></i><b>1</b> 1. Contexto</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="contexto.html"><a href="contexto.html#introducci%C3%B3n"><i class="fa fa-check"></i><b>1.1</b> 1.1 Introducción</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="objetivos.html"><a href="objetivos.html"><i class="fa fa-check"></i><b>2</b> 2. Objetivos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="objetivos.html"><a href="objetivos.html#objetivo-general"><i class="fa fa-check"></i><b>2.1</b> 2.1 Objetivo general</a></li>
+<li class="chapter" data-level="2.2" data-path="objetivos.html"><a href="objetivos.html#objetivos-espec%C3%ADficos"><i class="fa fa-check"></i><b>2.2</b> 2.2 Objetivos específicos</a></li>
+<li class="chapter" data-level="2.3" data-path="objetivos.html"><a href="objetivos.html#prop%C3%B3sito-del-estudio"><i class="fa fa-check"></i><b>2.3</b> 2.3 Propósito del estudio</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="metodología.html"><a href="metodología.html"><i class="fa fa-check"></i><b>3</b> 3. Metodología</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="metodología.html"><a href="metodología.html#marco-te%C3%B3rico"><i class="fa fa-check"></i><b>3.1</b> 3.1 Marco teórico</a></li>
+<li class="chapter" data-level="3.2" data-path="metodología.html"><a href="metodología.html#flujo-metodol%C3%B3gico-del-an%C3%A1lisis"><i class="fa fa-check"></i><b>3.2</b> 3.2 Flujo metodológico del análisis</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="descripción-del-conjunto-de-datos.html"><a href="descripción-del-conjunto-de-datos.html"><i class="fa fa-check"></i><b>4</b> 4. Descripción del conjunto de datos</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="descripción-del-conjunto-de-datos.html"><a href="descripción-del-conjunto-de-datos.html#fuente-y-variables"><i class="fa fa-check"></i><b>4.1</b> 4.1 Fuente y variables</a></li>
+<li class="chapter" data-level="4.2" data-path="descripción-del-conjunto-de-datos.html"><a href="descripción-del-conjunto-de-datos.html#librer%C3%ADas-y-configuraci%C3%B3n-del-entorno"><i class="fa fa-check"></i><b>4.2</b> 4.2 Librerías y configuración del entorno</a></li>
+<li class="chapter" data-level="4.3" data-path="descripción-del-conjunto-de-datos.html"><a href="descripción-del-conjunto-de-datos.html#extracci%C3%B3n-carga-de-datos"><i class="fa fa-check"></i><b>4.3</b> 4.3 Extracción (carga de datos)</a></li>
+<li class="chapter" data-level="4.4" data-path="descripción-del-conjunto-de-datos.html"><a href="descripción-del-conjunto-de-datos.html#auditor%C3%ADa-t%C3%A9cnica-del-dataset-crudo"><i class="fa fa-check"></i><b>4.4</b> 4.4 Auditoría técnica del dataset crudo</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html"><i class="fa fa-check"></i><b>5</b> 5. Limpieza y preparación de datos</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html#limpieza-y-control-de-calidad-del-cat%C3%A1logo"><i class="fa fa-check"></i><b>5.1</b> 5.1 Limpieza y control de calidad del catálogo</a></li>
+<li class="chapter" data-level="5.2" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html#magnitud-de-completitud-m_c-y-ventana-temporal-v%C3%A1lida"><i class="fa fa-check"></i><b>5.2</b> 5.2 Magnitud de completitud (<span class="math inline">\(M_c\)</span>) y ventana temporal válida</a></li>
+<li class="chapter" data-level="5.3" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html#ingenier%C3%ADa-de-variables"><i class="fa fa-check"></i><b>5.3</b> 5.3 Ingeniería de variables</a></li>
+<li class="chapter" data-level="5.4" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html#gesti%C3%B3n-de-datos-faltantes"><i class="fa fa-check"></i><b>5.4</b> 5.4 Gestión de datos faltantes</a></li>
+<li class="chapter" data-level="5.5" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html#construcci%C3%B3n-del-panel-regi%C3%B3n-mes"><i class="fa fa-check"></i><b>5.5</b> 5.5 Construcción del panel región × mes</a></li>
+<li class="chapter" data-level="5.6" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html#divisi%C3%B3n-de-los-datos-80-hist%C3%B3rico-20-reciente"><i class="fa fa-check"></i><b>5.6</b> 5.6 División de los datos: 80 % histórico / 20 % reciente</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html"><i class="fa fa-check"></i><b>6</b> 6. Análisis Exploratorio de Datos (EDA)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#an%C3%A1lisis-univariado-caracterizaci%C3%B3n"><i class="fa fa-check"></i><b>6.1</b> 6.1 Análisis univariado (caracterización)</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#estad%C3%ADstica-descriptiva-y-forma-de-la-distribuci%C3%B3n"><i class="fa fa-check"></i><b>6.1.1</b> 6.1.1 Estadística descriptiva y forma de la distribución</a></li>
+<li class="chapter" data-level="6.1.2" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#visualizaci%C3%B3n-univariada-histograma-normalizado-kde-boxplot"><i class="fa fa-check"></i><b>6.1.2</b> 6.1.2 Visualización univariada: histograma normalizado + KDE + boxplot</a></li>
+<li class="chapter" data-level="6.1.3" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#variables-categ%C3%B3ricas-diagramas-de-pareto"><i class="fa fa-check"></i><b>6.1.3</b> 6.1.3 Variables categóricas (diagramas de Pareto)</a></li>
+<li class="chapter" data-level="6.1.4" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#ley-de-gutenbergrichter-el-modelo-cl%C3%A1sico-de-la-distribuci%C3%B3n-de-magnitudes"><i class="fa fa-check"></i><b>6.1.4</b> 6.1.4 Ley de Gutenberg–Richter: el modelo clásico de la distribución de magnitudes</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#an%C3%A1lisis-bivariado-y-de-correlaci%C3%B3n"><i class="fa fa-check"></i><b>6.2</b> 6.2 Análisis bivariado y de correlación</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#matrices-de-correlaci%C3%B3n-pearson-vs-spearman-vs-kendall"><i class="fa fa-check"></i><b>6.2.1</b> Matrices de correlación: Pearson vs Spearman vs Kendall</a></li>
+<li class="chapter" data-level="6.2.2" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#relaci%C3%B3n-de-las-variables-independientes-con-el-target"><i class="fa fa-check"></i><b>6.2.2</b> Relación de las variables independientes con el TARGET</a></li>
+<li class="chapter" data-level="6.2.3" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#an%C3%A1lisis-bivariado-por-categor%C3%ADas-boxplots-m%C3%BAltiples"><i class="fa fa-check"></i><b>6.2.3</b> Análisis bivariado por categorías (boxplots múltiples)</a></li>
+<li class="chapter" data-level="6.2.4" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#asociaci%C3%B3n-entre-variables-categ%C3%B3ricas-chi-cuadrado-y-v-de-cram%C3%A9r"><i class="fa fa-check"></i><b>6.2.4</b> Asociación entre variables categóricas: chi-cuadrado y V de Cramér</a></li>
+<li class="chapter" data-level="6.2.5" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#estructura-temporal-del-target-autocorrelaci%C3%B3n"><i class="fa fa-check"></i><b>6.2.5</b> Estructura TEMPORAL del target: autocorrelación</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#diagn%C3%B3stico-inferencial-y-validaci%C3%B3n-de-supuestos"><i class="fa fa-check"></i><b>6.3</b> 6.3 Diagnóstico inferencial y validación de supuestos</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#pruebas-de-normalidad"><i class="fa fa-check"></i><b>6.3.1</b> 6.3.1 Pruebas de normalidad</a></li>
+<li class="chapter" data-level="6.3.2" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#se-cumple-el-supuesto-de-poisson-%C3%ADndice-de-dispersi%C3%B3n"><i class="fa fa-check"></i><b>6.3.2</b> 6.3.2 ¿Se cumple el supuesto de Poisson? Índice de dispersión</a></li>
+<li class="chapter" data-level="6.3.3" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#son-exponenciales-los-tiempos-entre-eventos"><i class="fa fa-check"></i><b>6.3.3</b> 6.3.3 ¿Son exponenciales los tiempos entre eventos?</a></li>
+<li class="chapter" data-level="6.3.4" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#homogeneidad-hist%C3%B3rico-vs.-reciente-control-de-artefactos"><i class="fa fa-check"></i><b>6.3.4</b> 6.3.4 Homogeneidad histórico vs. reciente: control de artefactos</a></li>
+<li class="chapter" data-level="6.3.5" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#detecci%C3%B3n-de-observaciones-an%C3%B3malas-e-influyentes"><i class="fa fa-check"></i><b>6.3.5</b> 6.3.5 Detección de observaciones anómalas e influyentes</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><i class="fa fa-check"></i><b>7</b> 7. Núcleo del análisis: ¿qué regiones están fuera de lo esperado?</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#deriva-global-del-cat%C3%A1logo-y-factor-de-estandarizaci%C3%B3n"><i class="fa fa-check"></i><b>7.1</b> 7.1 Deriva global del catálogo y factor de estandarización</a></li>
+<li class="chapter" data-level="7.2" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#contrastes-de-tasa-por-regi%C3%B3n-poisson-exacto-y-cuasi-poisson"><i class="fa fa-check"></i><b>7.2</b> 7.2 Contrastes de tasa por región: Poisson exacto y cuasi-Poisson</a></li>
+<li class="chapter" data-level="7.3" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#ranking-de-regiones-fuera-de-lo-esperado"><i class="fa fa-check"></i><b>7.3</b> 7.3 Ranking de regiones fuera de lo esperado</a></li>
+<li class="chapter" data-level="7.4" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#mapa-de-anomal%C3%ADas-interactivo"><i class="fa fa-check"></i><b>7.4</b> 7.4 Mapa de anomalías (interactivo)</a></li>
+<li class="chapter" data-level="7.5" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#segunda-v%C3%ADa-de-anomal%C3%ADa-cambio-en-el-b-value-test-de-utsu"><i class="fa fa-check"></i><b>7.5</b> 7.5 Segunda vía de anomalía: cambio en el <em>b-value</em> (test de Utsu)</a></li>
+<li class="chapter" data-level="7.6" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#cu%C3%A1ndo-empez%C3%B3-la-desviaci%C3%B3n-carta-de-control-de-shewhart"><i class="fa fa-check"></i><b>7.6</b> 7.6 ¿Cuándo empezó la desviación? Carta de control de Shewhart</a></li>
+<li class="chapter" data-level="7.7" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#diagn%C3%B3stico-combinado-construcci%C3%B3n-del-target-categ%C3%B3rico-es_anomala"><i class="fa fa-check"></i><b>7.7</b> 7.7 Diagnóstico combinado: construcción del <em>target</em> categórico <code>es_anomala</code></a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="transformaciones.html"><a href="transformaciones.html"><i class="fa fa-check"></i><b>8</b> 8. Transformaciones</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="transformaciones.html"><a href="transformaciones.html#transformaciones-estabilizadoras-de-varianza"><i class="fa fa-check"></i><b>8.1</b> 8.1 Transformaciones estabilizadoras de varianza</a></li>
+<li class="chapter" data-level="8.2" data-path="transformaciones.html"><a href="transformaciones.html#retornos-logar%C3%ADtmicos-la-actividad-s%C3%ADsmica-como-serie-de-volatilidad"><i class="fa fa-check"></i><b>8.2</b> 8.2 Retornos logarítmicos: la actividad sísmica como serie de «volatilidad»</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análisis Exploratorio de Datos — Anomalías en la Actividad Sísmica Regional</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="limpieza-y-preparación-de-datos" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">5</span> 5. Limpieza y preparación de datos<a href="limpieza-y-preparación-de-datos.html#limpieza-y-preparaci%C3%B3n-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="limpieza-y-control-de-calidad-del-catálogo" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> 5.1 Limpieza y control de calidad del catálogo<a href="limpieza-y-preparación-de-datos.html#limpieza-y-control-de-calidad-del-cat%C3%A1logo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="limpieza-y-preparación-de-datos.html#cb7-1" tabindex="-1"></a><span class="co"># `time` y `updated` pueden venir como milisegundos Unix o como texto ISO 8601</span></span>
+<span id="cb7-2"><a href="limpieza-y-preparación-de-datos.html#cb7-2" tabindex="-1"></a>a_fecha_hora <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb7-3"><a href="limpieza-y-preparación-de-datos.html#cb7-3" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">inherits</span>(x, <span class="st">&quot;POSIXct&quot;</span>)) <span class="fu">return</span>(<span class="fu">with_tz</span>(x, <span class="st">&quot;UTC&quot;</span>))</span>
+<span id="cb7-4"><a href="limpieza-y-preparación-de-datos.html#cb7-4" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.numeric</span>(x)) <span class="fu">return</span>(<span class="fu">as.POSIXct</span>(x <span class="sc">/</span> <span class="dv">1000</span>, <span class="at">origin =</span> <span class="st">&quot;1970-01-01&quot;</span>, <span class="at">tz =</span> <span class="st">&quot;UTC&quot;</span>))</span>
+<span id="cb7-5"><a href="limpieza-y-preparación-de-datos.html#cb7-5" tabindex="-1"></a>  r <span class="ot">&lt;-</span> <span class="fu">suppressWarnings</span>(<span class="fu">ymd_hms</span>(x, <span class="at">tz =</span> <span class="st">&quot;UTC&quot;</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb7-6"><a href="limpieza-y-preparación-de-datos.html#cb7-6" tabindex="-1"></a>  faltan <span class="ot">&lt;-</span> <span class="fu">is.na</span>(r) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(x)</span>
+<span id="cb7-7"><a href="limpieza-y-preparación-de-datos.html#cb7-7" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">any</span>(faltan)) r[faltan] <span class="ot">&lt;-</span> <span class="fu">suppressWarnings</span>(<span class="fu">ymd</span>(x[faltan], <span class="at">tz =</span> <span class="st">&quot;UTC&quot;</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb7-8"><a href="limpieza-y-preparación-de-datos.html#cb7-8" tabindex="-1"></a>  r</span>
+<span id="cb7-9"><a href="limpieza-y-preparación-de-datos.html#cb7-9" tabindex="-1"></a>}</span>
+<span id="cb7-10"><a href="limpieza-y-preparación-de-datos.html#cb7-10" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="limpieza-y-preparación-de-datos.html#cb7-11" tabindex="-1"></a>df <span class="ot">&lt;-</span> df_raw <span class="sc">%&gt;%</span></span>
+<span id="cb7-12"><a href="limpieza-y-preparación-de-datos.html#cb7-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">any_of</span>(<span class="fu">c</span>(<span class="st">&quot;time&quot;</span>, <span class="st">&quot;updated&quot;</span>)), a_fecha_hora),</span>
+<span id="cb7-13"><a href="limpieza-y-preparación-de-datos.html#cb7-13" tabindex="-1"></a>         <span class="fu">across</span>(<span class="fu">c</span>(latitude, longitude, depth, mag), <span class="sc">~</span> <span class="fu">suppressWarnings</span>(<span class="fu">as.numeric</span>(.x))))</span>
+<span id="cb7-14"><a href="limpieza-y-preparación-de-datos.html#cb7-14" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="limpieza-y-preparación-de-datos.html#cb7-15" tabindex="-1"></a>n0 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb7-16"><a href="limpieza-y-preparación-de-datos.html#cb7-16" tabindex="-1"></a>reporte_limpieza <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb7-17"><a href="limpieza-y-preparación-de-datos.html#cb7-17" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="limpieza-y-preparación-de-datos.html#cb7-18" tabindex="-1"></a><span class="co"># Aplica un filtro y registra cuántas filas cuesta</span></span>
+<span id="cb7-19"><a href="limpieza-y-preparación-de-datos.html#cb7-19" tabindex="-1"></a>paso <span class="ot">&lt;-</span> <span class="cf">function</span>(nombre, df_nuevo) {</span>
+<span id="cb7-20"><a href="limpieza-y-preparación-de-datos.html#cb7-20" tabindex="-1"></a>  reporte_limpieza[[<span class="fu">length</span>(reporte_limpieza) <span class="sc">+</span> <span class="dv">1</span>]] <span class="ot">&lt;&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb7-21"><a href="limpieza-y-preparación-de-datos.html#cb7-21" tabindex="-1"></a>    <span class="at">paso =</span> nombre, <span class="at">filas =</span> <span class="fu">nrow</span>(df_nuevo), <span class="at">eliminadas =</span> <span class="fu">nrow</span>(df) <span class="sc">-</span> <span class="fu">nrow</span>(df_nuevo))</span>
+<span id="cb7-22"><a href="limpieza-y-preparación-de-datos.html#cb7-22" tabindex="-1"></a>  df <span class="ot">&lt;&lt;-</span> df_nuevo</span>
+<span id="cb7-23"><a href="limpieza-y-preparación-de-datos.html#cb7-23" tabindex="-1"></a>  <span class="fu">invisible</span>(df_nuevo)</span>
+<span id="cb7-24"><a href="limpieza-y-preparación-de-datos.html#cb7-24" tabindex="-1"></a>}</span>
+<span id="cb7-25"><a href="limpieza-y-preparación-de-datos.html#cb7-25" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="limpieza-y-preparación-de-datos.html#cb7-26" tabindex="-1"></a><span class="fu">paso</span>(<span class="st">&quot;dataset crudo&quot;</span>, df)</span>
+<span id="cb7-27"><a href="limpieza-y-preparación-de-datos.html#cb7-27" tabindex="-1"></a><span class="fu">paso</span>(<span class="st">&quot;time válido&quot;</span>, df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(time)))</span>
+<span id="cb7-28"><a href="limpieza-y-preparación-de-datos.html#cb7-28" tabindex="-1"></a><span class="fu">paso</span>(<span class="st">&quot;solo type == &#39;earthquake&#39;&quot;</span>, df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">tolower</span>(<span class="fu">as.character</span>(type)) <span class="sc">==</span> <span class="st">&quot;earthquake&quot;</span>))</span>
+<span id="cb7-29"><a href="limpieza-y-preparación-de-datos.html#cb7-29" tabindex="-1"></a><span class="fu">paso</span>(<span class="st">&quot;id único&quot;</span>, df <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(id, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb7-30"><a href="limpieza-y-preparación-de-datos.html#cb7-30" tabindex="-1"></a><span class="fu">paso</span>(<span class="st">&quot;duplicados espacio-temporales&quot;</span>,</span>
+<span id="cb7-31"><a href="limpieza-y-preparación-de-datos.html#cb7-31" tabindex="-1"></a>     df <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(time, latitude, longitude, mag, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb7-32"><a href="limpieza-y-preparación-de-datos.html#cb7-32" tabindex="-1"></a><span class="fu">paso</span>(<span class="st">&quot;coordenadas válidas&quot;</span>,</span>
+<span id="cb7-33"><a href="limpieza-y-preparación-de-datos.html#cb7-33" tabindex="-1"></a>     df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">between</span>(latitude, <span class="sc">-</span><span class="dv">90</span>, <span class="dv">90</span>), <span class="fu">between</span>(longitude, <span class="sc">-</span><span class="dv">180</span>, <span class="dv">180</span>)))</span>
+<span id="cb7-34"><a href="limpieza-y-preparación-de-datos.html#cb7-34" tabindex="-1"></a><span class="fu">paso</span>(<span class="st">&quot;magnitud &gt;= 5.0&quot;</span>, df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(mag <span class="sc">&gt;=</span> <span class="fl">5.0</span>))</span>
+<span id="cb7-35"><a href="limpieza-y-preparación-de-datos.html#cb7-35" tabindex="-1"></a><span class="fu">paso</span>(<span class="st">&quot;profundidad en [-5, 700] km o nula&quot;</span>,</span>
+<span id="cb7-36"><a href="limpieza-y-preparación-de-datos.html#cb7-36" tabindex="-1"></a>     df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(depth) <span class="sc">|</span> <span class="fu">between</span>(depth, <span class="sc">-</span><span class="dv">5</span>, <span class="dv">700</span>)))</span>
+<span id="cb7-37"><a href="limpieza-y-preparación-de-datos.html#cb7-37" tabindex="-1"></a></span>
+<span id="cb7-38"><a href="limpieza-y-preparación-de-datos.html#cb7-38" tabindex="-1"></a>tabla_limpieza <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(reporte_limpieza) <span class="sc">%&gt;%</span></span>
+<span id="cb7-39"><a href="limpieza-y-preparación-de-datos.html#cb7-39" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct_retenido =</span> <span class="fu">round</span>(filas <span class="sc">/</span> n0 <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>))</span>
+<span id="cb7-40"><a href="limpieza-y-preparación-de-datos.html#cb7-40" tabindex="-1"></a><span class="fu">kab</span>(tabla_limpieza)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">paso</th>
+<th align="right">filas</th>
+<th align="right">eliminadas</th>
+<th align="right">pct_retenido</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">dataset crudo</td>
+<td align="right">115,493</td>
+<td align="right">0</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="left">time válido</td>
+<td align="right">115,493</td>
+<td align="right">0</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="left">solo type == ‘earthquake’</td>
+<td align="right">115,001</td>
+<td align="right">492</td>
+<td align="right">99.57</td>
+</tr>
+<tr class="even">
+<td align="left">id único</td>
+<td align="right">102,307</td>
+<td align="right">12,694</td>
+<td align="right">88.58</td>
+</tr>
+<tr class="odd">
+<td align="left">duplicados espacio-temporales</td>
+<td align="right">102,306</td>
+<td align="right">1</td>
+<td align="right">88.58</td>
+</tr>
+<tr class="even">
+<td align="left">coordenadas válidas</td>
+<td align="right">102,306</td>
+<td align="right">0</td>
+<td align="right">88.58</td>
+</tr>
+<tr class="odd">
+<td align="left">magnitud &gt;= 5.0</td>
+<td align="right">102,306</td>
+<td align="right">0</td>
+<td align="right">88.58</td>
+</tr>
+<tr class="even">
+<td align="left">profundidad en [-5, 700] km o nula</td>
+<td align="right">102,306</td>
+<td align="right">0</td>
+<td align="right">88.58</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="magnitud-de-completitud-m_c-y-ventana-temporal-válida" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> 5.2 Magnitud de completitud (<span class="math inline">\(M_c\)</span>) y ventana temporal válida<a href="limpieza-y-preparación-de-datos.html#magnitud-de-completitud-m_c-y-ventana-temporal-v%C3%A1lida" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="limpieza-y-preparación-de-datos.html#cb8-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">anio =</span> <span class="fu">year</span>(time))</span>
+<span id="cb8-2"><a href="limpieza-y-preparación-de-datos.html#cb8-2" tabindex="-1"></a>conteo_anual <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">count</span>(anio, <span class="at">name =</span> <span class="st">&quot;n&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(anio)</span>
+<span id="cb8-3"><a href="limpieza-y-preparación-de-datos.html#cb8-3" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="limpieza-y-preparación-de-datos.html#cb8-4" tabindex="-1"></a><span class="co"># Criterio objetivo: primer año a partir del cual el conteo se mantiene (&gt;90% de los años)</span></span>
+<span id="cb8-5"><a href="limpieza-y-preparación-de-datos.html#cb8-5" tabindex="-1"></a><span class="co"># por encima del 50% del nivel instrumental moderno (mediana de los últimos 30 años)</span></span>
+<span id="cb8-6"><a href="limpieza-y-preparación-de-datos.html#cb8-6" tabindex="-1"></a>nivel_moderno <span class="ot">&lt;-</span> <span class="fu">median</span>(conteo_anual<span class="sc">$</span>n[conteo_anual<span class="sc">$</span>anio <span class="sc">&gt;=</span> <span class="fu">max</span>(conteo_anual<span class="sc">$</span>anio) <span class="sc">-</span> <span class="dv">30</span>])</span>
+<span id="cb8-7"><a href="limpieza-y-preparación-de-datos.html#cb8-7" tabindex="-1"></a>umbral <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="sc">*</span> nivel_moderno</span>
+<span id="cb8-8"><a href="limpieza-y-preparación-de-datos.html#cb8-8" tabindex="-1"></a>cumple <span class="ot">&lt;-</span> <span class="fu">sapply</span>(conteo_anual<span class="sc">$</span>anio, <span class="cf">function</span>(a) {</span>
+<span id="cb8-9"><a href="limpieza-y-preparación-de-datos.html#cb8-9" tabindex="-1"></a>  <span class="fu">mean</span>(conteo_anual<span class="sc">$</span>n[conteo_anual<span class="sc">$</span>anio <span class="sc">&gt;=</span> a] <span class="sc">&gt;=</span> umbral) <span class="sc">&gt;</span> <span class="fl">0.90</span></span>
+<span id="cb8-10"><a href="limpieza-y-preparación-de-datos.html#cb8-10" tabindex="-1"></a>})</span>
+<span id="cb8-11"><a href="limpieza-y-preparación-de-datos.html#cb8-11" tabindex="-1"></a>candidatos <span class="ot">&lt;-</span> conteo_anual<span class="sc">$</span>anio[cumple]</span>
+<span id="cb8-12"><a href="limpieza-y-preparación-de-datos.html#cb8-12" tabindex="-1"></a>ANIO_INICIO <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">length</span>(candidatos)) <span class="fu">as.integer</span>(<span class="fu">min</span>(candidatos)) <span class="cf">else</span> <span class="dv">1973</span><span class="dt">L</span></span>
+<span id="cb8-13"><a href="limpieza-y-preparación-de-datos.html#cb8-13" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="limpieza-y-preparación-de-datos.html#cb8-14" tabindex="-1"></a>lab_umbral <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">&quot;umbral de completitud (%.0f eventos/año)&quot;</span>, umbral)</span>
+<span id="cb8-15"><a href="limpieza-y-preparación-de-datos.html#cb8-15" tabindex="-1"></a>lab_inicio <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;inicio de la ventana válida = &quot;</span>, ANIO_INICIO)</span>
+<span id="cb8-16"><a href="limpieza-y-preparación-de-datos.html#cb8-16" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="limpieza-y-preparación-de-datos.html#cb8-17" tabindex="-1"></a><span class="fu">ggplot</span>(conteo_anual, <span class="fu">aes</span>(anio, n)) <span class="sc">+</span></span>
+<span id="cb8-18"><a href="limpieza-y-preparación-de-datos.html#cb8-18" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> AZUL, <span class="at">width =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb8-19"><a href="limpieza-y-preparación-de-datos.html#cb8-19" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> umbral, <span class="at">color =</span> lab_umbral), <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">linewidth =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb8-20"><a href="limpieza-y-preparación-de-datos.html#cb8-20" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> ANIO_INICIO, <span class="at">color =</span> lab_inicio), <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb8-21"><a href="limpieza-y-preparación-de-datos.html#cb8-21" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">setNames</span>(<span class="fu">c</span>(ROJO, <span class="st">&quot;black&quot;</span>), <span class="fu">c</span>(lab_umbral, lab_inicio)), <span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb8-22"><a href="limpieza-y-preparación-de-datos.html#cb8-22" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Sismos M&gt;=5.0 registrados por año — heterogeneidad instrumental del catálogo&quot;</span>,</span>
+<span id="cb8-23"><a href="limpieza-y-preparación-de-datos.html#cb8-23" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Año&quot;</span>, <span class="at">y =</span> <span class="st">&quot;N.° de sismos&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/completitud-1.png" alt="" width="1100" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="limpieza-y-preparación-de-datos.html#cb9-1" tabindex="-1"></a>antes   <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">c</span>(<span class="fu">median</span>(conteo_anual<span class="sc">$</span>n[conteo_anual<span class="sc">$</span>anio <span class="sc">&lt;</span> ANIO_INICIO]), <span class="dv">1</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-2"><a href="limpieza-y-preparación-de-datos.html#cb9-2" tabindex="-1"></a>despues <span class="ot">&lt;-</span> <span class="fu">median</span>(conteo_anual<span class="sc">$</span>n[conteo_anual<span class="sc">$</span>anio <span class="sc">&gt;=</span> ANIO_INICIO])</span></code></pre></div>
+<p>La mediana anual de sismos fue de <strong>182</strong> antes de 1968 y de <strong>1,542</strong> desde 1968.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="limpieza-y-preparación-de-datos.html#cb10-1" tabindex="-1"></a>ANIO_FIN <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">max</span>(df<span class="sc">$</span>anio))</span>
+<span id="cb10-2"><a href="limpieza-y-preparación-de-datos.html#cb10-2" tabindex="-1"></a>dfq <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(anio <span class="sc">&gt;=</span> ANIO_INICIO)   <span class="co"># quality catalog (catálogo de trabajo)</span></span></code></pre></div>
+<p>Último evento del catálogo: 2026-08-22 17:00:39 UTC.
+El catálogo de trabajo contiene <strong>89,540 sismos</strong> entre 1968 y 2026; se descartaron por completitud 12,766 sismos anteriores a 1968.</p>
+</div>
+<div id="ingeniería-de-variables" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> 5.3 Ingeniería de variables<a href="limpieza-y-preparación-de-datos.html#ingenier%C3%ADa-de-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Se derivan las variables que la pregunta de investigación necesita y que <strong>no existen</strong> en el
+archivo original:</p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Definición</th>
+<th>Justificación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>mes</code></td>
+<td>periodo mensual del evento</td>
+<td>unidad temporal del panel</td>
+</tr>
+<tr class="even">
+<td><code>log10_E</code></td>
+<td><span class="math inline">\(1.5\,M + 4.8\)</span> (Hanks &amp; Kanamori, 1979)</td>
+<td>la magnitud es <strong>logarítmica</strong>; la energía es la cantidad física <strong>aditiva</strong></td>
+</tr>
+<tr class="odd">
+<td><code>region</code></td>
+<td>celda de malla de 5°×5°</td>
+<td>partición <strong>objetiva y exhaustiva</strong> del espacio</td>
+</tr>
+<tr class="even">
+<td><code>region_nombre</code></td>
+<td>topónimo modal de <code>place</code> en la celda</td>
+<td>interpretabilidad</td>
+</tr>
+<tr class="odd">
+<td><code>rango_prof</code></td>
+<td>superficial (&lt;70 km), intermedia (70–300), profunda (&gt;300)</td>
+<td>clasificación sismológica estándar</td>
+</tr>
+<tr class="even">
+<td><code>dt_horas</code></td>
+<td>tiempo transcurrido desde el sismo anterior en la región</td>
+<td>diagnóstico de agrupamiento (réplicas)</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="limpieza-y-preparación-de-datos.html#cb11-1" tabindex="-1"></a>PASO_MALLA <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb11-2"><a href="limpieza-y-preparación-de-datos.html#cb11-2" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="limpieza-y-preparación-de-datos.html#cb11-3" tabindex="-1"></a><span class="co"># Topónimo: última parte tras la coma o, si no hay coma, tras &quot; of &quot;</span></span>
+<span id="cb11-4"><a href="limpieza-y-preparación-de-datos.html#cb11-4" tabindex="-1"></a>toponimo <span class="ot">&lt;-</span> <span class="cf">function</span>(s) {</span>
+<span id="cb11-5"><a href="limpieza-y-preparación-de-datos.html#cb11-5" tabindex="-1"></a>  tras_coma <span class="ot">&lt;-</span> <span class="fu">str_trim</span>(<span class="fu">str_extract</span>(s, <span class="st">&quot;[^,]*$&quot;</span>))</span>
+<span id="cb11-6"><a href="limpieza-y-preparación-de-datos.html#cb11-6" tabindex="-1"></a>  tras_of   <span class="ot">&lt;-</span> <span class="fu">str_trim</span>(<span class="fu">sub</span>(<span class="st">&quot;^.* of &quot;</span>, <span class="st">&quot;&quot;</span>, s))</span>
+<span id="cb11-7"><a href="limpieza-y-preparación-de-datos.html#cb11-7" tabindex="-1"></a>  <span class="fu">if_else</span>(<span class="fu">is.na</span>(s), <span class="cn">NA_character_</span>, <span class="fu">if_else</span>(<span class="fu">str_detect</span>(s, <span class="st">&quot;,&quot;</span>), tras_coma, tras_of))</span>
+<span id="cb11-8"><a href="limpieza-y-preparación-de-datos.html#cb11-8" tabindex="-1"></a>}</span>
+<span id="cb11-9"><a href="limpieza-y-preparación-de-datos.html#cb11-9" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="limpieza-y-preparación-de-datos.html#cb11-10" tabindex="-1"></a>CORTES_PROF <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">70</span>, <span class="dv">300</span>, <span class="dv">1000</span>)</span>
+<span id="cb11-11"><a href="limpieza-y-preparación-de-datos.html#cb11-11" tabindex="-1"></a>ETIQ_PROF   <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Superficial (&lt;70 km)&quot;</span>, <span class="st">&quot;Intermedia (70-300 km)&quot;</span>, <span class="st">&quot;Profunda (&gt;300 km)&quot;</span>)</span>
+<span id="cb11-12"><a href="limpieza-y-preparación-de-datos.html#cb11-12" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="limpieza-y-preparación-de-datos.html#cb11-13" tabindex="-1"></a>dfq <span class="ot">&lt;-</span> dfq <span class="sc">%&gt;%</span></span>
+<span id="cb11-14"><a href="limpieza-y-preparación-de-datos.html#cb11-14" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mes     =</span> <span class="fu">as.Date</span>(<span class="fu">floor_date</span>(time, <span class="st">&quot;month&quot;</span>)),</span>
+<span id="cb11-15"><a href="limpieza-y-preparación-de-datos.html#cb11-15" tabindex="-1"></a>         <span class="at">anio    =</span> <span class="fu">year</span>(time),</span>
+<span id="cb11-16"><a href="limpieza-y-preparación-de-datos.html#cb11-16" tabindex="-1"></a>         <span class="at">log10_E =</span> <span class="fl">1.5</span> <span class="sc">*</span> mag <span class="sc">+</span> <span class="fl">4.8</span>,</span>
+<span id="cb11-17"><a href="limpieza-y-preparación-de-datos.html#cb11-17" tabindex="-1"></a>         <span class="at">lat_bin =</span> <span class="fu">as.integer</span>(<span class="fu">floor</span>(latitude  <span class="sc">/</span> PASO_MALLA) <span class="sc">*</span> PASO_MALLA),</span>
+<span id="cb11-18"><a href="limpieza-y-preparación-de-datos.html#cb11-18" tabindex="-1"></a>         <span class="at">lon_bin =</span> <span class="fu">as.integer</span>(<span class="fu">floor</span>(longitude <span class="sc">/</span> PASO_MALLA) <span class="sc">*</span> PASO_MALLA),</span>
+<span id="cb11-19"><a href="limpieza-y-preparación-de-datos.html#cb11-19" tabindex="-1"></a>         <span class="at">region  =</span> <span class="fu">paste</span>(lat_bin, lon_bin, <span class="at">sep =</span> <span class="st">&quot;|&quot;</span>),</span>
+<span id="cb11-20"><a href="limpieza-y-preparación-de-datos.html#cb11-20" tabindex="-1"></a>         <span class="at">toponimo =</span> <span class="fu">toponimo</span>(place))</span>
+<span id="cb11-21"><a href="limpieza-y-preparación-de-datos.html#cb11-21" tabindex="-1"></a></span>
+<span id="cb11-22"><a href="limpieza-y-preparación-de-datos.html#cb11-22" tabindex="-1"></a><span class="co"># Nombre de cada región = topónimo más frecuente en la celda</span></span>
+<span id="cb11-23"><a href="limpieza-y-preparación-de-datos.html#cb11-23" tabindex="-1"></a>nombres <span class="ot">&lt;-</span> dfq <span class="sc">%&gt;%</span></span>
+<span id="cb11-24"><a href="limpieza-y-preparación-de-datos.html#cb11-24" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(toponimo)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-25"><a href="limpieza-y-preparación-de-datos.html#cb11-25" tabindex="-1"></a>  <span class="fu">count</span>(region, toponimo) <span class="sc">%&gt;%</span></span>
+<span id="cb11-26"><a href="limpieza-y-preparación-de-datos.html#cb11-26" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span></span>
+<span id="cb11-27"><a href="limpieza-y-preparación-de-datos.html#cb11-27" tabindex="-1"></a>  <span class="fu">slice_max</span>(n, <span class="at">n =</span> <span class="dv">1</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-28"><a href="limpieza-y-preparación-de-datos.html#cb11-28" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb11-29"><a href="limpieza-y-preparación-de-datos.html#cb11-29" tabindex="-1"></a>  <span class="fu">select</span>(region, <span class="at">region_nombre =</span> toponimo)</span>
+<span id="cb11-30"><a href="limpieza-y-preparación-de-datos.html#cb11-30" tabindex="-1"></a></span>
+<span id="cb11-31"><a href="limpieza-y-preparación-de-datos.html#cb11-31" tabindex="-1"></a>dfq <span class="ot">&lt;-</span> dfq <span class="sc">%&gt;%</span></span>
+<span id="cb11-32"><a href="limpieza-y-preparación-de-datos.html#cb11-32" tabindex="-1"></a>  <span class="fu">left_join</span>(nombres, <span class="at">by =</span> <span class="st">&quot;region&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-33"><a href="limpieza-y-preparación-de-datos.html#cb11-33" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">region_nombre =</span> <span class="fu">replace_na</span>(region_nombre, <span class="st">&quot;sin nombre&quot;</span>),</span>
+<span id="cb11-34"><a href="limpieza-y-preparación-de-datos.html#cb11-34" tabindex="-1"></a>         <span class="at">rango_prof    =</span> <span class="fu">cut</span>(depth, <span class="at">breaks =</span> CORTES_PROF, <span class="at">labels =</span> ETIQ_PROF))</span>
+<span id="cb11-35"><a href="limpieza-y-preparación-de-datos.html#cb11-35" tabindex="-1"></a></span>
+<span id="cb11-36"><a href="limpieza-y-preparación-de-datos.html#cb11-36" tabindex="-1"></a><span class="co"># Tiempo (en horas) desde el sismo anterior de la misma región</span></span>
+<span id="cb11-37"><a href="limpieza-y-preparación-de-datos.html#cb11-37" tabindex="-1"></a>dfq <span class="ot">&lt;-</span> dfq <span class="sc">%&gt;%</span></span>
+<span id="cb11-38"><a href="limpieza-y-preparación-de-datos.html#cb11-38" tabindex="-1"></a>  <span class="fu">arrange</span>(region, time) <span class="sc">%&gt;%</span></span>
+<span id="cb11-39"><a href="limpieza-y-preparación-de-datos.html#cb11-39" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span></span>
+<span id="cb11-40"><a href="limpieza-y-preparación-de-datos.html#cb11-40" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dt_horas =</span> <span class="fu">as.numeric</span>(<span class="fu">difftime</span>(time, <span class="fu">lag</span>(time), <span class="at">units =</span> <span class="st">&quot;hours&quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb11-41"><a href="limpieza-y-preparación-de-datos.html#cb11-41" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb11-42"><a href="limpieza-y-preparación-de-datos.html#cb11-42" tabindex="-1"></a>  <span class="fu">arrange</span>(time)</span>
+<span id="cb11-43"><a href="limpieza-y-preparación-de-datos.html#cb11-43" tabindex="-1"></a></span>
+<span id="cb11-44"><a href="limpieza-y-preparación-de-datos.html#cb11-44" tabindex="-1"></a>dfq <span class="sc">%&gt;%</span></span>
+<span id="cb11-45"><a href="limpieza-y-preparación-de-datos.html#cb11-45" tabindex="-1"></a>  <span class="fu">select</span>(time, mes, mag, log10_E, depth, rango_prof, region, region_nombre, dt_horas) <span class="sc">%&gt;%</span></span>
+<span id="cb11-46"><a href="limpieza-y-preparación-de-datos.html#cb11-46" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 9
+##   time                mes          mag log10_E depth rango_prof           region  region_nombre    dt_horas
+##   &lt;dttm&gt;              &lt;date&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;                &lt;chr&gt;   &lt;chr&gt;               &lt;dbl&gt;
+## 1 1968-01-02 00:21:12 1968-01-01  5.93    13.7  60   Superficial (&lt;70 km) -10|150 Papua New Guinea       NA
+## 2 1968-01-02 11:59:32 1968-01-01  5.19    12.6  10   Superficial (&lt;70 km) 25|50   Iran                   NA
+## 3 1968-01-04 00:57:44 1968-01-01  6.13    14.0  26   Superficial (&lt;70 km) 50|-175 Alaska                 NA
+## 4 1968-01-04 10:27:39 1968-01-01  5.75    13.4  15   Superficial (&lt;70 km) -10|145 Papua New Guinea       NA
+## 5 1968-01-05 06:42:48 1968-01-01  5.26    12.7  19.9 Superficial (&lt;70 km) 30|75   India                  NA
+## 6 1968-01-06 23:27:23 1968-01-01  6.4     14.4  30   Superficial (&lt;70 km) -30|-75 Chile                  NA</code></pre>
+<p>Regiones (celdas de 5° × 5°) con al menos un sismo: <strong>1038</strong>.</p>
+</div>
+<div id="gestión-de-datos-faltantes" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> 5.4 Gestión de datos faltantes<a href="limpieza-y-preparación-de-datos.html#gesti%C3%B3n-de-datos-faltantes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>% faltante</th>
+<th>Mecanismo</th>
+<th>Decisión</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>nst</code>, <code>gap</code>, <code>dmin</code>, <code>horizontalError</code>, <code>magError</code>, <code>magNst</code>, <code>depthError</code>, <code>rms</code></td>
+<td>25–71 %</td>
+<td><strong>MNAR</strong> (no reportado por redes antiguas)</td>
+<td><strong>Eliminar</strong> — imputar sesgaría</td>
+</tr>
+<tr class="even">
+<td><code>depth</code></td>
+<td>0,25 %</td>
+<td>MAR</td>
+<td><strong>Imputar</strong></td>
+</tr>
+<tr class="odd">
+<td><code>place</code></td>
+<td>0,77 %</td>
+<td>MCAR</td>
+<td><strong>Etiquetar</strong> como “desconocido”</td>
+</tr>
+</tbody>
+</table>
+<p>Para elegir la técnica de imputación de <code>depth</code> se enmascara el 5 % de los valores observados y se compara cada técnica contra el valor verdadero.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="limpieza-y-preparación-de-datos.html#cb13-1" tabindex="-1"></a>mask_faltante <span class="ot">&lt;-</span> <span class="fu">is.na</span>(dfq<span class="sc">$</span>depth)</span>
+<span id="cb13-2"><a href="limpieza-y-preparación-de-datos.html#cb13-2" tabindex="-1"></a>obs_idx  <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="sc">!</span>mask_faltante)</span>
+<span id="cb13-3"><a href="limpieza-y-preparación-de-datos.html#cb13-3" tabindex="-1"></a>idx_test <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">sample</span>(obs_idx, <span class="at">size =</span> <span class="fu">round</span>(<span class="fl">0.05</span> <span class="sc">*</span> <span class="fu">length</span>(obs_idx))))</span>
+<span id="cb13-4"><a href="limpieza-y-preparación-de-datos.html#cb13-4" tabindex="-1"></a>verdad   <span class="ot">&lt;-</span> dfq<span class="sc">$</span>depth[idx_test]</span>
+<span id="cb13-5"><a href="limpieza-y-preparación-de-datos.html#cb13-5" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="limpieza-y-preparación-de-datos.html#cb13-6" tabindex="-1"></a>ensayo <span class="ot">&lt;-</span> dfq <span class="sc">%&gt;%</span> <span class="fu">select</span>(depth, region, time)</span>
+<span id="cb13-7"><a href="limpieza-y-preparación-de-datos.html#cb13-7" tabindex="-1"></a>ensayo<span class="sc">$</span>depth[idx_test] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb13-8"><a href="limpieza-y-preparación-de-datos.html#cb13-8" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="limpieza-y-preparación-de-datos.html#cb13-9" tabindex="-1"></a>med_glob   <span class="ot">&lt;-</span> <span class="fu">median</span>(ensayo<span class="sc">$</span>depth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-10"><a href="limpieza-y-preparación-de-datos.html#cb13-10" tabindex="-1"></a>media_glob <span class="ot">&lt;-</span> <span class="fu">mean</span>(ensayo<span class="sc">$</span>depth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-11"><a href="limpieza-y-preparación-de-datos.html#cb13-11" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="limpieza-y-preparación-de-datos.html#cb13-12" tabindex="-1"></a>med_por_region <span class="ot">&lt;-</span> ensayo <span class="sc">%&gt;%</span></span>
+<span id="cb13-13"><a href="limpieza-y-preparación-de-datos.html#cb13-13" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span></span>
+<span id="cb13-14"><a href="limpieza-y-preparación-de-datos.html#cb13-14" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">m =</span> <span class="fu">median</span>(depth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-15"><a href="limpieza-y-preparación-de-datos.html#cb13-15" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb13-16"><a href="limpieza-y-preparación-de-datos.html#cb13-16" tabindex="-1"></a>  <span class="fu">pull</span>(m)</span>
+<span id="cb13-17"><a href="limpieza-y-preparación-de-datos.html#cb13-17" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="limpieza-y-preparación-de-datos.html#cb13-18" tabindex="-1"></a>imputaciones <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb13-19"><a href="limpieza-y-preparación-de-datos.html#cb13-19" tabindex="-1"></a>  <span class="st">&quot;Media global&quot;</span>           <span class="ot">=</span> <span class="fu">replace_na</span>(ensayo<span class="sc">$</span>depth, media_glob),</span>
+<span id="cb13-20"><a href="limpieza-y-preparación-de-datos.html#cb13-20" tabindex="-1"></a>  <span class="st">&quot;Mediana global&quot;</span>         <span class="ot">=</span> <span class="fu">replace_na</span>(ensayo<span class="sc">$</span>depth, med_glob),</span>
+<span id="cb13-21"><a href="limpieza-y-preparación-de-datos.html#cb13-21" tabindex="-1"></a>  <span class="st">&quot;Mediana por region&quot;</span>     <span class="ot">=</span> <span class="fu">coalesce</span>(ensayo<span class="sc">$</span>depth, med_por_region),</span>
+<span id="cb13-22"><a href="limpieza-y-preparación-de-datos.html#cb13-22" tabindex="-1"></a>  <span class="st">&quot;Backward fill (bfill)&quot;</span>  <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">depth =</span> ensayo<span class="sc">$</span>depth) <span class="sc">%&gt;%</span> <span class="fu">fill</span>(depth, <span class="at">.direction =</span> <span class="st">&quot;up&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(depth),</span>
+<span id="cb13-23"><a href="limpieza-y-preparación-de-datos.html#cb13-23" tabindex="-1"></a>  <span class="co"># R no tiene spline cuadrático en zoo: se usa el spline cúbico (na.spline)</span></span>
+<span id="cb13-24"><a href="limpieza-y-preparación-de-datos.html#cb13-24" tabindex="-1"></a>  <span class="st">&quot;Interpolacion spline&quot;</span>   <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">na.spline</span>(ensayo<span class="sc">$</span>depth, <span class="at">na.rm =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb13-25"><a href="limpieza-y-preparación-de-datos.html#cb13-25" tabindex="-1"></a>)</span>
+<span id="cb13-26"><a href="limpieza-y-preparación-de-datos.html#cb13-26" tabindex="-1"></a></span>
+<span id="cb13-27"><a href="limpieza-y-preparación-de-datos.html#cb13-27" tabindex="-1"></a>filas <span class="ot">&lt;-</span> <span class="fu">imap</span>(imputaciones, <span class="cf">function</span>(serie, nombre) {</span>
+<span id="cb13-28"><a href="limpieza-y-preparación-de-datos.html#cb13-28" tabindex="-1"></a>  pred <span class="ot">&lt;-</span> serie[idx_test]</span>
+<span id="cb13-29"><a href="limpieza-y-preparación-de-datos.html#cb13-29" tabindex="-1"></a>  pred[<span class="fu">is.na</span>(pred)] <span class="ot">&lt;-</span> med_glob</span>
+<span id="cb13-30"><a href="limpieza-y-preparación-de-datos.html#cb13-30" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">Tecnica =</span> nombre,</span>
+<span id="cb13-31"><a href="limpieza-y-preparación-de-datos.html#cb13-31" tabindex="-1"></a>         <span class="at">MAE =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(pred <span class="sc">-</span> verdad)),</span>
+<span id="cb13-32"><a href="limpieza-y-preparación-de-datos.html#cb13-32" tabindex="-1"></a>         <span class="at">RMSE =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((pred <span class="sc">-</span> verdad)<span class="sc">^</span><span class="dv">2</span>)),</span>
+<span id="cb13-33"><a href="limpieza-y-preparación-de-datos.html#cb13-33" tabindex="-1"></a>         <span class="at">Sesgo_medio =</span> <span class="fu">mean</span>(pred <span class="sc">-</span> verdad),</span>
+<span id="cb13-34"><a href="limpieza-y-preparación-de-datos.html#cb13-34" tabindex="-1"></a>         <span class="at">Cambio_sd_pct =</span> (<span class="fu">sd0</span>(pred) <span class="sc">/</span> <span class="fu">sd0</span>(verdad) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="dv">100</span>)</span>
+<span id="cb13-35"><a href="limpieza-y-preparación-de-datos.html#cb13-35" tabindex="-1"></a>})</span>
+<span id="cb13-36"><a href="limpieza-y-preparación-de-datos.html#cb13-36" tabindex="-1"></a></span>
+<span id="cb13-37"><a href="limpieza-y-preparación-de-datos.html#cb13-37" tabindex="-1"></a>comparacion <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(filas) <span class="sc">%&gt;%</span></span>
+<span id="cb13-38"><a href="limpieza-y-preparación-de-datos.html#cb13-38" tabindex="-1"></a>  <span class="fu">arrange</span>(RMSE) <span class="sc">%&gt;%</span></span>
+<span id="cb13-39"><a href="limpieza-y-preparación-de-datos.html#cb13-39" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span> <span class="fu">round</span>(.x, <span class="dv">3</span>)),</span>
+<span id="cb13-40"><a href="limpieza-y-preparación-de-datos.html#cb13-40" tabindex="-1"></a>         <span class="at">preserva_dispersion =</span> <span class="fu">abs</span>(Cambio_sd_pct) <span class="sc">&lt;=</span> <span class="dv">25</span>)</span>
+<span id="cb13-41"><a href="limpieza-y-preparación-de-datos.html#cb13-41" tabindex="-1"></a></span>
+<span id="cb13-42"><a href="limpieza-y-preparación-de-datos.html#cb13-42" tabindex="-1"></a>admisibles <span class="ot">&lt;-</span> comparacion <span class="sc">%&gt;%</span> <span class="fu">filter</span>(preserva_dispersion)</span>
+<span id="cb13-43"><a href="limpieza-y-preparación-de-datos.html#cb13-43" tabindex="-1"></a>TECNICA_ELEGIDA <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">nrow</span>(admisibles)) admisibles<span class="sc">$</span>Tecnica[<span class="dv">1</span>] <span class="cf">else</span> <span class="st">&quot;Mediana por region&quot;</span></span>
+<span id="cb13-44"><a href="limpieza-y-preparación-de-datos.html#cb13-44" tabindex="-1"></a></span>
+<span id="cb13-45"><a href="limpieza-y-preparación-de-datos.html#cb13-45" tabindex="-1"></a><span class="fu">kab</span>(comparacion)</span></code></pre></div>
+<table>
+<colgroup>
+<col width="26%" />
+<col width="8%" />
+<col width="9%" />
+<col width="14%" />
+<col width="16%" />
+<col width="24%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Tecnica</th>
+<th align="right">MAE</th>
+<th align="right">RMSE</th>
+<th align="right">Sesgo_medio</th>
+<th align="right">Cambio_sd_pct</th>
+<th align="left">preserva_dispersion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Mediana por region</td>
+<td align="right">38.019</td>
+<td align="right">87.019</td>
+<td align="right">-9.690</td>
+<td align="right">-19.582</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">Media global</td>
+<td align="right">65.202</td>
+<td align="right">117.454</td>
+<td align="right">-1.528</td>
+<td align="right">-100.000</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">Mediana global</td>
+<td align="right">50.964</td>
+<td align="right">122.579</td>
+<td align="right">-35.109</td>
+<td align="right">-100.000</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">Backward fill (bfill)</td>
+<td align="right">74.190</td>
+<td align="right">151.946</td>
+<td align="right">-5.209</td>
+<td align="right">-10.752</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="odd">
+<td align="left">Interpolacion spline</td>
+<td align="right">97.411</td>
+<td align="right">163.649</td>
+<td align="right">-5.373</td>
+<td align="right">4.174</td>
+<td align="left">TRUE</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="limpieza-y-preparación-de-datos.html#cb14-1" tabindex="-1"></a>ganadora_rmse <span class="ot">&lt;-</span> comparacion<span class="sc">$</span>Tecnica[<span class="dv">1</span>]</span>
+<span id="cb14-2"><a href="limpieza-y-preparación-de-datos.html#cb14-2" tabindex="-1"></a>delta_media   <span class="ot">&lt;-</span> comparacion<span class="sc">$</span>Cambio_sd_pct[comparacion<span class="sc">$</span>Tecnica <span class="sc">==</span> <span class="st">&quot;Media global&quot;</span>]</span></code></pre></div>
+<p>Faltantes reales en <code>depth</code>: <strong>1</strong> (0.001 %). La técnica con menor RMSE fue <strong>Mediana por region</strong>; la imputación por media global altera la desviación estándar en -100.0 %, por lo que degrada la dispersión de la variable. Entre las técnicas que preservan la dispersión (cambio en la desviación estándar de ±25 % o menos) se elige <strong>Mediana por region</strong>.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="limpieza-y-preparación-de-datos.html#cb15-1" tabindex="-1"></a>COLS_DESCARTE <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;nst&quot;</span>, <span class="st">&quot;gap&quot;</span>, <span class="st">&quot;dmin&quot;</span>, <span class="st">&quot;rms&quot;</span>, <span class="st">&quot;horizontalError&quot;</span>,</span>
+<span id="cb15-2"><a href="limpieza-y-preparación-de-datos.html#cb15-2" tabindex="-1"></a>                   <span class="st">&quot;depthError&quot;</span>, <span class="st">&quot;magError&quot;</span>, <span class="st">&quot;magNst&quot;</span>)</span>
+<span id="cb15-3"><a href="limpieza-y-preparación-de-datos.html#cb15-3" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="limpieza-y-preparación-de-datos.html#cb15-4" tabindex="-1"></a>dfq<span class="sc">$</span>depth <span class="ot">&lt;-</span> <span class="cf">switch</span>(</span>
+<span id="cb15-5"><a href="limpieza-y-preparación-de-datos.html#cb15-5" tabindex="-1"></a>  TECNICA_ELEGIDA,</span>
+<span id="cb15-6"><a href="limpieza-y-preparación-de-datos.html#cb15-6" tabindex="-1"></a>  <span class="st">&quot;Media global&quot;</span>          <span class="ot">=</span> <span class="fu">replace_na</span>(dfq<span class="sc">$</span>depth, <span class="fu">mean</span>(dfq<span class="sc">$</span>depth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb15-7"><a href="limpieza-y-preparación-de-datos.html#cb15-7" tabindex="-1"></a>  <span class="st">&quot;Mediana global&quot;</span>        <span class="ot">=</span> <span class="fu">replace_na</span>(dfq<span class="sc">$</span>depth, <span class="fu">median</span>(dfq<span class="sc">$</span>depth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb15-8"><a href="limpieza-y-preparación-de-datos.html#cb15-8" tabindex="-1"></a>  <span class="st">&quot;Backward fill (bfill)&quot;</span> <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">depth =</span> dfq<span class="sc">$</span>depth) <span class="sc">%&gt;%</span> <span class="fu">fill</span>(depth, <span class="at">.direction =</span> <span class="st">&quot;up&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(depth),</span>
+<span id="cb15-9"><a href="limpieza-y-preparación-de-datos.html#cb15-9" tabindex="-1"></a>  <span class="st">&quot;Interpolacion spline&quot;</span>  <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">na.spline</span>(dfq<span class="sc">$</span>depth, <span class="at">na.rm =</span> <span class="cn">FALSE</span>)),</span>
+<span id="cb15-10"><a href="limpieza-y-preparación-de-datos.html#cb15-10" tabindex="-1"></a>  <span class="co"># Mediana por región (opción por defecto)</span></span>
+<span id="cb15-11"><a href="limpieza-y-preparación-de-datos.html#cb15-11" tabindex="-1"></a>  {</span>
+<span id="cb15-12"><a href="limpieza-y-preparación-de-datos.html#cb15-12" tabindex="-1"></a>    m_reg <span class="ot">&lt;-</span> dfq <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">m =</span> <span class="fu">median</span>(depth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> <span class="fu">pull</span>(m)</span>
+<span id="cb15-13"><a href="limpieza-y-preparación-de-datos.html#cb15-13" tabindex="-1"></a>    <span class="fu">coalesce</span>(dfq<span class="sc">$</span>depth, m_reg)</span>
+<span id="cb15-14"><a href="limpieza-y-preparación-de-datos.html#cb15-14" tabindex="-1"></a>  }</span>
+<span id="cb15-15"><a href="limpieza-y-preparación-de-datos.html#cb15-15" tabindex="-1"></a>)</span>
+<span id="cb15-16"><a href="limpieza-y-preparación-de-datos.html#cb15-16" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="limpieza-y-preparación-de-datos.html#cb15-17" tabindex="-1"></a>dfq<span class="sc">$</span>depth <span class="ot">&lt;-</span> <span class="fu">replace_na</span>(dfq<span class="sc">$</span>depth, <span class="fu">median</span>(dfq<span class="sc">$</span>depth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))   <span class="co"># red de seguridad</span></span>
+<span id="cb15-18"><a href="limpieza-y-preparación-de-datos.html#cb15-18" tabindex="-1"></a>dfq<span class="sc">$</span>place <span class="ot">&lt;-</span> <span class="fu">replace_na</span>(dfq<span class="sc">$</span>place, <span class="st">&quot;desconocido&quot;</span>)</span>
+<span id="cb15-19"><a href="limpieza-y-preparación-de-datos.html#cb15-19" tabindex="-1"></a>dfq<span class="sc">$</span>rango_prof <span class="ot">&lt;-</span> <span class="fu">cut</span>(dfq<span class="sc">$</span>depth, <span class="at">breaks =</span> CORTES_PROF, <span class="at">labels =</span> ETIQ_PROF)</span>
+<span id="cb15-20"><a href="limpieza-y-preparación-de-datos.html#cb15-20" tabindex="-1"></a></span>
+<span id="cb15-21"><a href="limpieza-y-preparación-de-datos.html#cb15-21" tabindex="-1"></a>dfm <span class="ot">&lt;-</span> dfq <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span><span class="fu">any_of</span>(COLS_DESCARTE))   <span class="co"># dataset de modelado</span></span>
+<span id="cb15-22"><a href="limpieza-y-preparación-de-datos.html#cb15-22" tabindex="-1"></a></span>
+<span id="cb15-23"><a href="limpieza-y-preparación-de-datos.html#cb15-23" tabindex="-1"></a>VARS_MODELADO <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;time&quot;</span>, <span class="st">&quot;latitude&quot;</span>, <span class="st">&quot;longitude&quot;</span>, <span class="st">&quot;depth&quot;</span>, <span class="st">&quot;mag&quot;</span>, <span class="st">&quot;log10_E&quot;</span>,</span>
+<span id="cb15-24"><a href="limpieza-y-preparación-de-datos.html#cb15-24" tabindex="-1"></a>                   <span class="st">&quot;region&quot;</span>, <span class="st">&quot;mes&quot;</span>, <span class="st">&quot;rango_prof&quot;</span>)</span>
+<span id="cb15-25"><a href="limpieza-y-preparación-de-datos.html#cb15-25" tabindex="-1"></a>pendientes <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">is.na</span>(dfm[VARS_MODELADO]))</span>
+<span id="cb15-26"><a href="limpieza-y-preparación-de-datos.html#cb15-26" tabindex="-1"></a>pendientes <span class="ot">&lt;-</span> pendientes[pendientes <span class="sc">&gt;</span> <span class="dv">0</span>]</span></code></pre></div>
+<p>Técnica de imputación aplicada a <code>depth</code>: <strong>Mediana por region</strong>.</p>
+<p>Faltantes remanentes en las variables de modelado: ninguno — el dataset de modelado está completo.</p>
+<p><em>Nota:</em> <code>dt_horas</code> conserva un NA por región (el primer sismo de cada región no tiene evento previo). Es un faltante <strong>estructural</strong>, no un dato perdido: no se imputa.</p>
+<p>Dimensiones del dataset de modelado: <strong>89,540 filas × 25 columnas</strong>.</p>
+</div>
+<div id="construcción-del-panel-región-mes" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> 5.5 Construcción del panel región × mes<a href="limpieza-y-preparación-de-datos.html#construcci%C3%B3n-del-panel-regi%C3%B3n-mes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El catálogo es una <strong>lista de eventos</strong>; el modelo de Poisson necesita <strong>conteos por unidad de
+tiempo y espacio</strong>. Se construye la rejilla <strong>completa</strong>, incluyendo explícitamente <strong>los meses
+con cero sismos</strong>: omitirlos sesgaría la tasa histórica hacia arriba y haría que casi ninguna
+región pareciera anómala.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="limpieza-y-preparación-de-datos.html#cb16-1" tabindex="-1"></a><span class="co"># Solo regiones con actividad suficiente para hacer inferencia</span></span>
+<span id="cb16-2"><a href="limpieza-y-preparación-de-datos.html#cb16-2" tabindex="-1"></a>MIN_EVENTOS_REGION <span class="ot">&lt;-</span> <span class="dv">60</span></span>
+<span id="cb16-3"><a href="limpieza-y-preparación-de-datos.html#cb16-3" tabindex="-1"></a>regiones_validas <span class="ot">&lt;-</span> dfm <span class="sc">%&gt;%</span> <span class="fu">count</span>(region) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(n <span class="sc">&gt;=</span> MIN_EVENTOS_REGION) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(region)</span>
+<span id="cb16-4"><a href="limpieza-y-preparación-de-datos.html#cb16-4" tabindex="-1"></a>panel_base <span class="ot">&lt;-</span> dfm <span class="sc">%&gt;%</span> <span class="fu">filter</span>(region <span class="sc">%in%</span> regiones_validas)</span>
+<span id="cb16-5"><a href="limpieza-y-preparación-de-datos.html#cb16-5" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="limpieza-y-preparación-de-datos.html#cb16-6" tabindex="-1"></a><span class="co"># Rejilla completa región x mes (incluye los ceros)</span></span>
+<span id="cb16-7"><a href="limpieza-y-preparación-de-datos.html#cb16-7" tabindex="-1"></a>meses <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(panel_base<span class="sc">$</span>mes), <span class="fu">max</span>(panel_base<span class="sc">$</span>mes), <span class="at">by =</span> <span class="st">&quot;month&quot;</span>)</span>
+<span id="cb16-8"><a href="limpieza-y-preparación-de-datos.html#cb16-8" tabindex="-1"></a>malla <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(<span class="at">region =</span> regiones_validas, <span class="at">mes =</span> meses)</span>
+<span id="cb16-9"><a href="limpieza-y-preparación-de-datos.html#cb16-9" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="limpieza-y-preparación-de-datos.html#cb16-10" tabindex="-1"></a>agregado <span class="ot">&lt;-</span> panel_base <span class="sc">%&gt;%</span></span>
+<span id="cb16-11"><a href="limpieza-y-preparación-de-datos.html#cb16-11" tabindex="-1"></a>  <span class="fu">group_by</span>(region, mes) <span class="sc">%&gt;%</span></span>
+<span id="cb16-12"><a href="limpieza-y-preparación-de-datos.html#cb16-12" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_eventos     =</span> <span class="fu">n</span>(),</span>
+<span id="cb16-13"><a href="limpieza-y-preparación-de-datos.html#cb16-13" tabindex="-1"></a>            <span class="at">mag_max       =</span> <span class="fu">max</span>(mag),</span>
+<span id="cb16-14"><a href="limpieza-y-preparación-de-datos.html#cb16-14" tabindex="-1"></a>            <span class="at">mag_media     =</span> <span class="fu">mean</span>(mag),</span>
+<span id="cb16-15"><a href="limpieza-y-preparación-de-datos.html#cb16-15" tabindex="-1"></a>            <span class="at">prof_media    =</span> <span class="fu">mean</span>(depth),</span>
+<span id="cb16-16"><a href="limpieza-y-preparación-de-datos.html#cb16-16" tabindex="-1"></a>            <span class="at">log10_E_total =</span> <span class="fu">log10</span>(<span class="fu">sum</span>(<span class="dv">10</span><span class="sc">^</span>log10_E)),</span>
+<span id="cb16-17"><a href="limpieza-y-preparación-de-datos.html#cb16-17" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span>
+<span id="cb16-18"><a href="limpieza-y-preparación-de-datos.html#cb16-18" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="limpieza-y-preparación-de-datos.html#cb16-19" tabindex="-1"></a>panel <span class="ot">&lt;-</span> malla <span class="sc">%&gt;%</span></span>
+<span id="cb16-20"><a href="limpieza-y-preparación-de-datos.html#cb16-20" tabindex="-1"></a>  <span class="fu">left_join</span>(agregado, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;region&quot;</span>, <span class="st">&quot;mes&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-21"><a href="limpieza-y-preparación-de-datos.html#cb16-21" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_eventos =</span> <span class="fu">replace_na</span>(n_eventos, <span class="dv">0</span><span class="dt">L</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-22"><a href="limpieza-y-preparación-de-datos.html#cb16-22" tabindex="-1"></a>  <span class="fu">left_join</span>(nombres, <span class="at">by =</span> <span class="st">&quot;region&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-23"><a href="limpieza-y-preparación-de-datos.html#cb16-23" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">region_nombre =</span> <span class="fu">replace_na</span>(region_nombre, <span class="st">&quot;sin nombre&quot;</span>),</span>
+<span id="cb16-24"><a href="limpieza-y-preparación-de-datos.html#cb16-24" tabindex="-1"></a>         <span class="at">fecha         =</span> mes,</span>
+<span id="cb16-25"><a href="limpieza-y-preparación-de-datos.html#cb16-25" tabindex="-1"></a>         <span class="at">region_label  =</span> <span class="fu">paste0</span>(region_nombre, <span class="st">&quot; [&quot;</span>, region, <span class="st">&quot;]&quot;</span>))</span>
+<span id="cb16-26"><a href="limpieza-y-preparación-de-datos.html#cb16-26" tabindex="-1"></a></span>
+<span id="cb16-27"><a href="limpieza-y-preparación-de-datos.html#cb16-27" tabindex="-1"></a><span class="fu">head</span>(panel)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 10
+##   region   mes        n_eventos mag_max mag_media prof_media log10_E_total region_nombre             fecha      region_label                   
+##   &lt;chr&gt;    &lt;date&gt;         &lt;int&gt;   &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;         &lt;dbl&gt; &lt;chr&gt;                     &lt;date&gt;     &lt;chr&gt;                          
+## 1 -10|-110 1968-01-01         0      NA        NA         NA            NA central East Pacific Rise 1968-01-01 central East Pacific Rise [-10…
+## 2 -10|-110 1968-02-01         0      NA        NA         NA            NA central East Pacific Rise 1968-02-01 central East Pacific Rise [-10…
+## 3 -10|-110 1968-03-01         0      NA        NA         NA            NA central East Pacific Rise 1968-03-01 central East Pacific Rise [-10…
+## 4 -10|-110 1968-04-01         0      NA        NA         NA            NA central East Pacific Rise 1968-04-01 central East Pacific Rise [-10…
+## 5 -10|-110 1968-05-01         0      NA        NA         NA            NA central East Pacific Rise 1968-05-01 central East Pacific Rise [-10…
+## 6 -10|-110 1968-06-01         0      NA        NA         NA            NA central East Pacific Rise 1968-06-01 central East Pacific Rise [-10…</code></pre>
+<p>Regiones retenidas: <strong>242 de 1038</strong> (criterio: al menos 60 sismos), que cubren el <strong>90.0 %</strong> de los eventos del catálogo.
+El panel tiene <strong>170,368 filas</strong> = 242 regiones × 704 meses, y el <strong>76.7 %</strong> de sus filas corresponde a meses con cero sismos.</p>
+</div>
+<div id="división-de-los-datos-80-histórico-20-reciente" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> 5.6 División de los datos: 80 % histórico / 20 % reciente<a href="limpieza-y-preparación-de-datos.html#divisi%C3%B3n-de-los-datos-80-hist%C3%B3rico-20-reciente" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<blockquote>
+<p><strong>Decisión metodológica crítica: la división NO puede ser aleatoria.</strong></p>
+<p>Una partición aleatoria mezclaría meses de 1990 con meses de 2023 en ambos conjuntos,
+destruyendo el orden temporal y produciendo <em>data leakage</em>: el “histórico” contendría
+información del futuro. Como la pregunta es explícitamente <strong>“reciente vs. histórico”</strong>,
+la división debe ser <strong>cronológica</strong>:</p>
+<ul>
+<li><strong>80 % más antiguo → conjunto HISTÓRICO (<em>train</em>)</strong>: línea base de la que se estiman
+<span class="math inline">\(\lambda_r\)</span>, el <em>b-value</em> y los límites de control.</li>
+<li><strong>20 % más reciente → conjunto RECIENTE (<em>test</em>)</strong>: periodo bajo evaluación, <strong>nunca</strong>
+usado para estimar la línea base.</li>
+</ul>
+<p>Esta partición cumple el lineamiento 80/20 <strong>y</strong> define operativamente la pregunta de
+investigación.</p>
+</blockquote>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="limpieza-y-preparación-de-datos.html#cb18-1" tabindex="-1"></a>corte_idx <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fu">length</span>(meses) <span class="sc">*</span> <span class="fl">0.80</span>)</span>
+<span id="cb18-2"><a href="limpieza-y-preparación-de-datos.html#cb18-2" tabindex="-1"></a>MES_CORTE <span class="ot">&lt;-</span> meses[corte_idx <span class="sc">+</span> <span class="dv">1</span>]          <span class="co"># primer mes del periodo RECIENTE</span></span>
+<span id="cb18-3"><a href="limpieza-y-preparación-de-datos.html#cb18-3" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="limpieza-y-preparación-de-datos.html#cb18-4" tabindex="-1"></a>panel<span class="sc">$</span>periodo <span class="ot">&lt;-</span> <span class="fu">if_else</span>(panel<span class="sc">$</span>mes <span class="sc">&lt;</span> MES_CORTE, <span class="st">&quot;HISTORICO&quot;</span>, <span class="st">&quot;RECIENTE&quot;</span>)</span>
+<span id="cb18-5"><a href="limpieza-y-preparación-de-datos.html#cb18-5" tabindex="-1"></a>dfm<span class="sc">$</span>periodo   <span class="ot">&lt;-</span> <span class="fu">if_else</span>(dfm<span class="sc">$</span>mes   <span class="sc">&lt;</span> MES_CORTE, <span class="st">&quot;HISTORICO&quot;</span>, <span class="st">&quot;RECIENTE&quot;</span>)</span>
+<span id="cb18-6"><a href="limpieza-y-preparación-de-datos.html#cb18-6" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="limpieza-y-preparación-de-datos.html#cb18-7" tabindex="-1"></a>panel_hist   <span class="ot">&lt;-</span> panel <span class="sc">%&gt;%</span> <span class="fu">filter</span>(periodo <span class="sc">==</span> <span class="st">&quot;HISTORICO&quot;</span>)</span>
+<span id="cb18-8"><a href="limpieza-y-preparación-de-datos.html#cb18-8" tabindex="-1"></a>panel_rec    <span class="ot">&lt;-</span> panel <span class="sc">%&gt;%</span> <span class="fu">filter</span>(periodo <span class="sc">==</span> <span class="st">&quot;RECIENTE&quot;</span>)</span>
+<span id="cb18-9"><a href="limpieza-y-preparación-de-datos.html#cb18-9" tabindex="-1"></a>eventos_hist <span class="ot">&lt;-</span> dfm <span class="sc">%&gt;%</span> <span class="fu">filter</span>(periodo <span class="sc">==</span> <span class="st">&quot;HISTORICO&quot;</span>)</span>
+<span id="cb18-10"><a href="limpieza-y-preparación-de-datos.html#cb18-10" tabindex="-1"></a>eventos_rec  <span class="ot">&lt;-</span> dfm <span class="sc">%&gt;%</span> <span class="fu">filter</span>(periodo <span class="sc">==</span> <span class="st">&quot;RECIENTE&quot;</span>)</span>
+<span id="cb18-11"><a href="limpieza-y-preparación-de-datos.html#cb18-11" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="limpieza-y-preparación-de-datos.html#cb18-12" tabindex="-1"></a>M_HIST <span class="ot">&lt;-</span> <span class="fu">n_distinct</span>(panel_hist<span class="sc">$</span>mes)</span>
+<span id="cb18-13"><a href="limpieza-y-preparación-de-datos.html#cb18-13" tabindex="-1"></a>M_REC  <span class="ot">&lt;-</span> <span class="fu">n_distinct</span>(panel_rec<span class="sc">$</span>mes)</span>
+<span id="cb18-14"><a href="limpieza-y-preparación-de-datos.html#cb18-14" tabindex="-1"></a></span>
+<span id="cb18-15"><a href="limpieza-y-preparación-de-datos.html#cb18-15" tabindex="-1"></a>resumen_split <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb18-16"><a href="limpieza-y-preparación-de-datos.html#cb18-16" tabindex="-1"></a>  <span class="at">Conjunto =</span> <span class="fu">c</span>(<span class="st">&quot;HISTORICO (train)&quot;</span>, <span class="st">&quot;RECIENTE (test)&quot;</span>),</span>
+<span id="cb18-17"><a href="limpieza-y-preparación-de-datos.html#cb18-17" tabindex="-1"></a>  <span class="at">Desde    =</span> <span class="fu">c</span>(<span class="fu">format</span>(meses[<span class="dv">1</span>], <span class="st">&quot;%Y-%m&quot;</span>), <span class="fu">format</span>(MES_CORTE, <span class="st">&quot;%Y-%m&quot;</span>)),</span>
+<span id="cb18-18"><a href="limpieza-y-preparación-de-datos.html#cb18-18" tabindex="-1"></a>  <span class="at">Hasta    =</span> <span class="fu">c</span>(<span class="fu">format</span>(meses[corte_idx], <span class="st">&quot;%Y-%m&quot;</span>), <span class="fu">format</span>(meses[<span class="fu">length</span>(meses)], <span class="st">&quot;%Y-%m&quot;</span>)),</span>
+<span id="cb18-19"><a href="limpieza-y-preparación-de-datos.html#cb18-19" tabindex="-1"></a>  <span class="at">Meses    =</span> <span class="fu">c</span>(M_HIST, M_REC),</span>
+<span id="cb18-20"><a href="limpieza-y-preparación-de-datos.html#cb18-20" tabindex="-1"></a>  <span class="st">`</span><span class="at">% meses</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">c</span>(M_HIST, M_REC) <span class="sc">/</span> <span class="fu">length</span>(meses) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>),</span>
+<span id="cb18-21"><a href="limpieza-y-preparación-de-datos.html#cb18-21" tabindex="-1"></a>  <span class="at">Sismos   =</span> <span class="fu">c</span>(<span class="fu">nrow</span>(eventos_hist), <span class="fu">nrow</span>(eventos_rec)),</span>
+<span id="cb18-22"><a href="limpieza-y-preparación-de-datos.html#cb18-22" tabindex="-1"></a>  <span class="st">`</span><span class="at">Filas del panel</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">nrow</span>(panel_hist), <span class="fu">nrow</span>(panel_rec))</span>
+<span id="cb18-23"><a href="limpieza-y-preparación-de-datos.html#cb18-23" tabindex="-1"></a>)</span>
+<span id="cb18-24"><a href="limpieza-y-preparación-de-datos.html#cb18-24" tabindex="-1"></a><span class="fu">kab</span>(resumen_split)</span></code></pre></div>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="11%" />
+<col width="11%" />
+<col width="8%" />
+<col width="11%" />
+<col width="9%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Conjunto</th>
+<th align="left">Desde</th>
+<th align="left">Hasta</th>
+<th align="right">Meses</th>
+<th align="right">% meses</th>
+<th align="right">Sismos</th>
+<th align="right">Filas del panel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">HISTORICO (train)</td>
+<td align="left">1968-01</td>
+<td align="left">2014-11</td>
+<td align="right">563</td>
+<td align="right">80</td>
+<td align="right">69,110</td>
+<td align="right">136,246</td>
+</tr>
+<tr class="even">
+<td align="left">RECIENTE (test)</td>
+<td align="left">2014-12</td>
+<td align="left">2026-08</td>
+<td align="right">141</td>
+<td align="right">20</td>
+<td align="right">20,430</td>
+<td align="right">34,122</td>
+</tr>
+</tbody>
+</table>
+<p>El mes de corte es <strong>2014-12</strong>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="descripción-del-conjunto-de-datos.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="análisis-exploratorio-de-datos-eda.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

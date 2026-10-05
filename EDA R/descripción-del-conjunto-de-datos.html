@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 4. Descripción del conjunto de datos | Análisis Exploratorio de Datos — Anomalías en la Actividad Sísmica Regional</title>
+  <meta name="description" content="4 4. Descripción del conjunto de datos | Análisis Exploratorio de Datos — Anomalías en la Actividad Sísmica Regional" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 4. Descripción del conjunto de datos | Análisis Exploratorio de Datos — Anomalías en la Actividad Sísmica Regional" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 4. Descripción del conjunto de datos | Análisis Exploratorio de Datos — Anomalías en la Actividad Sísmica Regional" />
+  
+  
+  
+
+<meta name="author" content="Alejandra Fuentes y Santiago Tinoco" />
+
+
+<meta name="date" content="2026-08-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="metodología.html"/>
+<link rel="next" href="limpieza-y-preparación-de-datos.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.12.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.25.2/plotly-latest.min.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.2.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-3.0.0/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-2.2.3/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="contexto.html"><a href="contexto.html"><i class="fa fa-check"></i><b>1</b> 1. Contexto</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="contexto.html"><a href="contexto.html#introducci%C3%B3n"><i class="fa fa-check"></i><b>1.1</b> 1.1 Introducción</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="objetivos.html"><a href="objetivos.html"><i class="fa fa-check"></i><b>2</b> 2. Objetivos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="objetivos.html"><a href="objetivos.html#objetivo-general"><i class="fa fa-check"></i><b>2.1</b> 2.1 Objetivo general</a></li>
+<li class="chapter" data-level="2.2" data-path="objetivos.html"><a href="objetivos.html#objetivos-espec%C3%ADficos"><i class="fa fa-check"></i><b>2.2</b> 2.2 Objetivos específicos</a></li>
+<li class="chapter" data-level="2.3" data-path="objetivos.html"><a href="objetivos.html#prop%C3%B3sito-del-estudio"><i class="fa fa-check"></i><b>2.3</b> 2.3 Propósito del estudio</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="metodología.html"><a href="metodología.html"><i class="fa fa-check"></i><b>3</b> 3. Metodología</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="metodología.html"><a href="metodología.html#marco-te%C3%B3rico"><i class="fa fa-check"></i><b>3.1</b> 3.1 Marco teórico</a></li>
+<li class="chapter" data-level="3.2" data-path="metodología.html"><a href="metodología.html#flujo-metodol%C3%B3gico-del-an%C3%A1lisis"><i class="fa fa-check"></i><b>3.2</b> 3.2 Flujo metodológico del análisis</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="descripción-del-conjunto-de-datos.html"><a href="descripción-del-conjunto-de-datos.html"><i class="fa fa-check"></i><b>4</b> 4. Descripción del conjunto de datos</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="descripción-del-conjunto-de-datos.html"><a href="descripción-del-conjunto-de-datos.html#fuente-y-variables"><i class="fa fa-check"></i><b>4.1</b> 4.1 Fuente y variables</a></li>
+<li class="chapter" data-level="4.2" data-path="descripción-del-conjunto-de-datos.html"><a href="descripción-del-conjunto-de-datos.html#librer%C3%ADas-y-configuraci%C3%B3n-del-entorno"><i class="fa fa-check"></i><b>4.2</b> 4.2 Librerías y configuración del entorno</a></li>
+<li class="chapter" data-level="4.3" data-path="descripción-del-conjunto-de-datos.html"><a href="descripción-del-conjunto-de-datos.html#extracci%C3%B3n-carga-de-datos"><i class="fa fa-check"></i><b>4.3</b> 4.3 Extracción (carga de datos)</a></li>
+<li class="chapter" data-level="4.4" data-path="descripción-del-conjunto-de-datos.html"><a href="descripción-del-conjunto-de-datos.html#auditor%C3%ADa-t%C3%A9cnica-del-dataset-crudo"><i class="fa fa-check"></i><b>4.4</b> 4.4 Auditoría técnica del dataset crudo</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html"><i class="fa fa-check"></i><b>5</b> 5. Limpieza y preparación de datos</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html#limpieza-y-control-de-calidad-del-cat%C3%A1logo"><i class="fa fa-check"></i><b>5.1</b> 5.1 Limpieza y control de calidad del catálogo</a></li>
+<li class="chapter" data-level="5.2" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html#magnitud-de-completitud-m_c-y-ventana-temporal-v%C3%A1lida"><i class="fa fa-check"></i><b>5.2</b> 5.2 Magnitud de completitud (<span class="math inline">\(M_c\)</span>) y ventana temporal válida</a></li>
+<li class="chapter" data-level="5.3" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html#ingenier%C3%ADa-de-variables"><i class="fa fa-check"></i><b>5.3</b> 5.3 Ingeniería de variables</a></li>
+<li class="chapter" data-level="5.4" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html#gesti%C3%B3n-de-datos-faltantes"><i class="fa fa-check"></i><b>5.4</b> 5.4 Gestión de datos faltantes</a></li>
+<li class="chapter" data-level="5.5" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html#construcci%C3%B3n-del-panel-regi%C3%B3n-mes"><i class="fa fa-check"></i><b>5.5</b> 5.5 Construcción del panel región × mes</a></li>
+<li class="chapter" data-level="5.6" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html#divisi%C3%B3n-de-los-datos-80-hist%C3%B3rico-20-reciente"><i class="fa fa-check"></i><b>5.6</b> 5.6 División de los datos: 80 % histórico / 20 % reciente</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html"><i class="fa fa-check"></i><b>6</b> 6. Análisis Exploratorio de Datos (EDA)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#an%C3%A1lisis-univariado-caracterizaci%C3%B3n"><i class="fa fa-check"></i><b>6.1</b> 6.1 Análisis univariado (caracterización)</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#estad%C3%ADstica-descriptiva-y-forma-de-la-distribuci%C3%B3n"><i class="fa fa-check"></i><b>6.1.1</b> 6.1.1 Estadística descriptiva y forma de la distribución</a></li>
+<li class="chapter" data-level="6.1.2" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#visualizaci%C3%B3n-univariada-histograma-normalizado-kde-boxplot"><i class="fa fa-check"></i><b>6.1.2</b> 6.1.2 Visualización univariada: histograma normalizado + KDE + boxplot</a></li>
+<li class="chapter" data-level="6.1.3" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#variables-categ%C3%B3ricas-diagramas-de-pareto"><i class="fa fa-check"></i><b>6.1.3</b> 6.1.3 Variables categóricas (diagramas de Pareto)</a></li>
+<li class="chapter" data-level="6.1.4" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#ley-de-gutenbergrichter-el-modelo-cl%C3%A1sico-de-la-distribuci%C3%B3n-de-magnitudes"><i class="fa fa-check"></i><b>6.1.4</b> 6.1.4 Ley de Gutenberg–Richter: el modelo clásico de la distribución de magnitudes</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#an%C3%A1lisis-bivariado-y-de-correlaci%C3%B3n"><i class="fa fa-check"></i><b>6.2</b> 6.2 Análisis bivariado y de correlación</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#matrices-de-correlaci%C3%B3n-pearson-vs-spearman-vs-kendall"><i class="fa fa-check"></i><b>6.2.1</b> Matrices de correlación: Pearson vs Spearman vs Kendall</a></li>
+<li class="chapter" data-level="6.2.2" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#relaci%C3%B3n-de-las-variables-independientes-con-el-target"><i class="fa fa-check"></i><b>6.2.2</b> Relación de las variables independientes con el TARGET</a></li>
+<li class="chapter" data-level="6.2.3" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#an%C3%A1lisis-bivariado-por-categor%C3%ADas-boxplots-m%C3%BAltiples"><i class="fa fa-check"></i><b>6.2.3</b> Análisis bivariado por categorías (boxplots múltiples)</a></li>
+<li class="chapter" data-level="6.2.4" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#asociaci%C3%B3n-entre-variables-categ%C3%B3ricas-chi-cuadrado-y-v-de-cram%C3%A9r"><i class="fa fa-check"></i><b>6.2.4</b> Asociación entre variables categóricas: chi-cuadrado y V de Cramér</a></li>
+<li class="chapter" data-level="6.2.5" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#estructura-temporal-del-target-autocorrelaci%C3%B3n"><i class="fa fa-check"></i><b>6.2.5</b> Estructura TEMPORAL del target: autocorrelación</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#diagn%C3%B3stico-inferencial-y-validaci%C3%B3n-de-supuestos"><i class="fa fa-check"></i><b>6.3</b> 6.3 Diagnóstico inferencial y validación de supuestos</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#pruebas-de-normalidad"><i class="fa fa-check"></i><b>6.3.1</b> 6.3.1 Pruebas de normalidad</a></li>
+<li class="chapter" data-level="6.3.2" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#se-cumple-el-supuesto-de-poisson-%C3%ADndice-de-dispersi%C3%B3n"><i class="fa fa-check"></i><b>6.3.2</b> 6.3.2 ¿Se cumple el supuesto de Poisson? Índice de dispersión</a></li>
+<li class="chapter" data-level="6.3.3" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#son-exponenciales-los-tiempos-entre-eventos"><i class="fa fa-check"></i><b>6.3.3</b> 6.3.3 ¿Son exponenciales los tiempos entre eventos?</a></li>
+<li class="chapter" data-level="6.3.4" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#homogeneidad-hist%C3%B3rico-vs.-reciente-control-de-artefactos"><i class="fa fa-check"></i><b>6.3.4</b> 6.3.4 Homogeneidad histórico vs. reciente: control de artefactos</a></li>
+<li class="chapter" data-level="6.3.5" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#detecci%C3%B3n-de-observaciones-an%C3%B3malas-e-influyentes"><i class="fa fa-check"></i><b>6.3.5</b> 6.3.5 Detección de observaciones anómalas e influyentes</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><i class="fa fa-check"></i><b>7</b> 7. Núcleo del análisis: ¿qué regiones están fuera de lo esperado?</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#deriva-global-del-cat%C3%A1logo-y-factor-de-estandarizaci%C3%B3n"><i class="fa fa-check"></i><b>7.1</b> 7.1 Deriva global del catálogo y factor de estandarización</a></li>
+<li class="chapter" data-level="7.2" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#contrastes-de-tasa-por-regi%C3%B3n-poisson-exacto-y-cuasi-poisson"><i class="fa fa-check"></i><b>7.2</b> 7.2 Contrastes de tasa por región: Poisson exacto y cuasi-Poisson</a></li>
+<li class="chapter" data-level="7.3" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#ranking-de-regiones-fuera-de-lo-esperado"><i class="fa fa-check"></i><b>7.3</b> 7.3 Ranking de regiones fuera de lo esperado</a></li>
+<li class="chapter" data-level="7.4" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#mapa-de-anomal%C3%ADas-interactivo"><i class="fa fa-check"></i><b>7.4</b> 7.4 Mapa de anomalías (interactivo)</a></li>
+<li class="chapter" data-level="7.5" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#segunda-v%C3%ADa-de-anomal%C3%ADa-cambio-en-el-b-value-test-de-utsu"><i class="fa fa-check"></i><b>7.5</b> 7.5 Segunda vía de anomalía: cambio en el <em>b-value</em> (test de Utsu)</a></li>
+<li class="chapter" data-level="7.6" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#cu%C3%A1ndo-empez%C3%B3-la-desviaci%C3%B3n-carta-de-control-de-shewhart"><i class="fa fa-check"></i><b>7.6</b> 7.6 ¿Cuándo empezó la desviación? Carta de control de Shewhart</a></li>
+<li class="chapter" data-level="7.7" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#diagn%C3%B3stico-combinado-construcci%C3%B3n-del-target-categ%C3%B3rico-es_anomala"><i class="fa fa-check"></i><b>7.7</b> 7.7 Diagnóstico combinado: construcción del <em>target</em> categórico <code>es_anomala</code></a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="transformaciones.html"><a href="transformaciones.html"><i class="fa fa-check"></i><b>8</b> 8. Transformaciones</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="transformaciones.html"><a href="transformaciones.html#transformaciones-estabilizadoras-de-varianza"><i class="fa fa-check"></i><b>8.1</b> 8.1 Transformaciones estabilizadoras de varianza</a></li>
+<li class="chapter" data-level="8.2" data-path="transformaciones.html"><a href="transformaciones.html#retornos-logar%C3%ADtmicos-la-actividad-s%C3%ADsmica-como-serie-de-volatilidad"><i class="fa fa-check"></i><b>8.2</b> 8.2 Retornos logarítmicos: la actividad sísmica como serie de «volatilidad»</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análisis Exploratorio de Datos — Anomalías en la Actividad Sísmica Regional</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="descripción-del-conjunto-de-datos" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> 4. Descripción del conjunto de datos<a href="descripción-del-conjunto-de-datos.html#descripci%C3%B3n-del-conjunto-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="fuente-y-variables" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> 4.1 Fuente y variables<a href="descripción-del-conjunto-de-datos.html#fuente-y-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El conjunto de datos es un catálogo sísmico en formato USGS (<code>Significant_Earthquakes</code>) con aproximadamente 115.500 eventos registrados entre 1900 y 2023 y 22 variables por evento:</p>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Grupo</th>
+<th>Variables</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tiempo y localización</td>
+<td><code>time</code>, <code>latitude</code>, <code>longitude</code>, <code>depth</code>, <code>place</code></td>
+</tr>
+<tr class="even">
+<td>Magnitud</td>
+<td><code>mag</code>, <code>magType</code>, <code>magNst</code>, <code>magError</code></td>
+</tr>
+<tr class="odd">
+<td>Calidad de la localización</td>
+<td><code>nst</code>, <code>gap</code>, <code>dmin</code>, <code>rms</code>, <code>horizontalError</code>, <code>depthError</code></td>
+</tr>
+<tr class="even">
+<td>Identificación y metadatos</td>
+<td><code>id</code>, <code>net</code>, <code>type</code>, <code>status</code>, <code>updated</code>, <code>locationSource</code>, <code>magSource</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>time</code> y <code>updated</code> pueden venir en dos formatos según la fuente del CSV: como milisegundos desde el <em>epoch</em> Unix (formato original de la API de USGS) o ya como texto/fecha ISO 8601 (formato común en versiones redistribuidas, p. ej. en Kaggle). El código detecta automáticamente cuál es el caso.</p>
+<p><strong>Notas importantes sobre este dataset</strong></p>
+<ul>
+<li><strong>Cobertura global:</strong> incluye sismos de todo el mundo desde 1900. Comparar «reciente vs. histórico» sin filtrar por región mezclaría zonas de altísima actividad (Cinturón de Fuego del Pacífico) con zonas de baja actividad (Europa, África), lo cual invalida cualquier comparación. Por eso el análisis se hace por región (malla de 5° × 5°).</li>
+<li><strong>Filtrado por magnitud ≥ 5:</strong> el dataset solo reporta sismos de magnitud mayor o igual a 5. Esto implica que el histograma y la densidad de la magnitud están truncados por la izquierda (no es una distribución normal «completa»), y es la razón por la que se incorpora el análisis de la ley de Gutenberg–Richter (<em>b-value</em>), estándar en sismología para caracterizar la distribución de magnitudes.</li>
+</ul>
+</div>
+<div id="librerías-y-configuración-del-entorno" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> 4.2 Librerías y configuración del entorno<a href="descripción-del-conjunto-de-datos.html#librer%C3%ADas-y-configuraci%C3%B3n-del-entorno" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="descripción-del-conjunto-de-datos.html#cb1-1" tabindex="-1"></a><span class="co"># install.packages(c(&quot;tidyverse&quot;,&quot;moments&quot;,&quot;lubridate&quot;,&quot;scales&quot;,&quot;zoo&quot;,&quot;leaflet&quot;,&quot;htmltools&quot;,&quot;plotly&quot;))</span></span>
+<span id="cb1-2"><a href="descripción-del-conjunto-de-datos.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)   <span class="co"># manejo de datos y ggplot2</span></span>
+<span id="cb1-3"><a href="descripción-del-conjunto-de-datos.html#cb1-3" tabindex="-1"></a><span class="fu">library</span>(moments)     <span class="co"># skewness, kurtosis</span></span>
+<span id="cb1-4"><a href="descripción-del-conjunto-de-datos.html#cb1-4" tabindex="-1"></a><span class="fu">library</span>(lubridate)   <span class="co"># manejo de fechas</span></span>
+<span id="cb1-5"><a href="descripción-del-conjunto-de-datos.html#cb1-5" tabindex="-1"></a><span class="fu">library</span>(scales)      <span class="co"># formato de ejes</span></span>
+<span id="cb1-6"><a href="descripción-del-conjunto-de-datos.html#cb1-6" tabindex="-1"></a><span class="fu">library</span>(zoo)         <span class="co"># medias móviles</span></span>
+<span id="cb1-7"><a href="descripción-del-conjunto-de-datos.html#cb1-7" tabindex="-1"></a><span class="fu">library</span>(leaflet)     <span class="co"># mapa interactivo</span></span>
+<span id="cb1-8"><a href="descripción-del-conjunto-de-datos.html#cb1-8" tabindex="-1"></a><span class="fu">library</span>(htmltools)   <span class="co"># tooltips HTML en el mapa</span></span>
+<span id="cb1-9"><a href="descripción-del-conjunto-de-datos.html#cb1-9" tabindex="-1"></a><span class="fu">library</span>(plotly)      <span class="co"># gráficos interactivos (histograma, boxplot, densidad, pareto, correlación)</span></span>
+<span id="cb1-10"><a href="descripción-del-conjunto-de-datos.html#cb1-10" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="descripción-del-conjunto-de-datos.html#cb1-11" tabindex="-1"></a><span class="co"># Se fijan explícitamente las funciones de dplyr que otros paquetes pueden enmascarar</span></span>
+<span id="cb1-12"><a href="descripción-del-conjunto-de-datos.html#cb1-12" tabindex="-1"></a>filter <span class="ot">&lt;-</span> dplyr<span class="sc">::</span>filter</span>
+<span id="cb1-13"><a href="descripción-del-conjunto-de-datos.html#cb1-13" tabindex="-1"></a>select <span class="ot">&lt;-</span> dplyr<span class="sc">::</span>select</span>
+<span id="cb1-14"><a href="descripción-del-conjunto-de-datos.html#cb1-14" tabindex="-1"></a>lag    <span class="ot">&lt;-</span> dplyr<span class="sc">::</span>lag</span>
+<span id="cb1-15"><a href="descripción-del-conjunto-de-datos.html#cb1-15" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="descripción-del-conjunto-de-datos.html#cb1-16" tabindex="-1"></a><span class="fu">options</span>(<span class="at">dplyr.summarise.inform =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-17"><a href="descripción-del-conjunto-de-datos.html#cb1-17" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="descripción-del-conjunto-de-datos.html#cb1-18" tabindex="-1"></a>RANDOM_STATE <span class="ot">&lt;-</span> <span class="dv">42</span></span>
+<span id="cb1-19"><a href="descripción-del-conjunto-de-datos.html#cb1-19" tabindex="-1"></a>ALPHA <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb1-20"><a href="descripción-del-conjunto-de-datos.html#cb1-20" tabindex="-1"></a><span class="fu">set.seed</span>(RANDOM_STATE)</span>
+<span id="cb1-21"><a href="descripción-del-conjunto-de-datos.html#cb1-21" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="descripción-del-conjunto-de-datos.html#cb1-22" tabindex="-1"></a><span class="co"># Paleta de colores (la misma del notebook original)</span></span>
+<span id="cb1-23"><a href="descripción-del-conjunto-de-datos.html#cb1-23" tabindex="-1"></a>AZUL <span class="ot">&lt;-</span> <span class="st">&quot;#4C72B0&quot;</span>; ROJO <span class="ot">&lt;-</span> <span class="st">&quot;#C44E52&quot;</span>; VERDE <span class="ot">&lt;-</span> <span class="st">&quot;#55A868&quot;</span></span>
+<span id="cb1-24"><a href="descripción-del-conjunto-de-datos.html#cb1-24" tabindex="-1"></a>MORADO <span class="ot">&lt;-</span> <span class="st">&quot;#8172B2&quot;</span>; NARANJA <span class="ot">&lt;-</span> <span class="st">&quot;#DD8452&quot;</span>; GRIS <span class="ot">&lt;-</span> <span class="st">&quot;#BBBBBB&quot;</span></span>
+<span id="cb1-25"><a href="descripción-del-conjunto-de-datos.html#cb1-25" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="descripción-del-conjunto-de-datos.html#cb1-26" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb1-27"><a href="descripción-del-conjunto-de-datos.html#cb1-27" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb1-28"><a href="descripción-del-conjunto-de-datos.html#cb1-28" tabindex="-1"></a>                  <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>))</span>
+<span id="cb1-29"><a href="descripción-del-conjunto-de-datos.html#cb1-29" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="descripción-del-conjunto-de-datos.html#cb1-30" tabindex="-1"></a><span class="co"># ---- Funciones auxiliares de formato (los resultados se redactan como texto) ----</span></span>
+<span id="cb1-31"><a href="descripción-del-conjunto-de-datos.html#cb1-31" tabindex="-1"></a>fmt  <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">d =</span> <span class="dv">2</span>) <span class="fu">formatC</span>(x, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">digits =</span> d, <span class="at">big.mark =</span> <span class="st">&quot;,&quot;</span>)</span>
+<span id="cb1-32"><a href="descripción-del-conjunto-de-datos.html#cb1-32" tabindex="-1"></a>fmt0 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">formatC</span>(x, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">digits =</span> <span class="dv">0</span>, <span class="at">big.mark =</span> <span class="st">&quot;,&quot;</span>)</span>
+<span id="cb1-33"><a href="descripción-del-conjunto-de-datos.html#cb1-33" tabindex="-1"></a>sgn  <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">d =</span> <span class="dv">2</span>) <span class="fu">sprintf</span>(<span class="fu">paste0</span>(<span class="st">&quot;%+.&quot;</span>, d, <span class="st">&quot;f&quot;</span>), x)</span>
+<span id="cb1-34"><a href="descripción-del-conjunto-de-datos.html#cb1-34" tabindex="-1"></a>fp   <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="fu">formatC</span>(p, <span class="at">format =</span> <span class="st">&quot;e&quot;</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb1-35"><a href="descripción-del-conjunto-de-datos.html#cb1-35" tabindex="-1"></a>pct  <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">d =</span> <span class="dv">1</span>) <span class="fu">paste0</span>(<span class="fu">formatC</span>(x, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">digits =</span> d), <span class="st">&quot; %&quot;</span>)</span>
+<span id="cb1-36"><a href="descripción-del-conjunto-de-datos.html#cb1-36" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="descripción-del-conjunto-de-datos.html#cb1-37" tabindex="-1"></a><span class="co"># Traduce un p-valor a una decisión estadística explícita (devuelve texto)</span></span>
+<span id="cb1-38"><a href="descripción-del-conjunto-de-datos.html#cb1-38" tabindex="-1"></a>veredicto <span class="ot">&lt;-</span> <span class="cf">function</span>(p, <span class="at">alpha =</span> ALPHA, <span class="at">h0 =</span> <span class="st">&quot;H0&quot;</span>, <span class="at">h1 =</span> <span class="st">&quot;H1&quot;</span>) {</span>
+<span id="cb1-39"><a href="descripción-del-conjunto-de-datos.html#cb1-39" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.na</span>(p)) <span class="fu">return</span>(<span class="st">&quot;p-valor no disponible&quot;</span>)</span>
+<span id="cb1-40"><a href="descripción-del-conjunto-de-datos.html#cb1-40" tabindex="-1"></a>  <span class="cf">if</span> (p <span class="sc">&lt;</span> alpha) {</span>
+<span id="cb1-41"><a href="descripción-del-conjunto-de-datos.html#cb1-41" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">&quot;p = &quot;</span>, <span class="fu">fp</span>(p), <span class="st">&quot; &lt; &quot;</span>, alpha, <span class="st">&quot; → se **RECHAZA** &quot;</span>, h0, <span class="st">&quot;. Conclusión: &quot;</span>, h1)</span>
+<span id="cb1-42"><a href="descripción-del-conjunto-de-datos.html#cb1-42" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb1-43"><a href="descripción-del-conjunto-de-datos.html#cb1-43" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">&quot;p = &quot;</span>, <span class="fu">fp</span>(p), <span class="st">&quot; ≥ &quot;</span>, alpha, <span class="st">&quot; → **NO se rechaza** &quot;</span>, h0)</span>
+<span id="cb1-44"><a href="descripción-del-conjunto-de-datos.html#cb1-44" tabindex="-1"></a>  }</span>
+<span id="cb1-45"><a href="descripción-del-conjunto-de-datos.html#cb1-45" tabindex="-1"></a>}</span>
+<span id="cb1-46"><a href="descripción-del-conjunto-de-datos.html#cb1-46" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="descripción-del-conjunto-de-datos.html#cb1-47" tabindex="-1"></a><span class="co"># Tabla con separador de miles</span></span>
+<span id="cb1-48"><a href="descripción-del-conjunto-de-datos.html#cb1-48" tabindex="-1"></a>kab <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">digits =</span> <span class="dv">3</span>, ...) {</span>
+<span id="cb1-49"><a href="descripción-del-conjunto-de-datos.html#cb1-49" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(x, <span class="at">digits =</span> digits, <span class="at">format.args =</span> <span class="fu">list</span>(<span class="at">big.mark =</span> <span class="st">&quot;,&quot;</span>), ...)</span>
+<span id="cb1-50"><a href="descripción-del-conjunto-de-datos.html#cb1-50" tabindex="-1"></a>}</span>
+<span id="cb1-51"><a href="descripción-del-conjunto-de-datos.html#cb1-51" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="descripción-del-conjunto-de-datos.html#cb1-52" tabindex="-1"></a><span class="co"># Desviación estándar poblacional (equivalente a np.std)</span></span>
+<span id="cb1-53"><a href="descripción-del-conjunto-de-datos.html#cb1-53" tabindex="-1"></a>sd0 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">sqrt</span>(<span class="fu">mean</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x))<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
+</div>
+<div id="extracción-carga-de-datos" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> 4.3 Extracción (carga de datos)<a href="descripción-del-conjunto-de-datos.html#extracci%C3%B3n-carga-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="descripción-del-conjunto-de-datos.html#cb2-1" tabindex="-1"></a>RUTA_DATOS <span class="ot">&lt;-</span> <span class="st">&quot;Significant_Earthquakes.csv&quot;</span></span>
+<span id="cb2-2"><a href="descripción-del-conjunto-de-datos.html#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="descripción-del-conjunto-de-datos.html#cb2-3" tabindex="-1"></a>CANDIDATAS <span class="ot">&lt;-</span> <span class="fu">c</span>(RUTA_DATOS,</span>
+<span id="cb2-4"><a href="descripción-del-conjunto-de-datos.html#cb2-4" tabindex="-1"></a>                <span class="fu">Sys.getenv</span>(<span class="st">&quot;RUTA_SISMOS&quot;</span>, <span class="at">unset =</span> <span class="cn">NA</span>),</span>
+<span id="cb2-5"><a href="descripción-del-conjunto-de-datos.html#cb2-5" tabindex="-1"></a>                <span class="st">&quot;data/Significant_Earthquakes.csv&quot;</span>,</span>
+<span id="cb2-6"><a href="descripción-del-conjunto-de-datos.html#cb2-6" tabindex="-1"></a>                <span class="st">&quot;../data/Significant_Earthquakes.csv&quot;</span>)</span>
+<span id="cb2-7"><a href="descripción-del-conjunto-de-datos.html#cb2-7" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="descripción-del-conjunto-de-datos.html#cb2-8" tabindex="-1"></a>ruta <span class="ot">&lt;-</span> CANDIDATAS[<span class="sc">!</span><span class="fu">is.na</span>(CANDIDATAS) <span class="sc">&amp;</span> CANDIDATAS <span class="sc">!=</span> <span class="st">&quot;&quot;</span> <span class="sc">&amp;</span> <span class="fu">file.exists</span>(CANDIDATAS)][<span class="dv">1</span>]</span>
+<span id="cb2-9"><a href="descripción-del-conjunto-de-datos.html#cb2-9" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.na</span>(ruta)) {</span>
+<span id="cb2-10"><a href="descripción-del-conjunto-de-datos.html#cb2-10" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">&quot;No se encontró Significant_Earthquakes.csv. &quot;</span>,</span>
+<span id="cb2-11"><a href="descripción-del-conjunto-de-datos.html#cb2-11" tabindex="-1"></a>       <span class="st">&quot;Asigne la ruta completa a la constante RUTA_DATOS en esta celda.&quot;</span>)</span>
+<span id="cb2-12"><a href="descripción-del-conjunto-de-datos.html#cb2-12" tabindex="-1"></a>}</span>
+<span id="cb2-13"><a href="descripción-del-conjunto-de-datos.html#cb2-13" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="descripción-del-conjunto-de-datos.html#cb2-14" tabindex="-1"></a>df_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(ruta, <span class="at">guess_max =</span> <span class="dv">200000</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-15"><a href="descripción-del-conjunto-de-datos.html#cb2-15" tabindex="-1"></a><span class="fu">head</span>(df_raw)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 23
+##    ...1 time                latitude longitude depth   mag magType   nst   gap  dmin   rms net   id       updated             place       type 
+##   &lt;dbl&gt; &lt;dttm&gt;                 &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;dttm&gt;              &lt;chr&gt;       &lt;chr&gt;
+## 1     0 1900-10-09 12:25:00     57.1     -153.    NA  7.86 mw         NA    NA    NA    NA ushis ushis391 2022-05-09 14:44:17 16 km SW o… eart…
+## 2     1 1901-03-03 07:45:00     36       -120.    NA  6.4  ms         NA    NA    NA    NA ushis ushis393 2018-06-04 20:43:44 12 km NNW … eart…
+## 3     2 1901-07-26 22:20:00     40.8     -116.    NA  5    fa         NA    NA    NA    NA ushis ushis395 2018-06-04 20:43:44 6 km SE of… eart…
+## 4     3 1901-12-30 22:34:00     52       -160     NA  7    ms         NA    NA    NA    NA ushis ushis397 2018-06-04 20:43:44 south of A… eart…
+## 5     4 1902-01-01 05:20:30     52.4     -167.    NA  7    ms         NA    NA    NA    NA ushis ushis400 2018-06-04 20:43:44 113 km ESE… eart…
+## 6     5 1902-05-19 18:31:00     38.3     -122.    NA  5.4  ml         NA    NA    NA    NA ushis ushis402 2018-06-04 20:43:44 5 km S of … eart…
+## # ℹ 7 more variables: horizontalError &lt;dbl&gt;, depthError &lt;dbl&gt;, magError &lt;dbl&gt;, magNst &lt;dbl&gt;, status &lt;chr&gt;, locationSource &lt;chr&gt;,
+## #   magSource &lt;chr&gt;</code></pre>
+<p>Archivo leído: Significant_Earthquakes.csv. Dimensiones del dataset crudo: <strong>115,493 filas × 23 columnas</strong>.</p>
+</div>
+<div id="auditoría-técnica-del-dataset-crudo" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> 4.4 Auditoría técnica del dataset crudo<a href="descripción-del-conjunto-de-datos.html#auditor%C3%ADa-t%C3%A9cnica-del-dataset-crudo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="descripción-del-conjunto-de-datos.html#cb4-1" tabindex="-1"></a>auditoria <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">variable =</span> <span class="fu">names</span>(df_raw)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="descripción-del-conjunto-de-datos.html#cb4-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dtype     =</span> <span class="fu">map_chr</span>(variable, <span class="sc">~</span> <span class="fu">class</span>(df_raw[[.x]])[<span class="dv">1</span>]),</span>
+<span id="cb4-3"><a href="descripción-del-conjunto-de-datos.html#cb4-3" tabindex="-1"></a>         <span class="at">no_nulos  =</span> <span class="fu">map_int</span>(variable, <span class="sc">~</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(df_raw[[.x]]))),</span>
+<span id="cb4-4"><a href="descripción-del-conjunto-de-datos.html#cb4-4" tabindex="-1"></a>         <span class="at">nulos     =</span> <span class="fu">map_int</span>(variable, <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(df_raw[[.x]]))),</span>
+<span id="cb4-5"><a href="descripción-del-conjunto-de-datos.html#cb4-5" tabindex="-1"></a>         <span class="at">pct_nulos =</span> <span class="fu">round</span>(nulos <span class="sc">/</span> <span class="fu">nrow</span>(df_raw) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>),</span>
+<span id="cb4-6"><a href="descripción-del-conjunto-de-datos.html#cb4-6" tabindex="-1"></a>         <span class="at">unicos    =</span> <span class="fu">map_int</span>(variable, <span class="sc">~</span> <span class="fu">n_distinct</span>(df_raw[[.x]]))) <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="descripción-del-conjunto-de-datos.html#cb4-7" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(pct_nulos))</span>
+<span id="cb4-8"><a href="descripción-del-conjunto-de-datos.html#cb4-8" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="descripción-del-conjunto-de-datos.html#cb4-9" tabindex="-1"></a><span class="fu">kab</span>(auditoria)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">variable</th>
+<th align="left">dtype</th>
+<th align="right">no_nulos</th>
+<th align="right">nulos</th>
+<th align="right">pct_nulos</th>
+<th align="right">unicos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">horizontalError</td>
+<td align="left">numeric</td>
+<td align="right">33,808</td>
+<td align="right">81,685</td>
+<td align="right">70.73</td>
+<td align="right">1,526</td>
+</tr>
+<tr class="even">
+<td align="left">dmin</td>
+<td align="left">numeric</td>
+<td align="right">35,189</td>
+<td align="right">80,304</td>
+<td align="right">69.53</td>
+<td align="right">10,104</td>
+</tr>
+<tr class="odd">
+<td align="left">nst</td>
+<td align="left">numeric</td>
+<td align="right">44,848</td>
+<td align="right">70,645</td>
+<td align="right">61.17</td>
+<td align="right">735</td>
+</tr>
+<tr class="even">
+<td align="left">magError</td>
+<td align="left">numeric</td>
+<td align="right">48,413</td>
+<td align="right">67,080</td>
+<td align="right">58.08</td>
+<td align="right">343</td>
+</tr>
+<tr class="odd">
+<td align="left">gap</td>
+<td align="left">numeric</td>
+<td align="right">55,133</td>
+<td align="right">60,360</td>
+<td align="right">52.26</td>
+<td align="right">1,858</td>
+</tr>
+<tr class="even">
+<td align="left">magNst</td>
+<td align="left">numeric</td>
+<td align="right">55,457</td>
+<td align="right">60,036</td>
+<td align="right">51.98</td>
+<td align="right">739</td>
+</tr>
+<tr class="odd">
+<td align="left">depthError</td>
+<td align="left">numeric</td>
+<td align="right">65,778</td>
+<td align="right">49,715</td>
+<td align="right">43.05</td>
+<td align="right">4,816</td>
+</tr>
+<tr class="even">
+<td align="left">rms</td>
+<td align="left">numeric</td>
+<td align="right">86,746</td>
+<td align="right">28,747</td>
+<td align="right">24.89</td>
+<td align="right">276</td>
+</tr>
+<tr class="odd">
+<td align="left">place</td>
+<td align="left">character</td>
+<td align="right">114,602</td>
+<td align="right">891</td>
+<td align="right">0.77</td>
+<td align="right">64,211</td>
+</tr>
+<tr class="even">
+<td align="left">depth</td>
+<td align="left">numeric</td>
+<td align="right">115,208</td>
+<td align="right">285</td>
+<td align="right">0.25</td>
+<td align="right">14,339</td>
+</tr>
+<tr class="odd">
+<td align="left">…1</td>
+<td align="left">numeric</td>
+<td align="right">115,493</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">115,493</td>
+</tr>
+<tr class="even">
+<td align="left">time</td>
+<td align="left">POSIXct</td>
+<td align="right">115,493</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">107,770</td>
+</tr>
+<tr class="odd">
+<td align="left">latitude</td>
+<td align="left">numeric</td>
+<td align="right">115,493</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">79,249</td>
+</tr>
+<tr class="even">
+<td align="left">longitude</td>
+<td align="left">numeric</td>
+<td align="right">115,493</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">86,565</td>
+</tr>
+<tr class="odd">
+<td align="left">mag</td>
+<td align="left">numeric</td>
+<td align="right">115,493</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">316</td>
+</tr>
+<tr class="even">
+<td align="left">magType</td>
+<td align="left">character</td>
+<td align="right">115,493</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">26</td>
+</tr>
+<tr class="odd">
+<td align="left">net</td>
+<td align="left">character</td>
+<td align="right">115,493</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">21</td>
+</tr>
+<tr class="even">
+<td align="left">id</td>
+<td align="left">character</td>
+<td align="right">115,493</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">102,798</td>
+</tr>
+<tr class="odd">
+<td align="left">updated</td>
+<td align="left">POSIXct</td>
+<td align="right">115,493</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">105,196</td>
+</tr>
+<tr class="even">
+<td align="left">type</td>
+<td align="left">character</td>
+<td align="right">115,493</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="left">status</td>
+<td align="left">character</td>
+<td align="right">115,493</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">locationSource</td>
+<td align="left">character</td>
+<td align="right">115,493</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">88</td>
+</tr>
+<tr class="odd">
+<td align="left">magSource</td>
+<td align="left">character</td>
+<td align="right">115,493</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">91</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="descripción-del-conjunto-de-datos.html#cb5-1" tabindex="-1"></a>n_dup_filas <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">duplicated</span>(df_raw))</span>
+<span id="cb5-2"><a href="descripción-del-conjunto-de-datos.html#cb5-2" tabindex="-1"></a>n_dup_id    <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">duplicated</span>(df_raw<span class="sc">$</span>id))</span>
+<span id="cb5-3"><a href="descripción-del-conjunto-de-datos.html#cb5-3" tabindex="-1"></a>tb_tipo     <span class="ot">&lt;-</span> <span class="fu">head</span>(<span class="fu">sort</span>(<span class="fu">table</span>(df_raw<span class="sc">$</span>type), <span class="at">decreasing =</span> <span class="cn">TRUE</span>), <span class="dv">5</span>)</span>
+<span id="cb5-4"><a href="descripción-del-conjunto-de-datos.html#cb5-4" tabindex="-1"></a>tipos_txt   <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">names</span>(tb_tipo), <span class="st">&quot; = &quot;</span>, <span class="fu">fmt0</span>(<span class="fu">as.numeric</span>(tb_tipo)), <span class="at">collapse =</span> <span class="st">&quot;; &quot;</span>)</span>
+<span id="cb5-5"><a href="descripción-del-conjunto-de-datos.html#cb5-5" tabindex="-1"></a>rango_mag   <span class="ot">&lt;-</span> <span class="fu">range</span>(df_raw<span class="sc">$</span>mag, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<ul>
+<li><strong>Filas duplicadas completas:</strong> 0</li>
+<li><strong>IDs duplicados:</strong> 12,695</li>
+<li><strong>Valores de <code>type</code> (top 5):</strong> earthquake = 115,001; nuclear explosion = 424; volcanic eruption = 54; explosion = 10; landslide = 2</li>
+<li><strong>Rango de magnitud:</strong> [5.00 , 9.50]</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="descripción-del-conjunto-de-datos.html#cb6-1" tabindex="-1"></a><span class="co"># Mapa visual de faltantes (muestra de 3.000 registros)</span></span>
+<span id="cb6-2"><a href="descripción-del-conjunto-de-datos.html#cb6-2" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> df_raw <span class="sc">%&gt;%</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="fu">min</span>(<span class="dv">3000</span>, <span class="fu">nrow</span>(df_raw)))</span>
+<span id="cb6-3"><a href="descripción-del-conjunto-de-datos.html#cb6-3" tabindex="-1"></a>mat_na <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">is.na</span>(muestra))</span>
+<span id="cb6-4"><a href="descripción-del-conjunto-de-datos.html#cb6-4" tabindex="-1"></a>mat_na<span class="sc">$</span>fila <span class="ot">&lt;-</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(mat_na))</span>
+<span id="cb6-5"><a href="descripción-del-conjunto-de-datos.html#cb6-5" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="descripción-del-conjunto-de-datos.html#cb6-6" tabindex="-1"></a>mat_long <span class="ot">&lt;-</span> mat_na <span class="sc">%&gt;%</span></span>
+<span id="cb6-7"><a href="descripción-del-conjunto-de-datos.html#cb6-7" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>fila, <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;ausente&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-8"><a href="descripción-del-conjunto-de-datos.html#cb6-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="fu">factor</span>(variable, <span class="at">levels =</span> <span class="fu">names</span>(df_raw)))</span>
+<span id="cb6-9"><a href="descripción-del-conjunto-de-datos.html#cb6-9" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="descripción-del-conjunto-de-datos.html#cb6-10" tabindex="-1"></a><span class="fu">ggplot</span>(mat_long, <span class="fu">aes</span>(variable, fila, <span class="at">fill =</span> ausente)) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="descripción-del-conjunto-de-datos.html#cb6-11" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb6-12"><a href="descripción-del-conjunto-de-datos.html#cb6-12" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">FALSE</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;#440154&quot;</span>, <span class="st">`</span><span class="at">TRUE</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;#FDE725&quot;</span>),</span>
+<span id="cb6-13"><a href="descripción-del-conjunto-de-datos.html#cb6-13" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;presente&quot;</span>, <span class="st">&quot;ausente&quot;</span>), <span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb6-14"><a href="descripción-del-conjunto-de-datos.html#cb6-14" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
+<span id="cb6-15"><a href="descripción-del-conjunto-de-datos.html#cb6-15" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Mapa de valores faltantes (amarillo = ausente) — muestra de 3.000 registros&quot;</span>,</span>
+<span id="cb6-16"><a href="descripción-del-conjunto-de-datos.html#cb6-16" tabindex="-1"></a>       <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb6-17"><a href="descripción-del-conjunto-de-datos.html#cb6-17" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">60</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb6-18"><a href="descripción-del-conjunto-de-datos.html#cb6-18" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(), <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-19"><a href="descripción-del-conjunto-de-datos.html#cb6-19" tabindex="-1"></a>        <span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<p><img src="_main_files/figure-html/mapa-faltantes-1.png" alt="" width="1100" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="metodología.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="limpieza-y-preparación-de-datos.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
