@@ -1,1 +1,1 @@
-import{b as a}from"/Visualizacion-de-Datos/EDA/build/_shared/chunk-EZGS6HXP.js";import"/Visualizacion-de-Datos/EDA/build/_shared/chunk-TBCV2LPN.js";import"/Visualizacion-de-Datos/EDA/build/_shared/chunk-RAQ24GF6.js";export{a as unified};
+import{b as a}from"/myst_assets_folder/_shared/chunk-EZGS6HXP.js";import"/myst_assets_folder/_shared/chunk-TBCV2LPN.js";import"/myst_assets_folder/_shared/chunk-RAQ24GF6.js";export{a as unified};

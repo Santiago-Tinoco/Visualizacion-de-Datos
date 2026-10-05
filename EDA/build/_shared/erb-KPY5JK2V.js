@@ -1,1 +1,1 @@
-import{a}from"/Visualizacion-de-Datos/EDA/build/_shared/chunk-F5KHXAAU.js";import"/Visualizacion-de-Datos/EDA/build/_shared/chunk-DOYQ5WN6.js";import"/Visualizacion-de-Datos/EDA/build/_shared/chunk-FWIMYXAP.js";import"/Visualizacion-de-Datos/EDA/build/_shared/chunk-RAQ24GF6.js";export default a();
+import{a}from"/myst_assets_folder/_shared/chunk-F5KHXAAU.js";import"/myst_assets_folder/_shared/chunk-DOYQ5WN6.js";import"/myst_assets_folder/_shared/chunk-FWIMYXAP.js";import"/myst_assets_folder/_shared/chunk-RAQ24GF6.js";export default a();
