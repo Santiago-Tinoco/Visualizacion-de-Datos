@@ -1,0 +1,1 @@
+import{a}from"/Visualizacion-de-Datos/Ejercicios Python/Ejercicio 1/build/_shared/chunk-AP7QK2AR.js";import"/Visualizacion-de-Datos/Ejercicios Python/Ejercicio 1/build/_shared/chunk-RAQ24GF6.js";export default a();
