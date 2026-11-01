@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>9 9. Análisis de series de tiempo de la actividad sísmica | Análisis Exploratorio de Datos — Anomalías en la Actividad Sísmica Regional</title>
+  <meta name="description" content="9 9. Análisis de series de tiempo de la actividad sísmica | Análisis Exploratorio de Datos — Anomalías en la Actividad Sísmica Regional" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="9 9. Análisis de series de tiempo de la actividad sísmica | Análisis Exploratorio de Datos — Anomalías en la Actividad Sísmica Regional" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="9 9. Análisis de series de tiempo de la actividad sísmica | Análisis Exploratorio de Datos — Anomalías en la Actividad Sísmica Regional" />
+  
+  
+  
+
+<meta name="author" content="Alejandra Fuentes y Santiago Tinoco" />
+
+
+<meta name="date" content="2026-08-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="transformaciones.html"/>
+<link rel="next" href="modelos-de-series-de-tiempo-para-el-conteo-mensual.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.12.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.25.2/plotly-latest.min.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.2.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-3.0.0/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-2.2.3/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="contexto.html"><a href="contexto.html"><i class="fa fa-check"></i><b>1</b> 1. Contexto</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="contexto.html"><a href="contexto.html#introducci%C3%B3n"><i class="fa fa-check"></i><b>1.1</b> 1.1 Introducción</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="objetivos.html"><a href="objetivos.html"><i class="fa fa-check"></i><b>2</b> 2. Objetivos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="objetivos.html"><a href="objetivos.html#objetivo-general"><i class="fa fa-check"></i><b>2.1</b> 2.1 Objetivo general</a></li>
+<li class="chapter" data-level="2.2" data-path="objetivos.html"><a href="objetivos.html#objetivos-espec%C3%ADficos"><i class="fa fa-check"></i><b>2.2</b> 2.2 Objetivos específicos</a></li>
+<li class="chapter" data-level="2.3" data-path="objetivos.html"><a href="objetivos.html#prop%C3%B3sito-del-estudio"><i class="fa fa-check"></i><b>2.3</b> 2.3 Propósito del estudio</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="metodología.html"><a href="metodología.html"><i class="fa fa-check"></i><b>3</b> 3. Metodología</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="metodología.html"><a href="metodología.html#marco-te%C3%B3rico"><i class="fa fa-check"></i><b>3.1</b> 3.1 Marco teórico</a></li>
+<li class="chapter" data-level="3.2" data-path="metodología.html"><a href="metodología.html#flujo-metodol%C3%B3gico-del-an%C3%A1lisis"><i class="fa fa-check"></i><b>3.2</b> 3.2 Flujo metodológico del análisis</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="descripción-del-conjunto-de-datos.html"><a href="descripción-del-conjunto-de-datos.html"><i class="fa fa-check"></i><b>4</b> 4. Descripción del conjunto de datos</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="descripción-del-conjunto-de-datos.html"><a href="descripción-del-conjunto-de-datos.html#fuente-y-variables"><i class="fa fa-check"></i><b>4.1</b> 4.1 Fuente y variables</a></li>
+<li class="chapter" data-level="4.2" data-path="descripción-del-conjunto-de-datos.html"><a href="descripción-del-conjunto-de-datos.html#librer%C3%ADas-y-configuraci%C3%B3n-del-entorno"><i class="fa fa-check"></i><b>4.2</b> 4.2 Librerías y configuración del entorno</a></li>
+<li class="chapter" data-level="4.3" data-path="descripción-del-conjunto-de-datos.html"><a href="descripción-del-conjunto-de-datos.html#extracci%C3%B3n-carga-de-datos"><i class="fa fa-check"></i><b>4.3</b> 4.3 Extracción (carga de datos)</a></li>
+<li class="chapter" data-level="4.4" data-path="descripción-del-conjunto-de-datos.html"><a href="descripción-del-conjunto-de-datos.html#auditor%C3%ADa-t%C3%A9cnica-del-dataset-crudo"><i class="fa fa-check"></i><b>4.4</b> 4.4 Auditoría técnica del dataset crudo</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html"><i class="fa fa-check"></i><b>5</b> 5. Limpieza y preparación de datos</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html#limpieza-y-control-de-calidad-del-cat%C3%A1logo"><i class="fa fa-check"></i><b>5.1</b> 5.1 Limpieza y control de calidad del catálogo</a></li>
+<li class="chapter" data-level="5.2" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html#magnitud-de-completitud-m_c-y-ventana-temporal-v%C3%A1lida"><i class="fa fa-check"></i><b>5.2</b> 5.2 Magnitud de completitud (<span class="math inline">\(M_c\)</span>) y ventana temporal válida</a></li>
+<li class="chapter" data-level="5.3" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html#ingenier%C3%ADa-de-variables"><i class="fa fa-check"></i><b>5.3</b> 5.3 Ingeniería de variables</a></li>
+<li class="chapter" data-level="5.4" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html#gesti%C3%B3n-de-datos-faltantes"><i class="fa fa-check"></i><b>5.4</b> 5.4 Gestión de datos faltantes</a></li>
+<li class="chapter" data-level="5.5" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html#construcci%C3%B3n-del-panel-regi%C3%B3n-mes"><i class="fa fa-check"></i><b>5.5</b> 5.5 Construcción del panel región × mes</a></li>
+<li class="chapter" data-level="5.6" data-path="limpieza-y-preparación-de-datos.html"><a href="limpieza-y-preparación-de-datos.html#divisi%C3%B3n-de-los-datos-80-hist%C3%B3rico-20-reciente"><i class="fa fa-check"></i><b>5.6</b> 5.6 División de los datos: 80 % histórico / 20 % reciente</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html"><i class="fa fa-check"></i><b>6</b> 6. Análisis Exploratorio de Datos (EDA)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#an%C3%A1lisis-univariado-caracterizaci%C3%B3n"><i class="fa fa-check"></i><b>6.1</b> 6.1 Análisis univariado (caracterización)</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#estad%C3%ADstica-descriptiva-y-forma-de-la-distribuci%C3%B3n"><i class="fa fa-check"></i><b>6.1.1</b> 6.1.1 Estadística descriptiva y forma de la distribución</a></li>
+<li class="chapter" data-level="6.1.2" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#visualizaci%C3%B3n-univariada-histograma-normalizado-kde-boxplot"><i class="fa fa-check"></i><b>6.1.2</b> 6.1.2 Visualización univariada: histograma normalizado + KDE + boxplot</a></li>
+<li class="chapter" data-level="6.1.3" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#variables-categ%C3%B3ricas-diagramas-de-pareto"><i class="fa fa-check"></i><b>6.1.3</b> 6.1.3 Variables categóricas (diagramas de Pareto)</a></li>
+<li class="chapter" data-level="6.1.4" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#ley-de-gutenbergrichter-el-modelo-cl%C3%A1sico-de-la-distribuci%C3%B3n-de-magnitudes"><i class="fa fa-check"></i><b>6.1.4</b> 6.1.4 Ley de Gutenberg–Richter: el modelo clásico de la distribución de magnitudes</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#an%C3%A1lisis-bivariado-y-de-correlaci%C3%B3n"><i class="fa fa-check"></i><b>6.2</b> 6.2 Análisis bivariado y de correlación</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#matrices-de-correlaci%C3%B3n-pearson-vs-spearman-vs-kendall"><i class="fa fa-check"></i><b>6.2.1</b> Matrices de correlación: Pearson vs Spearman vs Kendall</a></li>
+<li class="chapter" data-level="6.2.2" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#relaci%C3%B3n-de-las-variables-independientes-con-el-target"><i class="fa fa-check"></i><b>6.2.2</b> Relación de las variables independientes con el TARGET</a></li>
+<li class="chapter" data-level="6.2.3" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#an%C3%A1lisis-bivariado-por-categor%C3%ADas-boxplots-m%C3%BAltiples"><i class="fa fa-check"></i><b>6.2.3</b> Análisis bivariado por categorías (boxplots múltiples)</a></li>
+<li class="chapter" data-level="6.2.4" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#asociaci%C3%B3n-entre-variables-categ%C3%B3ricas-chi-cuadrado-y-v-de-cram%C3%A9r"><i class="fa fa-check"></i><b>6.2.4</b> Asociación entre variables categóricas: chi-cuadrado y V de Cramér</a></li>
+<li class="chapter" data-level="6.2.5" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#estructura-temporal-del-target-autocorrelaci%C3%B3n"><i class="fa fa-check"></i><b>6.2.5</b> Estructura TEMPORAL del target: autocorrelación</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#diagn%C3%B3stico-inferencial-y-validaci%C3%B3n-de-supuestos"><i class="fa fa-check"></i><b>6.3</b> 6.3 Diagnóstico inferencial y validación de supuestos</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#pruebas-de-normalidad"><i class="fa fa-check"></i><b>6.3.1</b> 6.3.1 Pruebas de normalidad</a></li>
+<li class="chapter" data-level="6.3.2" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#se-cumple-el-supuesto-de-poisson-%C3%ADndice-de-dispersi%C3%B3n"><i class="fa fa-check"></i><b>6.3.2</b> 6.3.2 ¿Se cumple el supuesto de Poisson? Índice de dispersión</a></li>
+<li class="chapter" data-level="6.3.3" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#son-exponenciales-los-tiempos-entre-eventos"><i class="fa fa-check"></i><b>6.3.3</b> 6.3.3 ¿Son exponenciales los tiempos entre eventos?</a></li>
+<li class="chapter" data-level="6.3.4" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#homogeneidad-hist%C3%B3rico-vs.-reciente-control-de-artefactos"><i class="fa fa-check"></i><b>6.3.4</b> 6.3.4 Homogeneidad histórico vs. reciente: control de artefactos</a></li>
+<li class="chapter" data-level="6.3.5" data-path="análisis-exploratorio-de-datos-eda.html"><a href="análisis-exploratorio-de-datos-eda.html#detecci%C3%B3n-de-observaciones-an%C3%B3malas-e-influyentes"><i class="fa fa-check"></i><b>6.3.5</b> 6.3.5 Detección de observaciones anómalas e influyentes</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><i class="fa fa-check"></i><b>7</b> 7. Núcleo del análisis: ¿qué regiones están fuera de lo esperado?</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#deriva-global-del-cat%C3%A1logo-y-factor-de-estandarizaci%C3%B3n"><i class="fa fa-check"></i><b>7.1</b> 7.1 Deriva global del catálogo y factor de estandarización</a></li>
+<li class="chapter" data-level="7.2" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#contrastes-de-tasa-por-regi%C3%B3n-poisson-exacto-y-cuasi-poisson"><i class="fa fa-check"></i><b>7.2</b> 7.2 Contrastes de tasa por región: Poisson exacto y cuasi-Poisson</a></li>
+<li class="chapter" data-level="7.3" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#ranking-de-regiones-fuera-de-lo-esperado"><i class="fa fa-check"></i><b>7.3</b> 7.3 Ranking de regiones fuera de lo esperado</a></li>
+<li class="chapter" data-level="7.4" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#mapa-de-anomal%C3%ADas-interactivo"><i class="fa fa-check"></i><b>7.4</b> 7.4 Mapa de anomalías (interactivo)</a></li>
+<li class="chapter" data-level="7.5" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#segunda-v%C3%ADa-de-anomal%C3%ADa-cambio-en-el-b-value-test-de-utsu"><i class="fa fa-check"></i><b>7.5</b> 7.5 Segunda vía de anomalía: cambio en el <em>b-value</em> (test de Utsu)</a></li>
+<li class="chapter" data-level="7.6" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#cu%C3%A1ndo-empez%C3%B3-la-desviaci%C3%B3n-carta-de-control-de-shewhart"><i class="fa fa-check"></i><b>7.6</b> 7.6 ¿Cuándo empezó la desviación? Carta de control de Shewhart</a></li>
+<li class="chapter" data-level="7.7" data-path="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html"><a href="núcleo-del-análisis-qué-regiones-están-fuera-de-lo-esperado.html#diagn%C3%B3stico-combinado-construcci%C3%B3n-del-target-categ%C3%B3rico-es_anomala"><i class="fa fa-check"></i><b>7.7</b> 7.7 Diagnóstico combinado: construcción del <em>target</em> categórico <code>es_anomala</code></a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="transformaciones.html"><a href="transformaciones.html"><i class="fa fa-check"></i><b>8</b> 8. Transformaciones</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="transformaciones.html"><a href="transformaciones.html#transformaciones-estabilizadoras-de-varianza"><i class="fa fa-check"></i><b>8.1</b> 8.1 Transformaciones estabilizadoras de varianza</a></li>
+<li class="chapter" data-level="8.2" data-path="transformaciones.html"><a href="transformaciones.html#retornos-logar%C3%ADtmicos-la-actividad-s%C3%ADsmica-como-serie-de-volatilidad"><i class="fa fa-check"></i><b>8.2</b> 8.2 Retornos logarítmicos: la actividad sísmica como serie de «volatilidad»</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html"><i class="fa fa-check"></i><b>9</b> 9. Análisis de series de tiempo de la actividad sísmica</a>
+<ul>
+<li class="chapter" data-level="9.0.1" data-path="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#variables-temporales-construidas"><i class="fa fa-check"></i><b>9.0.1</b> 9.1 Variables temporales construidas</a></li>
+<li class="chapter" data-level="9.0.2" data-path="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#elecci%C3%B3n-de-la-resoluci%C3%B3n-temporal"><i class="fa fa-check"></i><b>9.0.2</b> 9.2 Elección de la resolución temporal</a></li>
+<li class="chapter" data-level="9.0.3" data-path="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#evoluci%C3%B3n-temporal-media-m%C3%B3vil-y-anomal%C3%ADas"><i class="fa fa-check"></i><b>9.0.3</b> 9.3 Evolución temporal, media móvil y anomalías</a></li>
+<li class="chapter" data-level="9.0.4" data-path="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#comparaci%C3%B3n-de-periodos-y-tendencia"><i class="fa fa-check"></i><b>9.0.4</b> 9.4 Comparación de periodos y tendencia</a></li>
+<li class="chapter" data-level="9.0.5" data-path="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#autocorrelaci%C3%B3n-acf-y-autocorrelaci%C3%B3n-parcial-pacf"><i class="fa fa-check"></i><b>9.0.5</b> 9.5 Autocorrelación (ACF) y autocorrelación parcial (PACF)</a></li>
+<li class="chapter" data-level="9.0.6" data-path="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#estacionariedad-adf-y-kpss-no-se-aplican-a-ciegas"><i class="fa fa-check"></i><b>9.0.6</b> 9.6 Estacionariedad: ADF y KPSS (no se aplican a ciegas)</a></li>
+<li class="chapter" data-level="9.0.7" data-path="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#descomposici%C3%B3n-stl"><i class="fa fa-check"></i><b>9.0.7</b> 9.7 Descomposición STL</a></li>
+<li class="chapter" data-level="9.0.8" data-path="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#agrupamiento-temporal-r%C3%A9plicas-y-desagrupamiento-gardnerknopoff"><i class="fa fa-check"></i><b>9.0.8</b> 9.8 Agrupamiento temporal: réplicas y desagrupamiento (Gardner–Knopoff)</a></li>
+<li class="chapter" data-level="9.0.9" data-path="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cambios-de-r%C3%A9gimen-prueba-de-pettitt"><i class="fa fa-check"></i><b>9.0.9</b> 9.9 Cambios de régimen: prueba de Pettitt</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="modelos-de-series-de-tiempo-para-el-conteo-mensual.html"><a href="modelos-de-series-de-tiempo-para-el-conteo-mensual.html"><i class="fa fa-check"></i><b>10</b> 10. Modelos de series de tiempo para el conteo mensual</a>
+<ul>
+<li class="chapter" data-level="10.0.1" data-path="modelos-de-series-de-tiempo-para-el-conteo-mensual.html"><a href="modelos-de-series-de-tiempo-para-el-conteo-mensual.html#m%C3%A9todos-seleccionados-y-justificaci%C3%B3n"><i class="fa fa-check"></i><b>10.0.1</b> 10.1 Métodos seleccionados y justificación</a></li>
+<li class="chapter" data-level="10.0.2" data-path="modelos-de-series-de-tiempo-para-el-conteo-mensual.html"><a href="modelos-de-series-de-tiempo-para-el-conteo-mensual.html#diagn%C3%B3stico-de-residuos-del-mejor-modelo"><i class="fa fa-check"></i><b>10.0.2</b> 10.2 Diagnóstico de residuos del mejor modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="predecir-pronóstico-de-la-frecuencia-mensual-de-eventos.html"><a href="predecir-pronóstico-de-la-frecuencia-mensual-de-eventos.html"><i class="fa fa-check"></i><b>11</b> 11. Predecir: pronóstico de la frecuencia mensual de eventos</a>
+<ul>
+<li class="chapter" data-level="11.0.1" data-path="predecir-pronóstico-de-la-frecuencia-mensual-de-eventos.html"><a href="predecir-pronóstico-de-la-frecuencia-mensual-de-eventos.html#limitaciones-y-conclusiones-de-las-secciones-911"><i class="fa fa-check"></i><b>11.0.1</b> 11.1 Limitaciones y conclusiones de las secciones 9–11</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análisis Exploratorio de Datos — Anomalías en la Actividad Sísmica Regional</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="análisis-de-series-de-tiempo-de-la-actividad-sísmica" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> 9. Análisis de series de tiempo de la actividad sísmica<a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#an%C3%A1lisis-de-series-de-tiempo-de-la-actividad-s%C3%ADsmica" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Hasta aquí el catálogo se analizó como <strong>panel región × mes</strong> para detectar regiones fuera de lo esperado. Las secciones 9, 10 y 11 incorporan el enfoque de <strong>series de tiempo</strong> que implementan las aplicaciones interactivas (Dash y Shiny): se estudia el comportamiento temporal de la actividad sísmica, se comparan modelos de pronóstico del <strong>número mensual de eventos</strong> y se genera un pronóstico con incertidumbre.</p>
+<blockquote>
+<p><strong>Aclaración metodológica.</strong> No se emplea ningún modelo de regresión como predictor. La información útil para pronosticar está en la historia de la propia serie (autocorrelación). Además, <strong>pronosticar la frecuencia estadística de eventos NO equivale a predecir cuándo, dónde o con qué magnitud ocurrirá un terremoto.</strong></p>
+</blockquote>
+<p><strong>Dependencias nuevas:</strong> <code>tseries</code>, <code>urca</code> y <code>gridExtra</code> (<code>install.packages(c("tseries", "urca", "gridExtra"))</code>).</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb85-1" tabindex="-1"></a><span class="fu">library</span>(tseries)     <span class="co"># kpss.test</span></span>
+<span id="cb85-2"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb85-2" tabindex="-1"></a><span class="fu">library</span>(urca)        <span class="co"># ur.df (ADF con selección de rezagos por AIC)</span></span>
+<span id="cb85-3"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb85-3" tabindex="-1"></a><span class="fu">library</span>(gridExtra)   <span class="co"># disposición de gráficos</span></span></code></pre></div>
+<div id="variables-temporales-construidas" class="section level3 hasAnchor" number="9.0.1">
+<h3><span class="header-section-number">9.0.1</span> 9.1 Variables temporales construidas<a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#variables-temporales-construidas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Definición</th>
+<th>Observación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>n</code></td>
+<td>número de eventos por periodo</td>
+<td>conteo; los periodos sin eventos valen 0</td>
+</tr>
+<tr class="even">
+<td><code>mag_media</code></td>
+<td>magnitud media del periodo</td>
+<td>indefinida (NA) si el periodo está vacío</td>
+</tr>
+<tr class="odd">
+<td><code>mag_max</code></td>
+<td>magnitud máxima del periodo</td>
+<td>indefinida si el periodo está vacío</td>
+</tr>
+<tr class="even">
+<td><code>prof_media</code></td>
+<td>profundidad media (km)</td>
+<td>indefinida si el periodo está vacío</td>
+</tr>
+<tr class="odd">
+<td><code>energia_J</code></td>
+<td><span class="math inline">\(\sum_i 10^{1.5\,M_i + 4.8}\)</span> (julios)</td>
+<td>relación de Gutenberg–Richter (1956); se suma la <strong>energía</strong>, nunca las magnitudes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Limitaciones de la energía:</strong> la fórmula supone una escala de magnitud homogénea (el catálogo mezcla <code>mb</code>, <code>Mw</code>, <code>Ms</code>…), es una aproximación empírica con incertidumbre de ±0.3 unidades logarítmicas por evento, y la suma de un periodo queda <strong>dominada por el sismo más grande</strong> (por eso se grafica en <span class="math inline">\(\log_{10}\)</span>).</p>
+<p><strong>Periodos completos.</strong> Solo se usan periodos que terminan antes del último evento del catálogo: el mes (o semana, o día) en curso se excluye porque su conteo parcial subestimaría la actividad.</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-1" tabindex="-1"></a><span class="co"># ------------------- FILTROS (equivalentes a los de la aplicación) -------------------</span></span>
+<span id="cb86-2"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-2" tabindex="-1"></a>REGION_BBOX <span class="ot">&lt;-</span> <span class="cn">NULL</span>       <span class="co"># NULL = global | c(lat_min, lat_max, lon_min, lon_max)</span></span>
+<span id="cb86-3"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-3" tabindex="-1"></a>FECHA_INI   <span class="ot">&lt;-</span> <span class="cn">NULL</span>       <span class="co"># NULL = inicio de la ventana válida (ANIO_INICIO-01-01)</span></span>
+<span id="cb86-4"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-4" tabindex="-1"></a>FECHA_FIN   <span class="ot">&lt;-</span> <span class="cn">NULL</span>       <span class="co"># NULL = último evento del catálogo</span></span>
+<span id="cb86-5"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-5" tabindex="-1"></a>MAG_MIN     <span class="ot">&lt;-</span> <span class="fl">5.0</span></span>
+<span id="cb86-6"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-6" tabindex="-1"></a>PROF_MIN    <span class="ot">&lt;-</span> <span class="dv">0</span>; PROF_MAX <span class="ot">&lt;-</span> <span class="dv">700</span></span>
+<span id="cb86-7"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-7" tabindex="-1"></a>RESOLUCION  <span class="ot">&lt;-</span> <span class="st">&quot;M&quot;</span>        <span class="co"># &quot;D&quot; día | &quot;W&quot; semana (lunes a domingo) | &quot;M&quot; mes | &quot;Y&quot; año</span></span>
+<span id="cb86-8"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-8" tabindex="-1"></a>N_PRUEBA    <span class="ot">&lt;-</span> <span class="dv">36</span>         <span class="co"># meses reservados para la validación temporal (sección 10)</span></span>
+<span id="cb86-9"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-9" tabindex="-1"></a>HORIZONTE   <span class="ot">&lt;-</span> <span class="dv">12</span>         <span class="co"># meses a pronosticar (sección 11)</span></span>
+<span id="cb86-10"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-10" tabindex="-1"></a>ANOMALIA_Z  <span class="ot">&lt;-</span> <span class="fl">3.5</span>        <span class="co"># umbral |z| robusto (Iglewicz-Hoaglin)</span></span>
+<span id="cb86-11"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-11" tabindex="-1"></a><span class="co"># --------------------------------------------------------------------------------------</span></span>
+<span id="cb86-12"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-12" tabindex="-1"></a></span>
+<span id="cb86-13"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-13" tabindex="-1"></a>UNIDAD     <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">D =</span> <span class="st">&quot;day&quot;</span>, <span class="at">W =</span> <span class="st">&quot;week&quot;</span>, <span class="at">M =</span> <span class="st">&quot;month&quot;</span>, <span class="at">Y =</span> <span class="st">&quot;year&quot;</span>)</span>
+<span id="cb86-14"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-14" tabindex="-1"></a>NOMBRE_RES <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">D =</span> <span class="st">&quot;Día&quot;</span>, <span class="at">W =</span> <span class="st">&quot;Semana (lunes a domingo)&quot;</span>, <span class="at">M =</span> <span class="st">&quot;Mes&quot;</span>, <span class="at">Y =</span> <span class="st">&quot;Año&quot;</span>)</span>
+<span id="cb86-15"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-15" tabindex="-1"></a>PER_EST    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">D =</span> <span class="dv">365</span>, <span class="at">W =</span> <span class="dv">52</span>, <span class="at">M =</span> <span class="dv">12</span>, <span class="at">Y =</span> <span class="cn">NA</span>)</span>
+<span id="cb86-16"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-16" tabindex="-1"></a></span>
+<span id="cb86-17"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-17" tabindex="-1"></a>T_INI <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">is.null</span>(FECHA_INI)) <span class="fu">as.POSIXct</span>(<span class="fu">paste0</span>(ANIO_INICIO, <span class="st">&quot;-01-01&quot;</span>), <span class="at">tz =</span> <span class="st">&quot;UTC&quot;</span>) <span class="cf">else</span> <span class="fu">as.POSIXct</span>(FECHA_INI, <span class="at">tz =</span> <span class="st">&quot;UTC&quot;</span>)</span>
+<span id="cb86-18"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-18" tabindex="-1"></a>T_FIN <span class="ot">&lt;-</span> <span class="fu">max</span>(dfq<span class="sc">$</span>time)</span>
+<span id="cb86-19"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-19" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(FECHA_FIN)) T_FIN <span class="ot">&lt;-</span> <span class="fu">min</span>(T_FIN, <span class="fu">as.POSIXct</span>(FECHA_FIN, <span class="at">tz =</span> <span class="st">&quot;UTC&quot;</span>) <span class="sc">+</span> <span class="dv">86399</span>)</span>
+<span id="cb86-20"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-20" tabindex="-1"></a></span>
+<span id="cb86-21"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-21" tabindex="-1"></a>cat_ts <span class="ot">&lt;-</span> dfq <span class="sc">%&gt;%</span></span>
+<span id="cb86-22"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-22" tabindex="-1"></a>  <span class="fu">filter</span>(time <span class="sc">&gt;=</span> T_INI, time <span class="sc">&lt;=</span> T_FIN, mag <span class="sc">&gt;=</span> MAG_MIN,</span>
+<span id="cb86-23"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-23" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(depth), depth <span class="sc">&gt;=</span> PROF_MIN, depth <span class="sc">&lt;=</span> PROF_MAX)</span>
+<span id="cb86-24"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-24" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(REGION_BBOX)) {</span>
+<span id="cb86-25"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-25" tabindex="-1"></a>  cat_ts <span class="ot">&lt;-</span> cat_ts <span class="sc">%&gt;%</span></span>
+<span id="cb86-26"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-26" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">between</span>(latitude, REGION_BBOX[<span class="dv">1</span>], REGION_BBOX[<span class="dv">2</span>]),</span>
+<span id="cb86-27"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-27" tabindex="-1"></a>           <span class="fu">between</span>(longitude, REGION_BBOX[<span class="dv">3</span>], REGION_BBOX[<span class="dv">4</span>]))</span>
+<span id="cb86-28"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-28" tabindex="-1"></a>}</span>
+<span id="cb86-29"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-29" tabindex="-1"></a>cat_ts <span class="ot">&lt;-</span> cat_ts <span class="sc">%&gt;%</span> <span class="fu">select</span>(time, mag, depth, latitude, longitude) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(time)</span>
+<span id="cb86-30"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-30" tabindex="-1"></a></span>
+<span id="cb86-31"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-31" tabindex="-1"></a>siguiente <span class="ot">&lt;-</span> <span class="cf">function</span>(p, u) <span class="cf">switch</span>(u, <span class="at">day =</span> p <span class="sc">+</span> <span class="dv">1</span>, <span class="at">week =</span> p <span class="sc">+</span> <span class="dv">7</span>,</span>
+<span id="cb86-32"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-32" tabindex="-1"></a>                                   <span class="at">month =</span> p <span class="sc">%m+%</span> <span class="fu">months</span>(<span class="dv">1</span>), <span class="at">year =</span> p <span class="sc">%m+%</span> <span class="fu">years</span>(<span class="dv">1</span>))</span>
+<span id="cb86-33"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-33" tabindex="-1"></a></span>
+<span id="cb86-34"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-34" tabindex="-1"></a><span class="co"># Agrega el catálogo por periodo con rejilla completa (los periodos vacíos cuentan como 0)</span></span>
+<span id="cb86-35"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-35" tabindex="-1"></a>agregar <span class="ot">&lt;-</span> <span class="cf">function</span>(cat, res) {</span>
+<span id="cb86-36"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-36" tabindex="-1"></a>  u <span class="ot">&lt;-</span> UNIDAD[[res]]</span>
+<span id="cb86-37"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-37" tabindex="-1"></a>  agg <span class="ot">&lt;-</span> cat <span class="sc">%&gt;%</span></span>
+<span id="cb86-38"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-38" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">per =</span> <span class="fu">as.Date</span>(<span class="fu">floor_date</span>(time, u, <span class="at">week_start =</span> <span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb86-39"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-39" tabindex="-1"></a>    <span class="fu">group_by</span>(per) <span class="sc">%&gt;%</span></span>
+<span id="cb86-40"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-40" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mag_media =</span> <span class="fu">mean</span>(mag), <span class="at">mag_max =</span> <span class="fu">max</span>(mag),</span>
+<span id="cb86-41"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-41" tabindex="-1"></a>              <span class="at">prof_media =</span> <span class="fu">mean</span>(depth), <span class="at">energia_J =</span> <span class="fu">sum</span>(<span class="dv">10</span><span class="sc">^</span>(<span class="fl">1.5</span> <span class="sc">*</span> mag <span class="sc">+</span> <span class="fl">4.8</span>)))</span>
+<span id="cb86-42"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-42" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">per =</span> <span class="fu">seq</span>(<span class="fu">min</span>(agg<span class="sc">$</span>per), <span class="fu">max</span>(agg<span class="sc">$</span>per), <span class="at">by =</span> u)) <span class="sc">%&gt;%</span></span>
+<span id="cb86-43"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-43" tabindex="-1"></a>    <span class="fu">left_join</span>(agg, <span class="at">by =</span> <span class="st">&quot;per&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb86-44"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-44" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">n =</span> <span class="fu">replace_na</span>(n, <span class="dv">0</span><span class="dt">L</span>),</span>
+<span id="cb86-45"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-45" tabindex="-1"></a>           <span class="at">energia_J =</span> <span class="fu">replace_na</span>(energia_J, <span class="dv">0</span>),</span>
+<span id="cb86-46"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-46" tabindex="-1"></a>           <span class="at">log10_energia =</span> <span class="fu">if_else</span>(energia_J <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="fu">log10</span>(energia_J), <span class="cn">NA_real_</span>),</span>
+<span id="cb86-47"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-47" tabindex="-1"></a>           <span class="at">completo =</span> <span class="fu">as.POSIXct</span>(per, <span class="at">tz =</span> <span class="st">&quot;UTC&quot;</span>) <span class="sc">&gt;=</span> T_INI <span class="sc">&amp;</span></span>
+<span id="cb86-48"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-48" tabindex="-1"></a>                      <span class="fu">as.POSIXct</span>(<span class="fu">siguiente</span>(per, u), <span class="at">tz =</span> <span class="st">&quot;UTC&quot;</span>) <span class="sc">-</span> <span class="dv">1</span> <span class="sc">&lt;=</span> T_FIN)</span>
+<span id="cb86-49"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-49" tabindex="-1"></a>}</span>
+<span id="cb86-50"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-50" tabindex="-1"></a></span>
+<span id="cb86-51"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-51" tabindex="-1"></a>serie_sel <span class="ot">&lt;-</span> <span class="fu">agregar</span>(cat_ts, RESOLUCION) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(completo)</span>
+<span id="cb86-52"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-52" tabindex="-1"></a>serie_m   <span class="ot">&lt;-</span> <span class="fu">agregar</span>(cat_ts, <span class="st">&quot;M&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(completo)</span>
+<span id="cb86-53"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb86-53" tabindex="-1"></a>n_m       <span class="ot">&lt;-</span> serie_m<span class="sc">$</span>n</span></code></pre></div>
+<p>Eventos tras filtros: <strong>89,514</strong> (1968-01-02 → 2026-08-22). Resolución de trabajo: <strong>Mes</strong> con <strong>703 periodos completos</strong>. La serie mensual (703 meses) se usa en la tendencia, los modelos y el pronóstico.</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb87-1" tabindex="-1"></a><span class="fu">head</span>(serie_sel)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 8
+##   per            n mag_media mag_max prof_media energia_J log10_energia completo
+##   &lt;date&gt;     &lt;int&gt;     &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt; &lt;lgl&gt;   
+## 1 1968-01-01    42      5.77    7.37       73.5   1.07e16          16.0 TRUE    
+## 2 1968-02-01    36      5.72    7.3        54.6   9.15e15          16.0 TRUE    
+## 3 1968-03-01    28      5.72    6.51       73.0   1.37e15          15.1 TRUE    
+## 4 1968-04-01    25      5.83    7.5        25.9   1.39e16          16.1 TRUE    
+## 5 1968-05-01    72      5.91    8.2        46.5   1.94e17          17.3 TRUE    
+## 6 1968-06-01    68      5.64    7          34.3   5.91e15          15.8 TRUE</code></pre>
+</div>
+<div id="elección-de-la-resolución-temporal" class="section level3 hasAnchor" number="9.0.2">
+<h3><span class="header-section-number">9.0.2</span> 9.2 Elección de la resolución temporal<a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#elecci%C3%B3n-de-la-resoluci%C3%B3n-temporal" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>No todas las resoluciones son adecuadas. Si un intervalo es demasiado fino la mayoría de periodos quedan vacíos: la magnitud y la profundidad medias quedan <strong>indefinidas</strong> y las pruebas estadísticas pierden sentido. Si es demasiado grueso se pierde información sobre el agrupamiento. Criterio: <strong>la resolución más fina con ≤ 10 % de periodos sin eventos y ≥ 60 periodos</strong>. El índice de dispersión (varianza/media) cuantifica la desviación respecto de un proceso de Poisson (= 1).</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb89-1" tabindex="-1"></a>tab_res <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(<span class="fu">c</span>(<span class="st">&quot;D&quot;</span>, <span class="st">&quot;W&quot;</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;Y&quot;</span>), <span class="cf">function</span>(r) {</span>
+<span id="cb89-2"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb89-2" tabindex="-1"></a>  s <span class="ot">&lt;-</span> <span class="fu">agregar</span>(cat_ts, r) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(completo)</span>
+<span id="cb89-3"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb89-3" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">cod =</span> r, <span class="at">Resolucion =</span> NOMBRE_RES[[r]], <span class="at">Periodos =</span> <span class="fu">nrow</span>(s),</span>
+<span id="cb89-4"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb89-4" tabindex="-1"></a>         <span class="st">`</span><span class="at">Media de eventos</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(s<span class="sc">$</span>n), <span class="at">Varianza =</span> <span class="fu">var</span>(s<span class="sc">$</span>n),</span>
+<span id="cb89-5"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb89-5" tabindex="-1"></a>         <span class="st">`</span><span class="at">Indice de dispersion</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">var</span>(s<span class="sc">$</span>n) <span class="sc">/</span> <span class="fu">mean</span>(s<span class="sc">$</span>n),</span>
+<span id="cb89-6"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb89-6" tabindex="-1"></a>         <span class="st">`</span><span class="at">% periodos vacios</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(s<span class="sc">$</span>n <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">*</span> <span class="dv">100</span>)</span>
+<span id="cb89-7"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb89-7" tabindex="-1"></a>})</span>
+<span id="cb89-8"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb89-8" tabindex="-1"></a><span class="fu">kab</span>(tab_res <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>cod), <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
+<table>
+<colgroup>
+<col width="24%" />
+<col width="8%" />
+<col width="16%" />
+<col width="10%" />
+<col width="20%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Resolucion</th>
+<th align="right">Periodos</th>
+<th align="right">Media de eventos</th>
+<th align="right">Varianza</th>
+<th align="right">Indice de dispersion</th>
+<th align="right">% periodos vacios</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Día</td>
+<td align="right">21,417</td>
+<td align="right">4.18</td>
+<td align="right">19.79</td>
+<td align="right">4.74</td>
+<td align="right">7.46</td>
+</tr>
+<tr class="even">
+<td align="left">Semana (lunes a domingo)</td>
+<td align="right">3,059</td>
+<td align="right">29.25</td>
+<td align="right">302.01</td>
+<td align="right">10.33</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Mes</td>
+<td align="right">703</td>
+<td align="right">127.13</td>
+<td align="right">2,568.40</td>
+<td align="right">20.20</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Año</td>
+<td align="right">58</td>
+<td align="right">1,519.53</td>
+<td align="right">170,301.55</td>
+<td align="right">112.07</td>
+<td align="right">0.00</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb90-1" tabindex="-1"></a>ok  <span class="ot">&lt;-</span> tab_res <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="st">`</span><span class="at">% periodos vacios</span><span class="st">`</span> <span class="sc">&lt;=</span> <span class="dv">10</span>, Periodos <span class="sc">&gt;=</span> <span class="dv">60</span>)</span>
+<span id="cb90-2"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb90-2" tabindex="-1"></a>REC <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">nrow</span>(ok)) ok<span class="sc">$</span>cod[<span class="dv">1</span>] <span class="cf">else</span> <span class="st">&quot;M&quot;</span></span></code></pre></div>
+<p>Resolución actual: <strong>Mes</strong>. Recomendada para estos filtros: <strong>Día</strong> (la más fina con ≤ 10 % de periodos vacíos y ≥ 60 periodos). Las secciones de tendencia, modelos y pronóstico usan <strong>siempre conteos mensuales</strong> (los conteos diarios están dominados por secuencias de réplicas).</p>
+</div>
+<div id="evolución-temporal-media-móvil-y-anomalías" class="section level3 hasAnchor" number="9.0.3">
+<h3><span class="header-section-number">9.0.3</span> 9.3 Evolución temporal, media móvil y anomalías<a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#evoluci%C3%B3n-temporal-media-m%C3%B3vil-y-anomal%C3%ADas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para cada variable se muestra la serie por periodo (gris), la <strong>media móvil centrada de 12 periodos</strong> (azul) y los periodos anómalos (rombos naranja). La anomalía se define con el <strong>z-score robusto</strong> <span class="math inline">\(z=0.6745\,(x-\tilde{x})/\mathrm{MAD}\)</span> y el umbral <span class="math inline">\(|z|&gt;3.5\)</span> (Iglewicz y Hoaglin, 1993). Se usa la mediana y la MAD porque la media y la desviación estándar están contaminadas justamente por los eventos extremos que se quieren detectar.</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-1" tabindex="-1"></a>VARIABLES <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">n =</span> <span class="st">&quot;Número de eventos&quot;</span>, <span class="at">mag_media =</span> <span class="st">&quot;Magnitud media&quot;</span>,</span>
+<span id="cb91-2"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-2" tabindex="-1"></a>               <span class="at">mag_max =</span> <span class="st">&quot;Magnitud máxima&quot;</span>, <span class="at">prof_media =</span> <span class="st">&quot;Profundidad media (km)&quot;</span>,</span>
+<span id="cb91-3"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-3" tabindex="-1"></a>               <span class="at">log10_energia =</span> <span class="st">&quot;log10 de la energía sísmica (J)&quot;</span>)</span>
+<span id="cb91-4"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-4" tabindex="-1"></a></span>
+<span id="cb91-5"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-5" tabindex="-1"></a>z_robusto <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb91-6"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-6" tabindex="-1"></a>  med <span class="ot">&lt;-</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb91-7"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-7" tabindex="-1"></a>  mad0 <span class="ot">&lt;-</span> <span class="fu">median</span>(<span class="fu">abs</span>(x <span class="sc">-</span> med), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb91-8"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-8" tabindex="-1"></a>  <span class="cf">if</span> (mad0 <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="fl">0.6745</span> <span class="sc">*</span> (x <span class="sc">-</span> med) <span class="sc">/</span> mad0 <span class="cf">else</span> <span class="fu">rep</span>(<span class="cn">NA_real_</span>, <span class="fu">length</span>(x))</span>
+<span id="cb91-9"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-9" tabindex="-1"></a>}</span>
+<span id="cb91-10"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-10" tabindex="-1"></a></span>
+<span id="cb91-11"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-11" tabindex="-1"></a>graf_serie <span class="ot">&lt;-</span> <span class="cf">function</span>(d, col, etiqueta) {</span>
+<span id="cb91-12"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-12" tabindex="-1"></a>  d<span class="sc">$</span>y   <span class="ot">&lt;-</span> d[[col]]</span>
+<span id="cb91-13"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-13" tabindex="-1"></a>  d<span class="sc">$</span>ma  <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">rollapply</span>(d<span class="sc">$</span>y, <span class="dv">12</span>, mean, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">align =</span> <span class="st">&quot;center&quot;</span>))</span>
+<span id="cb91-14"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-14" tabindex="-1"></a>  d<span class="sc">$</span>z   <span class="ot">&lt;-</span> <span class="fu">z_robusto</span>(d<span class="sc">$</span>y)</span>
+<span id="cb91-15"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-15" tabindex="-1"></a>  d<span class="sc">$</span>anom <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">is.na</span>(d<span class="sc">$</span>z) <span class="sc">&amp;</span> <span class="fu">abs</span>(d<span class="sc">$</span>z) <span class="sc">&gt;</span> ANOMALIA_Z</span>
+<span id="cb91-16"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-16" tabindex="-1"></a>  <span class="fu">ggplot</span>(d, <span class="fu">aes</span>(per, y)) <span class="sc">+</span></span>
+<span id="cb91-17"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-17" tabindex="-1"></a>    <span class="fu">geom_area</span>(<span class="at">fill =</span> GRIS, <span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb91-18"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-18" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ma), <span class="at">color =</span> AZUL, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb91-19"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-19" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> d <span class="sc">%&gt;%</span> <span class="fu">filter</span>(anom), <span class="at">shape =</span> <span class="dv">18</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">&quot;#B87333&quot;</span>) <span class="sc">+</span></span>
+<span id="cb91-20"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-20" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(etiqueta, <span class="st">&quot; — resolución: &quot;</span>, NOMBRE_RES[[RESOLUCION]]),</span>
+<span id="cb91-21"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-21" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">&quot;Gris: valor por periodo · Azul: media móvil centrada (12) · Rombos: |z| &gt; &quot;</span>, ANOMALIA_Z),</span>
+<span id="cb91-22"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-22" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">&quot;Periodo (UTC)&quot;</span>, <span class="at">y =</span> etiqueta)</span>
+<span id="cb91-23"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-23" tabindex="-1"></a>}</span>
+<span id="cb91-24"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-24" tabindex="-1"></a></span>
+<span id="cb91-25"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb91-25" tabindex="-1"></a><span class="cf">for</span> (v <span class="cf">in</span> <span class="fu">names</span>(VARIABLES)) <span class="fu">print</span>(<span class="fu">graf_serie</span>(serie_sel, v, VARIABLES[[v]]))</span></code></pre></div>
+<p><img src="_main_files/figure-html/ts-series-1.png" alt="" width="1100" style="display: block; margin: auto;" /><img src="_main_files/figure-html/ts-series-2.png" alt="" width="1100" style="display: block; margin: auto;" /><img src="_main_files/figure-html/ts-series-3.png" alt="" width="1100" style="display: block; margin: auto;" /><img src="_main_files/figure-html/ts-series-4.png" alt="" width="1100" style="display: block; margin: auto;" /><img src="_main_files/figure-html/ts-series-5.png" alt="" width="1100" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb92-1" tabindex="-1"></a>z_n <span class="ot">&lt;-</span> <span class="fu">z_robusto</span>(serie_sel<span class="sc">$</span>n)</span>
+<span id="cb92-2"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb92-2" tabindex="-1"></a>anom_n <span class="ot">&lt;-</span> serie_sel <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">z_robusto =</span> z_n) <span class="sc">%&gt;%</span></span>
+<span id="cb92-3"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb92-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">abs</span>(z_robusto) <span class="sc">&gt;</span> ANOMALIA_Z) <span class="sc">%&gt;%</span></span>
+<span id="cb92-4"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb92-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(z_robusto))) <span class="sc">%&gt;%</span> <span class="fu">select</span>(per, n, z_robusto)</span></code></pre></div>
+<p>Periodos anómalos en el número de eventos: <strong>21 de 703</strong>.</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb93-1" tabindex="-1"></a><span class="fu">kab</span>(<span class="fu">head</span>(anom_n, <span class="dv">15</span>), <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">per</th>
+<th align="right">n</th>
+<th align="right">z_robusto</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2011-03-01</td>
+<td align="right">694</td>
+<td align="right">17.48</td>
+</tr>
+<tr class="even">
+<td align="left">2025-07-01</td>
+<td align="right">431</td>
+<td align="right">9.41</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-03-01</td>
+<td align="right">353</td>
+<td align="right">7.02</td>
+</tr>
+<tr class="even">
+<td align="left">2004-12-01</td>
+<td align="right">333</td>
+<td align="right">6.41</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-08-01</td>
+<td align="right">325</td>
+<td align="right">6.16</td>
+</tr>
+<tr class="even">
+<td align="left">2005-01-01</td>
+<td align="right">322</td>
+<td align="right">6.07</td>
+</tr>
+<tr class="odd">
+<td align="left">2023-12-01</td>
+<td align="right">301</td>
+<td align="right">5.43</td>
+</tr>
+<tr class="even">
+<td align="left">2010-03-01</td>
+<td align="right">285</td>
+<td align="right">4.94</td>
+</tr>
+<tr class="odd">
+<td align="left">2013-02-01</td>
+<td align="right">283</td>
+<td align="right">4.87</td>
+</tr>
+<tr class="even">
+<td align="left">2010-12-01</td>
+<td align="right">276</td>
+<td align="right">4.66</td>
+</tr>
+<tr class="odd">
+<td align="left">2009-10-01</td>
+<td align="right">268</td>
+<td align="right">4.41</td>
+</tr>
+<tr class="even">
+<td align="left">2007-09-01</td>
+<td align="right">263</td>
+<td align="right">4.26</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-02-01</td>
+<td align="right">263</td>
+<td align="right">4.26</td>
+</tr>
+<tr class="even">
+<td align="left">2007-04-01</td>
+<td align="right">256</td>
+<td align="right">4.05</td>
+</tr>
+<tr class="odd">
+<td align="left">2010-02-01</td>
+<td align="right">255</td>
+<td align="right">4.02</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lectura.</strong> Los periodos anómalos del conteo coinciden con <strong>secuencias de réplicas</strong> de grandes terremotos (p. ej. Sumatra 2004, Tohoku 2011): son anomalías reales, no errores. La magnitud máxima y la energía responden a eventos individuales, no a la tasa de ocurrencia.</p>
+</div>
+<div id="comparación-de-periodos-y-tendencia" class="section level3 hasAnchor" number="9.0.4">
+<h3><span class="header-section-number">9.0.4</span> 9.4 Comparación de periodos y tendencia<a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#comparaci%C3%B3n-de-periodos-y-tendencia" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Se compara la actividad <strong>por década</strong> (conteos mensuales) y se evalúa la tendencia con el <strong>tau de Kendall</strong> (prueba de Mann–Kendall; no paramétrica, no exige normalidad) y la pendiente robusta de <strong>Theil–Sen</strong>. Limitación: ambas pruebas suponen observaciones independientes, y la serie tiene autocorrelación, de modo que el p-valor es optimista.</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb94-1" tabindex="-1"></a>dec <span class="ot">&lt;-</span> serie_m <span class="sc">%&gt;%</span></span>
+<span id="cb94-2"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb94-2" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">decada =</span> (<span class="fu">year</span>(per) <span class="sc">%/%</span> <span class="dv">10</span>) <span class="sc">*</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb94-3"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb94-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meses =</span> <span class="fu">n</span>(), <span class="at">media =</span> <span class="fu">mean</span>(n), <span class="at">mediana =</span> <span class="fu">median</span>(n), <span class="at">maximo =</span> <span class="fu">max</span>(n), <span class="at">desv_est =</span> <span class="fu">sd</span>(n))</span>
+<span id="cb94-4"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb94-4" tabindex="-1"></a><span class="fu">kab</span>(dec, <span class="at">digits =</span> <span class="dv">1</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">decada</th>
+<th align="right">meses</th>
+<th align="right">media</th>
+<th align="right">mediana</th>
+<th align="right">maximo</th>
+<th align="right">desv_est</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1,960</td>
+<td align="right">24</td>
+<td align="right">44.3</td>
+<td align="right">38.5</td>
+<td align="right">94</td>
+<td align="right">17.6</td>
+</tr>
+<tr class="even">
+<td align="right">1,970</td>
+<td align="right">120</td>
+<td align="right">102.8</td>
+<td align="right">110.0</td>
+<td align="right">242</td>
+<td align="right">42.3</td>
+</tr>
+<tr class="odd">
+<td align="right">1,980</td>
+<td align="right">120</td>
+<td align="right">126.7</td>
+<td align="right">127.0</td>
+<td align="right">213</td>
+<td align="right">24.7</td>
+</tr>
+<tr class="even">
+<td align="right">1,990</td>
+<td align="right">120</td>
+<td align="right">118.2</td>
+<td align="right">118.5</td>
+<td align="right">249</td>
+<td align="right">30.9</td>
+</tr>
+<tr class="odd">
+<td align="right">2,000</td>
+<td align="right">120</td>
+<td align="right">139.1</td>
+<td align="right">128.5</td>
+<td align="right">333</td>
+<td align="right">47.6</td>
+</tr>
+<tr class="even">
+<td align="right">2,010</td>
+<td align="right">120</td>
+<td align="right">147.4</td>
+<td align="right">136.0</td>
+<td align="right">694</td>
+<td align="right">64.9</td>
+</tr>
+<tr class="odd">
+<td align="right">2,020</td>
+<td align="right">79</td>
+<td align="right">154.5</td>
+<td align="right">138.0</td>
+<td align="right">431</td>
+<td align="right">57.1</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb95-1" tabindex="-1"></a>tt <span class="ot">&lt;-</span> <span class="fu">seq_along</span>(n_m)</span>
+<span id="cb95-2"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb95-2" tabindex="-1"></a>kt <span class="ot">&lt;-</span> <span class="fu">cor.test</span>(tt, n_m, <span class="at">method =</span> <span class="st">&quot;kendall&quot;</span>, <span class="at">exact =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb95-3"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb95-3" tabindex="-1"></a>par_ij <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">upper.tri</span>(<span class="fu">matrix</span>(<span class="dv">0</span>, <span class="fu">length</span>(tt), <span class="fu">length</span>(tt))), <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb95-4"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb95-4" tabindex="-1"></a>pend <span class="ot">&lt;-</span> <span class="fu">median</span>((n_m[par_ij[, <span class="dv">2</span>]] <span class="sc">-</span> n_m[par_ij[, <span class="dv">1</span>]]) <span class="sc">/</span> (par_ij[, <span class="dv">2</span>] <span class="sc">-</span> par_ij[, <span class="dv">1</span>]))</span>
+<span id="cb95-5"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb95-5" tabindex="-1"></a>interc <span class="ot">&lt;-</span> <span class="fu">median</span>(n_m <span class="sc">-</span> pend <span class="sc">*</span> tt)</span>
+<span id="cb95-6"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb95-6" tabindex="-1"></a></span>
+<span id="cb95-7"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb95-7" tabindex="-1"></a><span class="fu">ggplot</span>(serie_m, <span class="fu">aes</span>(per, n)) <span class="sc">+</span></span>
+<span id="cb95-8"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb95-8" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> GRIS, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb95-9"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb95-9" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> interc <span class="sc">+</span> pend <span class="sc">*</span> tt, <span class="at">color =</span> <span class="st">&quot;Tendencia de Theil-Sen&quot;</span>), <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb95-10"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb95-10" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Tendencia de Theil-Sen&quot;</span> <span class="ot">=</span> ROJO), <span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb95-11"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb95-11" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Tendencia del conteo mensual&quot;</span>, <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">&quot;Eventos por mes&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/ts-tendencia-1.png" alt="" width="1100" style="display: block; margin: auto;" /></p>
+<ul>
+<li><strong>Kendall tau</strong> = +0.281. p = 1.23e-28 &lt; 0.05 → se <strong>RECHAZA</strong> no hay tendencia monótona. Conclusión: existe tendencia monótona</li>
+<li><strong>Pendiente de Theil–Sen:</strong> +0.97 eventos/mes por año.</li>
+</ul>
+</div>
+<div id="autocorrelación-acf-y-autocorrelación-parcial-pacf" class="section level3 hasAnchor" number="9.0.5">
+<h3><span class="header-section-number">9.0.5</span> 9.5 Autocorrelación (ACF) y autocorrelación parcial (PACF)<a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#autocorrelaci%C3%B3n-acf-y-autocorrelaci%C3%B3n-parcial-pacf" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La <strong>ACF</strong> mide la correlación de la serie con sus propios rezagos; la <strong>PACF</strong> la mide controlando los rezagos intermedios y orienta el orden autorregresivo. Bandas: ±1.96/√n (hipótesis de ruido blanco). La prueba de <strong>Ljung–Box</strong> contrasta conjuntamente que las primeras <em>k</em> autocorrelaciones sean nulas. Supuesto: serie (aprox.) estacionaria; en una serie con cambios de nivel la ACF decae lentamente y sobrestima la memoria.</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb96-1" tabindex="-1"></a>x_sel <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(serie_sel<span class="sc">$</span>n)</span>
+<span id="cb96-2"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb96-2" tabindex="-1"></a>nl    <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="dv">36</span>, <span class="fu">floor</span>(<span class="fu">length</span>(x_sel) <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb96-3"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb96-3" tabindex="-1"></a>ac_v  <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">acf</span>(x_sel, <span class="at">lag.max =</span> nl, <span class="at">plot =</span> <span class="cn">FALSE</span>)<span class="sc">$</span>acf)        <span class="co"># incluye rezago 0</span></span>
+<span id="cb96-4"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb96-4" tabindex="-1"></a>pac_v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">as.numeric</span>(<span class="fu">pacf</span>(x_sel, <span class="at">lag.max =</span> nl, <span class="at">plot =</span> <span class="cn">FALSE</span>)<span class="sc">$</span>acf))  <span class="co"># PACF(0) = 1 por convención</span></span>
+<span id="cb96-5"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb96-5" tabindex="-1"></a>banda <span class="ot">&lt;-</span> <span class="fl">1.96</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">length</span>(x_sel))</span>
+<span id="cb96-6"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb96-6" tabindex="-1"></a></span>
+<span id="cb96-7"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb96-7" tabindex="-1"></a>d_ap <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(<span class="fu">tibble</span>(<span class="at">tipo =</span> <span class="st">&quot;ACF&quot;</span>,  <span class="at">rezago =</span> <span class="dv">0</span><span class="sc">:</span>nl, <span class="at">valor =</span> ac_v),</span>
+<span id="cb96-8"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb96-8" tabindex="-1"></a>                  <span class="fu">tibble</span>(<span class="at">tipo =</span> <span class="st">&quot;PACF&quot;</span>, <span class="at">rezago =</span> <span class="dv">0</span><span class="sc">:</span>nl, <span class="at">valor =</span> pac_v))</span>
+<span id="cb96-9"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb96-9" tabindex="-1"></a><span class="fu">ggplot</span>(d_ap, <span class="fu">aes</span>(rezago, valor)) <span class="sc">+</span></span>
+<span id="cb96-10"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb96-10" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> AZUL, <span class="at">width =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb96-11"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb96-11" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">c</span>(<span class="sc">-</span>banda, banda), <span class="at">color =</span> ROJO, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb96-12"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb96-12" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb96-13"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb96-13" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>tipo) <span class="sc">+</span></span>
+<span id="cb96-14"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb96-14" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;ACF y PACF del número de eventos (&quot;</span>, NOMBRE_RES[[RESOLUCION]], <span class="st">&quot;)&quot;</span>),</span>
+<span id="cb96-15"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb96-15" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Rezago (periodos)&quot;</span>, <span class="at">y =</span> <span class="cn">NULL</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/ts-acf-1.png" alt="" width="1100" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb97-1" tabindex="-1"></a>k_lb <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="dv">12</span>, nl)</span>
+<span id="cb97-2"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb97-2" tabindex="-1"></a>lb <span class="ot">&lt;-</span> <span class="fu">Box.test</span>(x_sel, <span class="at">lag =</span> k_lb, <span class="at">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>)</span></code></pre></div>
+<ul>
+<li>Rezagos 1–12 fuera de la banda (ACF): <strong>12</strong></li>
+<li>ACF rezago 1 = +0.469 | PACF rezago 1 = +0.469</li>
+<li><strong>Ljung–Box:</strong> p = 0.00e+00 &lt; 0.05 → se <strong>RECHAZA</strong> no hay autocorrelación. Conclusión: la serie tiene autocorrelación</li>
+</ul>
+</div>
+<div id="estacionariedad-adf-y-kpss-no-se-aplican-a-ciegas" class="section level3 hasAnchor" number="9.0.6">
+<h3><span class="header-section-number">9.0.6</span> 9.6 Estacionariedad: ADF y KPSS (no se aplican a ciegas)<a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#estacionariedad-adf-y-kpss-no-se-aplican-a-ciegas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Las dos pruebas tienen hipótesis nulas <strong>opuestas</strong>, por eso se usan juntas:</p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Prueba</th>
+<th>H₀</th>
+<th>Supuestos / limitaciones</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>ADF</strong> (Dickey–Fuller aumentada)</td>
+<td>existe raíz unitaria (no estacionaria)</td>
+<td>baja potencia ante cambios de nivel; el número de rezagos depende de la implementación</td>
+</tr>
+<tr class="even">
+<td><strong>KPSS</strong></td>
+<td>la serie es estacionaria (alrededor de una constante o tendencia)</td>
+<td>muy sensible a la autocorrelación fuerte y a los cambios de nivel; p-valor interpolado en [0.01, 0.10]</td>
+</tr>
+</tbody>
+</table>
+<p>Se prueban dos especificaciones: con <strong>constante</strong> (estacionaria en torno a un nivel) y con <strong>constante + tendencia</strong>. Un cambio de régimen puede hacer que <strong>ambas rechacen</strong> su nula: ese resultado se interpreta como inconcluso, no como «no estacionaria» a secas.</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-1" tabindex="-1"></a>diag_est <span class="ot">&lt;-</span> <span class="cf">function</span>(adf_rech, p_kpss) {</span>
+<span id="cb98-2"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-2" tabindex="-1"></a>  k <span class="ot">&lt;-</span> p_kpss <span class="sc">&lt;</span> ALPHA</span>
+<span id="cb98-3"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-3" tabindex="-1"></a>  <span class="cf">if</span> (adf_rech <span class="sc">&amp;&amp;</span> <span class="sc">!</span>k) <span class="st">&quot;Estacionaria (ADF rechaza, KPSS no)&quot;</span></span>
+<span id="cb98-4"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-4" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span> (<span class="sc">!</span>adf_rech <span class="sc">&amp;&amp;</span> k) <span class="st">&quot;No estacionaria (ADF no rechaza, KPSS rechaza)&quot;</span></span>
+<span id="cb98-5"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-5" tabindex="-1"></a>  <span class="cf">else</span> <span class="cf">if</span> (adf_rech <span class="sc">&amp;&amp;</span> k) <span class="st">&quot;Inconclusa: ambas rechazan (cambios de nivel / colas pesadas)&quot;</span></span>
+<span id="cb98-6"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-6" tabindex="-1"></a>  <span class="cf">else</span> <span class="st">&quot;Inconclusa: ninguna rechaza (poca potencia)&quot;</span></span>
+<span id="cb98-7"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-7" tabindex="-1"></a>}</span>
+<span id="cb98-8"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-8" tabindex="-1"></a></span>
+<span id="cb98-9"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-9" tabindex="-1"></a><span class="co"># ADF con rezagos elegidos por AIC (máximo de Schwert); se compara con el valor crítico al 5 %</span></span>
+<span id="cb98-10"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-10" tabindex="-1"></a>adf_u <span class="ot">&lt;-</span> <span class="cf">function</span>(x, tipo) {</span>
+<span id="cb98-11"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-11" tabindex="-1"></a>  u <span class="ot">&lt;-</span> <span class="fu">ur.df</span>(x, <span class="at">type =</span> tipo, <span class="at">selectlags =</span> <span class="st">&quot;AIC&quot;</span>, <span class="at">lags =</span> <span class="fu">floor</span>(<span class="dv">12</span> <span class="sc">*</span> (<span class="fu">length</span>(x) <span class="sc">/</span> <span class="dv">100</span>)<span class="sc">^</span><span class="fl">0.25</span>))</span>
+<span id="cb98-12"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-12" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">stat =</span> u<span class="sc">@</span>teststat[<span class="dv">1</span>, <span class="dv">1</span>], <span class="at">crit =</span> u<span class="sc">@</span>cval[<span class="dv">1</span>, <span class="st">&quot;5pct&quot;</span>])</span>
+<span id="cb98-13"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-13" tabindex="-1"></a>}</span>
+<span id="cb98-14"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-14" tabindex="-1"></a>adf_c <span class="ot">&lt;-</span> <span class="fu">adf_u</span>(x_sel, <span class="st">&quot;drift&quot;</span>)</span>
+<span id="cb98-15"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-15" tabindex="-1"></a>adf_t <span class="ot">&lt;-</span> <span class="fu">adf_u</span>(x_sel, <span class="st">&quot;trend&quot;</span>)</span>
+<span id="cb98-16"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-16" tabindex="-1"></a>kp_c  <span class="ot">&lt;-</span> <span class="fu">kpss.test</span>(x_sel, <span class="at">null =</span> <span class="st">&quot;Level&quot;</span>)</span>
+<span id="cb98-17"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-17" tabindex="-1"></a>kp_t  <span class="ot">&lt;-</span> <span class="fu">kpss.test</span>(x_sel, <span class="at">null =</span> <span class="st">&quot;Trend&quot;</span>)</span>
+<span id="cb98-18"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-18" tabindex="-1"></a></span>
+<span id="cb98-19"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-19" tabindex="-1"></a>tab_est <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb98-20"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-20" tabindex="-1"></a>  <span class="at">Especificacion =</span> <span class="fu">c</span>(<span class="st">&quot;Alrededor de una constante&quot;</span>, <span class="st">&quot;Alrededor de una tendencia&quot;</span>),</span>
+<span id="cb98-21"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-21" tabindex="-1"></a>  <span class="st">`</span><span class="at">ADF estad.</span><span class="st">`</span>   <span class="ot">=</span> <span class="fu">c</span>(adf_c<span class="sc">$</span>stat, adf_t<span class="sc">$</span>stat),</span>
+<span id="cb98-22"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-22" tabindex="-1"></a>  <span class="st">`</span><span class="at">ADF crítico 5 %</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(adf_c<span class="sc">$</span>crit, adf_t<span class="sc">$</span>crit),</span>
+<span id="cb98-23"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-23" tabindex="-1"></a>  <span class="st">`</span><span class="at">ADF rechaza H0</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(adf_c<span class="sc">$</span>stat <span class="sc">&lt;</span> adf_c<span class="sc">$</span>crit, adf_t<span class="sc">$</span>stat <span class="sc">&lt;</span> adf_t<span class="sc">$</span>crit),</span>
+<span id="cb98-24"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-24" tabindex="-1"></a>  <span class="st">`</span><span class="at">KPSS estad.</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">unname</span>(kp_c<span class="sc">$</span>statistic), <span class="fu">unname</span>(kp_t<span class="sc">$</span>statistic)),</span>
+<span id="cb98-25"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-25" tabindex="-1"></a>  <span class="st">`</span><span class="at">KPSS p</span><span class="st">`</span>       <span class="ot">=</span> <span class="fu">c</span>(kp_c<span class="sc">$</span>p.value, kp_t<span class="sc">$</span>p.value)) <span class="sc">%&gt;%</span></span>
+<span id="cb98-26"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-26" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Diagnostico =</span> <span class="fu">map2_chr</span>(<span class="st">`</span><span class="at">ADF rechaza H0</span><span class="st">`</span>, <span class="st">`</span><span class="at">KPSS p</span><span class="st">`</span>, diag_est))</span>
+<span id="cb98-27"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb98-27" tabindex="-1"></a><span class="fu">kab</span>(tab_est, <span class="at">digits =</span> <span class="dv">4</span>)</span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="18%" />
+<col width="7%" />
+<col width="10%" />
+<col width="10%" />
+<col width="8%" />
+<col width="4%" />
+<col width="41%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Especificacion</th>
+<th align="right">ADF estad.</th>
+<th align="right">ADF crítico 5 %</th>
+<th align="left">ADF rechaza H0</th>
+<th align="right">KPSS estad.</th>
+<th align="right">KPSS p</th>
+<th align="left">Diagnostico</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Alrededor de una constante</td>
+<td align="right">-3.2802</td>
+<td align="right">-2.86</td>
+<td align="left">TRUE</td>
+<td align="right">3.1766</td>
+<td align="right">0.01</td>
+<td align="left">Inconclusa: ambas rechazan (cambios de nivel / colas pesadas)</td>
+</tr>
+<tr class="even">
+<td align="left">Alrededor de una tendencia</td>
+<td align="right">-5.5924</td>
+<td align="right">-3.41</td>
+<td align="left">TRUE</td>
+<td align="right">0.3234</td>
+<td align="right">0.01</td>
+<td align="left">Inconclusa: ambas rechazan (cambios de nivel / colas pesadas)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Nota:</em> en R el ADF (<code>urca::ur.df</code>) se decide con el valor crítico al 5 % (no entrega p-valor) y el KPSS (<code>tseries::kpss.test</code>) usa la ventana de rezagos corta; en Python (<code>statsmodels</code>) el ADF reporta p-valor y el KPSS usa selección automática de ancho de banda. Los estadísticos pueden diferir ligeramente, pero el diagnóstico conjunto debe coincidir.</p>
+</div>
+<div id="descomposición-stl" class="section level3 hasAnchor" number="9.0.7">
+<h3><span class="header-section-number">9.0.7</span> 9.7 Descomposición STL<a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#descomposici%C3%B3n-stl" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>STL (Cleveland et al., 1990) separa <strong>tendencia + estacionalidad + resto</strong> con regresión local robusta (<code>robust = TRUE</code> reduce la influencia de las réplicas extremas). Se resume con la <em>fuerza</em> de cada componente (Wang, Smith y Hyndman, 2006): <span class="math inline">\(F=\max\left(0,\,1-\mathrm{Var}(R)/\mathrm{Var}(C+R)\right)\)</span>, donde 0 = ausente y 1 = dominante. Solo es apropiada si hay un periodo estacional definido; en la resolución anual no aplica.</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb99-1" tabindex="-1"></a>per_est <span class="ot">&lt;-</span> PER_EST[[RESOLUCION]]</span>
+<span id="cb99-2"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb99-2" tabindex="-1"></a>stl_ok <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">is.na</span>(per_est) <span class="sc">&amp;&amp;</span> <span class="fu">length</span>(x_sel) <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">*</span> per_est</span>
+<span id="cb99-3"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb99-3" tabindex="-1"></a><span class="cf">if</span> (stl_ok) {</span>
+<span id="cb99-4"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb99-4" tabindex="-1"></a>  stl_f    <span class="ot">&lt;-</span> <span class="fu">stl</span>(<span class="fu">ts</span>(x_sel, <span class="at">frequency =</span> per_est), <span class="at">s.window =</span> <span class="dv">13</span>, <span class="at">robust =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb99-5"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb99-5" tabindex="-1"></a>  stl_comp <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(stl_f<span class="sc">$</span>time.series)</span>
+<span id="cb99-6"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb99-6" tabindex="-1"></a></span>
+<span id="cb99-7"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb99-7" tabindex="-1"></a>  d_stl <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">per =</span> <span class="fu">rep</span>(serie_sel<span class="sc">$</span>per, <span class="dv">4</span>),</span>
+<span id="cb99-8"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb99-8" tabindex="-1"></a>                  <span class="at">comp =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Observada&quot;</span>, <span class="st">&quot;Tendencia&quot;</span>, <span class="st">&quot;Estacional&quot;</span>, <span class="st">&quot;Resto&quot;</span>), <span class="at">each =</span> <span class="fu">length</span>(x_sel)),</span>
+<span id="cb99-9"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb99-9" tabindex="-1"></a>                                <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Observada&quot;</span>, <span class="st">&quot;Tendencia&quot;</span>, <span class="st">&quot;Estacional&quot;</span>, <span class="st">&quot;Resto&quot;</span>)),</span>
+<span id="cb99-10"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb99-10" tabindex="-1"></a>                  <span class="at">v =</span> <span class="fu">c</span>(x_sel, stl_comp<span class="sc">$</span>trend, stl_comp<span class="sc">$</span>seasonal, stl_comp<span class="sc">$</span>remainder))</span>
+<span id="cb99-11"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb99-11" tabindex="-1"></a></span>
+<span id="cb99-12"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb99-12" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">ggplot</span>(d_stl, <span class="fu">aes</span>(per, v)) <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="at">color =</span> AZUL, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb99-13"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb99-13" tabindex="-1"></a>          <span class="fu">facet_wrap</span>(<span class="sc">~</span>comp, <span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>) <span class="sc">+</span></span>
+<span id="cb99-14"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb99-14" tabindex="-1"></a>          <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;Descomposición STL (periodo estacional = &quot;</span>, per_est, <span class="st">&quot;)&quot;</span>), <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>))</span>
+<span id="cb99-15"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb99-15" tabindex="-1"></a></span>
+<span id="cb99-16"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb99-16" tabindex="-1"></a>  F_t <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="dv">0</span>, <span class="dv">1</span> <span class="sc">-</span> <span class="fu">var</span>(stl_comp<span class="sc">$</span>remainder) <span class="sc">/</span> <span class="fu">var</span>(stl_comp<span class="sc">$</span>trend <span class="sc">+</span> stl_comp<span class="sc">$</span>remainder))</span>
+<span id="cb99-17"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb99-17" tabindex="-1"></a>  F_s <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="dv">0</span>, <span class="dv">1</span> <span class="sc">-</span> <span class="fu">var</span>(stl_comp<span class="sc">$</span>remainder) <span class="sc">/</span> <span class="fu">var</span>(stl_comp<span class="sc">$</span>seasonal <span class="sc">+</span> stl_comp<span class="sc">$</span>remainder))</span>
+<span id="cb99-18"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb99-18" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="_main_files/figure-html/ts-stl-1.png" alt="" width="1100" style="display: block; margin: auto;" /></p>
+<p>Fuerza de la tendencia: <strong>0.426</strong> | Fuerza de la estacionalidad: <strong>0.022</strong>. Estacionalidad <strong>DÉBIL</strong>: un término estacional (SARIMA) añadiría parámetros sin justificación.</p>
+</div>
+<div id="agrupamiento-temporal-réplicas-y-desagrupamiento-gardnerknopoff" class="section level3 hasAnchor" number="9.0.8">
+<h3><span class="header-section-number">9.0.8</span> 9.8 Agrupamiento temporal: réplicas y desagrupamiento (Gardner–Knopoff)<a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#agrupamiento-temporal-r%C3%A9plicas-y-desagrupamiento-gardnerknopoff" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La sobredispersión y la autocorrelación son manifestaciones del <strong>agrupamiento</strong>: los terremotos grandes generan réplicas. El método de <strong>Gardner y Knopoff (1974)</strong> marca como réplicas/premonitores los eventos que caen dentro de una ventana espacio-temporal de un evento mayor, con ventana que crece con la magnitud. Se aplica una versión simplificada: ventana simétrica en el tiempo y distancia en km por el método de Gardner–Knopoff; los eventos ya marcados no generan ventana propia. Limitación: es un algoritmo determinista con ventanas empíricas; el porcentaje de eventos en secuencias depende del método y del catálogo.</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-1" tabindex="-1"></a>gardner_knopoff <span class="ot">&lt;-</span> <span class="cf">function</span>(cat) {</span>
+<span id="cb100-2"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-2" tabindex="-1"></a>  c0 <span class="ot">&lt;-</span> cat <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(time)</span>
+<span id="cb100-3"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-3" tabindex="-1"></a>  t  <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">difftime</span>(c0<span class="sc">$</span>time, c0<span class="sc">$</span>time[<span class="dv">1</span>], <span class="at">units =</span> <span class="st">&quot;days&quot;</span>))</span>
+<span id="cb100-4"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-4" tabindex="-1"></a>  M  <span class="ot">&lt;-</span> c0<span class="sc">$</span>mag</span>
+<span id="cb100-5"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-5" tabindex="-1"></a>  lat <span class="ot">&lt;-</span> c0<span class="sc">$</span>latitude <span class="sc">*</span> pi <span class="sc">/</span> <span class="dv">180</span>; lon <span class="ot">&lt;-</span> c0<span class="sc">$</span>longitude <span class="sc">*</span> pi <span class="sc">/</span> <span class="dv">180</span></span>
+<span id="cb100-6"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-6" tabindex="-1"></a>  d_km <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span>(<span class="fl">0.1238</span> <span class="sc">*</span> M <span class="sc">+</span> <span class="fl">0.983</span>)</span>
+<span id="cb100-7"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-7" tabindex="-1"></a>  t_d  <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(M <span class="sc">&gt;=</span> <span class="fl">6.5</span>, <span class="dv">10</span><span class="sc">^</span>(<span class="fl">0.032</span> <span class="sc">*</span> M <span class="sc">+</span> <span class="fl">2.7389</span>), <span class="dv">10</span><span class="sc">^</span>(<span class="fl">0.5409</span> <span class="sc">*</span> M <span class="sc">-</span> <span class="fl">0.547</span>))</span>
+<span id="cb100-8"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-8" tabindex="-1"></a>  en_sec <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">FALSE</span>, <span class="fu">nrow</span>(c0))</span>
+<span id="cb100-9"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-9" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">order</span>(<span class="sc">-</span>M)) {</span>
+<span id="cb100-10"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-10" tabindex="-1"></a>    <span class="cf">if</span> (en_sec[i]) <span class="cf">next</span></span>
+<span id="cb100-11"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-11" tabindex="-1"></a>    lo <span class="ot">&lt;-</span> <span class="fu">findInterval</span>(t[i] <span class="sc">-</span> t_d[i], t, <span class="at">left.open =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="dv">1</span><span class="dt">L</span></span>
+<span id="cb100-12"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-12" tabindex="-1"></a>    hi <span class="ot">&lt;-</span> <span class="fu">findInterval</span>(t[i] <span class="sc">+</span> t_d[i], t)</span>
+<span id="cb100-13"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-13" tabindex="-1"></a>    <span class="cf">if</span> (lo <span class="sc">&gt;</span> hi) <span class="cf">next</span></span>
+<span id="cb100-14"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-14" tabindex="-1"></a>    idx <span class="ot">&lt;-</span> lo<span class="sc">:</span>hi</span>
+<span id="cb100-15"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-15" tabindex="-1"></a>    idx <span class="ot">&lt;-</span> idx[<span class="sc">!</span>en_sec[idx] <span class="sc">&amp;</span> M[idx] <span class="sc">&lt;=</span> M[i] <span class="sc">&amp;</span> idx <span class="sc">!=</span> i]</span>
+<span id="cb100-16"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-16" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">length</span>(idx)) <span class="cf">next</span></span>
+<span id="cb100-17"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-17" tabindex="-1"></a>    a <span class="ot">&lt;-</span> <span class="fu">sin</span>((lat[idx] <span class="sc">-</span> lat[i]) <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">cos</span>(lat[i]) <span class="sc">*</span> <span class="fu">cos</span>(lat[idx]) <span class="sc">*</span> <span class="fu">sin</span>((lon[idx] <span class="sc">-</span> lon[i]) <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb100-18"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-18" tabindex="-1"></a>    dist <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="dv">6371</span> <span class="sc">*</span> <span class="fu">asin</span>(<span class="fu">sqrt</span>(a))</span>
+<span id="cb100-19"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-19" tabindex="-1"></a>    en_sec[idx[dist <span class="sc">&lt;=</span> d_km[i]]] <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb100-20"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-20" tabindex="-1"></a>  }</span>
+<span id="cb100-21"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-21" tabindex="-1"></a>  c0<span class="sc">$</span>en_secuencia <span class="ot">&lt;-</span> en_sec</span>
+<span id="cb100-22"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-22" tabindex="-1"></a>  c0</span>
+<span id="cb100-23"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-23" tabindex="-1"></a>}</span>
+<span id="cb100-24"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-24" tabindex="-1"></a></span>
+<span id="cb100-25"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-25" tabindex="-1"></a>cat_gk  <span class="ot">&lt;-</span> <span class="fu">gardner_knopoff</span>(cat_ts)</span>
+<span id="cb100-26"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-26" tabindex="-1"></a>pct_sec <span class="ot">&lt;-</span> <span class="fu">mean</span>(cat_gk<span class="sc">$</span>en_secuencia) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb100-27"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-27" tabindex="-1"></a></span>
+<span id="cb100-28"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-28" tabindex="-1"></a>serie_ind <span class="ot">&lt;-</span> <span class="fu">agregar</span>(cat_gk <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span>en_secuencia), <span class="st">&quot;M&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb100-29"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-29" tabindex="-1"></a>  <span class="fu">select</span>(per, <span class="at">n_ind =</span> n) <span class="sc">%&gt;%</span></span>
+<span id="cb100-30"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-30" tabindex="-1"></a>  <span class="fu">right_join</span>(serie_m <span class="sc">%&gt;%</span> <span class="fu">select</span>(per, n), <span class="at">by =</span> <span class="st">&quot;per&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb100-31"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-31" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_ind =</span> <span class="fu">replace_na</span>(n_ind, <span class="dv">0</span><span class="dt">L</span>))</span>
+<span id="cb100-32"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-32" tabindex="-1"></a></span>
+<span id="cb100-33"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-33" tabindex="-1"></a>ind_disp <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Medida =</span> <span class="fu">c</span>(<span class="st">&quot;Media mensual&quot;</span>, <span class="st">&quot;Varianza&quot;</span>, <span class="st">&quot;Indice de dispersion&quot;</span>),</span>
+<span id="cb100-34"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-34" tabindex="-1"></a>                   <span class="st">`</span><span class="at">Catalogo completo</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">mean</span>(serie_ind<span class="sc">$</span>n), <span class="fu">var</span>(serie_ind<span class="sc">$</span>n), <span class="fu">var</span>(serie_ind<span class="sc">$</span>n) <span class="sc">/</span> <span class="fu">mean</span>(serie_ind<span class="sc">$</span>n)),</span>
+<span id="cb100-35"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-35" tabindex="-1"></a>                   <span class="at">Desagrupado =</span> <span class="fu">c</span>(<span class="fu">mean</span>(serie_ind<span class="sc">$</span>n_ind), <span class="fu">var</span>(serie_ind<span class="sc">$</span>n_ind), <span class="fu">var</span>(serie_ind<span class="sc">$</span>n_ind) <span class="sc">/</span> <span class="fu">mean</span>(serie_ind<span class="sc">$</span>n_ind)))</span>
+<span id="cb100-36"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb100-36" tabindex="-1"></a><span class="fu">kab</span>(ind_disp, <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Medida</th>
+<th align="right">Catalogo completo</th>
+<th align="right">Desagrupado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Media mensual</td>
+<td align="right">127.13</td>
+<td align="right">53.64</td>
+</tr>
+<tr class="even">
+<td align="left">Varianza</td>
+<td align="right">2,568.40</td>
+<td align="right">174.26</td>
+</tr>
+<tr class="odd">
+<td align="left">Indice de dispersion</td>
+<td align="right">20.20</td>
+<td align="right">3.25</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb101-1" tabindex="-1"></a><span class="fu">ggplot</span>(serie_ind, <span class="fu">aes</span>(per)) <span class="sc">+</span></span>
+<span id="cb101-2"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb101-2" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> n, <span class="at">color =</span> <span class="st">&quot;Catálogo completo&quot;</span>), <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb101-3"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb101-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> n_ind, <span class="at">color =</span> <span class="st">&quot;Desagrupado (eventos independientes)&quot;</span>), <span class="at">linewidth =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb101-4"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb101-4" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Catálogo completo&quot;</span> <span class="ot">=</span> GRIS, <span class="st">&quot;Desagrupado (eventos independientes)&quot;</span> <span class="ot">=</span> AZUL), <span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb101-5"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb101-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Conteo mensual: catálogo completo vs desagrupado&quot;</span>, <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">&quot;Eventos por mes&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/ts-gk-1.png" alt="" width="1100" style="display: block; margin: auto;" /></p>
+<p>Eventos en secuencias (réplicas/premonitores): <strong>57.8 %</strong>; eventos independientes: <strong>37,763</strong>.</p>
+<p><strong>Lectura.</strong> Si tras el desagrupamiento el índice de dispersión cae hacia 1 y los picos desaparecen, el agrupamiento por réplicas explica la sobredispersión y los picos del conteo: la serie desagrupada se acerca a un proceso de Poisson, mientras que la serie completa <strong>no se puede anticipar</strong> más allá de su nivel reciente.</p>
+</div>
+<div id="cambios-de-régimen-prueba-de-pettitt" class="section level3 hasAnchor" number="9.0.9">
+<h3><span class="header-section-number">9.0.9</span> 9.9 Cambios de régimen: prueba de Pettitt<a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cambios-de-r%C3%A9gimen-prueba-de-pettitt" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La prueba de <strong>Pettitt (1979)</strong> es no paramétrica (basada en rangos) y localiza el punto de cambio de nivel más probable, con p-valor aproximado <span class="math inline">\(p\approx 2\exp\!\left(-6K^2/(n^3+n^2)\right)\)</span>. Supone observaciones independientes y detecta <strong>un solo</strong> cambio de nivel; con agrupamiento y autocorrelación el p-valor es optimista, por lo que se interpreta como indicio, no como prueba definitiva.</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-1" tabindex="-1"></a>pettitt <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb102-2"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-2" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb102-3"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-3" tabindex="-1"></a>  U <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">cumsum</span>(<span class="fu">rank</span>(x)) <span class="sc">-</span> <span class="fu">seq_len</span>(n) <span class="sc">*</span> (n <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb102-4"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-4" tabindex="-1"></a>  Ua <span class="ot">&lt;-</span> <span class="fu">abs</span>(U[<span class="sc">-</span>n])</span>
+<span id="cb102-5"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-5" tabindex="-1"></a>  t_ <span class="ot">&lt;-</span> <span class="fu">which.max</span>(Ua)</span>
+<span id="cb102-6"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-6" tabindex="-1"></a>  K  <span class="ot">&lt;-</span> Ua[t_]</span>
+<span id="cb102-7"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-7" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">t =</span> t_, <span class="at">K =</span> K, <span class="at">p =</span> <span class="fu">min</span>(<span class="dv">1</span>, <span class="dv">2</span> <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="dv">6</span> <span class="sc">*</span> K<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> (n<span class="sc">^</span><span class="dv">3</span> <span class="sc">+</span> n<span class="sc">^</span><span class="dv">2</span>))))</span>
+<span id="cb102-8"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-8" tabindex="-1"></a>}</span>
+<span id="cb102-9"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-9" tabindex="-1"></a></span>
+<span id="cb102-10"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-10" tabindex="-1"></a>pt <span class="ot">&lt;-</span> <span class="fu">pettitt</span>(x_sel)</span>
+<span id="cb102-11"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-11" tabindex="-1"></a>fecha_cp <span class="ot">&lt;-</span> serie_sel<span class="sc">$</span>per[pt<span class="sc">$</span>t <span class="sc">+</span> <span class="dv">1</span>]</span>
+<span id="cb102-12"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-12" tabindex="-1"></a>m_antes   <span class="ot">&lt;-</span> <span class="fu">mean</span>(x_sel[<span class="dv">1</span><span class="sc">:</span>pt<span class="sc">$</span>t])</span>
+<span id="cb102-13"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-13" tabindex="-1"></a>m_despues <span class="ot">&lt;-</span> <span class="fu">mean</span>(x_sel[(pt<span class="sc">$</span>t <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span><span class="fu">length</span>(x_sel)])</span>
+<span id="cb102-14"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-14" tabindex="-1"></a></span>
+<span id="cb102-15"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-15" tabindex="-1"></a><span class="fu">ggplot</span>(serie_sel, <span class="fu">aes</span>(per, n)) <span class="sc">+</span></span>
+<span id="cb102-16"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-16" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> GRIS, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb102-17"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-17" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;segment&quot;</span>, <span class="at">x =</span> <span class="fu">min</span>(serie_sel<span class="sc">$</span>per), <span class="at">xend =</span> serie_sel<span class="sc">$</span>per[pt<span class="sc">$</span>t], <span class="at">y =</span> m_antes, <span class="at">yend =</span> m_antes, <span class="at">color =</span> ROJO, <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb102-18"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-18" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;segment&quot;</span>, <span class="at">x =</span> serie_sel<span class="sc">$</span>per[pt<span class="sc">$</span>t <span class="sc">+</span> <span class="dv">1</span>], <span class="at">xend =</span> <span class="fu">max</span>(serie_sel<span class="sc">$</span>per), <span class="at">y =</span> m_despues, <span class="at">yend =</span> m_despues, <span class="at">color =</span> ROJO, <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb102-19"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-19" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> fecha_cp, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb102-20"><a href="análisis-de-series-de-tiempo-de-la-actividad-sísmica.html#cb102-20" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Cambio de nivel detectado (Pettitt)&quot;</span>, <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">&quot;Eventos por periodo&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/ts-pettitt-1.png" alt="" width="1100" style="display: block; margin: auto;" /></p>
+<p>Punto de cambio más probable: <strong>2004-11-01</strong> (K = 58,590). p = 3.90e-26 &lt; 0.05 → se <strong>RECHAZA</strong> no hay cambio de nivel. Conclusión: hay un cambio de nivel Nivel medio antes: <strong>111.41</strong> | después: <strong>153.74</strong>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="transformaciones.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="modelos-de-series-de-tiempo-para-el-conteo-mensual.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
